@@ -31,6 +31,7 @@ namespace AbsenceCoverageMS
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllersWithViews();
 
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
 
