@@ -10,9 +10,7 @@
     <Folder Include="Areas\Teacher\" />
     <Folder Include="Areas\SubTeacher\" />
     <Folder Include="Models\" />
-    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
-    <Folder Include="Views\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
 </Project>
