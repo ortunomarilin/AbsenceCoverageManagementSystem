@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbsenceCoverageMS.Controllers
