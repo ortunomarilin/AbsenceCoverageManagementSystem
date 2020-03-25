@@ -1,6 +1,8 @@
 ﻿using AbsenceCoverageMS.Models.DomainModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +30,11 @@ namespace AbsenceCoverageMS.Models.DataLayer
         public DbSet<AbsenceBalance> AbsenceBalances { get; set; }
 
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
         }
+
 
     }
 }
