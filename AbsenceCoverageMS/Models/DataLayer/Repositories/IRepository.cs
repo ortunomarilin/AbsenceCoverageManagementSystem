@@ -7,7 +7,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        List<TEntity> GetAll();
+        IEnumerable<TEntity> GetAll();
         
         TEntity Get(string id);
 

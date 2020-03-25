@@ -16,7 +16,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        public List<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return context.Set<TEntity>().ToList();
         }
