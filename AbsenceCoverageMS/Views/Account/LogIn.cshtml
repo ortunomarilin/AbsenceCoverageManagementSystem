@@ -12,6 +12,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/StartScreenStyleSheet.css" rel="stylesheet" />
 
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/jquery/jquery.min.js"></script>
@@ -21,30 +22,42 @@
 </head>
  <body>
 
-    <h1>LogIn</h1>
+     <header>
+         <h1>Absence & Coverage Management System </h1>
+     </header>
+    
 
-    @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-    <form method="post" asp-action="LogIn">
-        <div class="form-group">
-            <div>
-                <label>Username:</label>
-                <input type="text" asp-for="Username" class="form-control" />
-                <span asp-validation-for="Username" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Password:</label>
-                <input type="password" asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="checkbox" title="Remember Me" asp-for="RememberMe" class="form-check-inline" />
-                <label asp-for="RememberMe">Remember Me</label>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Log In</button>
+     <main class="center">
+         <h3 class="text-center">Login</h3>
 
-        </div>
-    </form>
+         @*<div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+         <form method="post" asp-action="LogIn">
+             <div>
+                 <div>
+                     <label class="text-dark">Username:</label>
+                     <input type="text" asp-for="Username" class="form-control" />
+                     <span asp-validation-for="Username" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <label class="text-dark">Password:</label>
+                     <input type="password" asp-for="Password" class="form-control" />
+                     <span asp-validation-for="Password" class="text-danger"></span>
+                 </div>
+                 <div class="form-group">
+                     <input type="checkbox" title="Remember Me" asp-for="RememberMe" class="form-check-inline" />
+                     <label class="text-dark" asp-for="RememberMe">Remember Me</label>
+                 </div>
+
+                 <button type="submit" class="btn btn-primary">Log In</button>
+
+             </div>
+         </form>
+
+
+     </main>
+
+
 </body>
 </html>
 
