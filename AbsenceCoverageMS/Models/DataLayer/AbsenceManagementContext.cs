@@ -1,4 +1,5 @@
-﻿using AbsenceCoverageMS.Models.DomainModels;
+﻿using AbsenceCoverageMS.Models.DataLayer.SeedData;
+using AbsenceCoverageMS.Models.DomainModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,10 @@ namespace AbsenceCoverageMS.Models.DataLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+
+            modelBuilder.ApplyConfiguration(new SeedLeaveTypes());
+            modelBuilder.ApplyConfiguration(new SeedPeriods());
         }
 
 
