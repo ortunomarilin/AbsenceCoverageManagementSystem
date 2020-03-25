@@ -63,6 +63,13 @@ namespace AbsenceCoverageMS
 
             app.UseEndpoints(endpoints =>
             {
+                // route for Admin area
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Book}/{action=Index}/{id?}");
+
+                //Default Route
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
