@@ -16,7 +16,6 @@
     <Folder Include="Areas\Manager\" />
     <Folder Include="Areas\Teacher\" />
     <Folder Include="Areas\SubTeacher\" />
-    <Folder Include="Models\DataLayer\Repositories\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
