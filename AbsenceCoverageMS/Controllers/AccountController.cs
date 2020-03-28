@@ -22,12 +22,6 @@ namespace AbsenceCoverageMS.Controllers
         }
 
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-
         [HttpGet]
         public IActionResult LogIn()
         {
@@ -65,6 +59,13 @@ namespace AbsenceCoverageMS.Controllers
 
             ModelState.AddModelError("", "Invalid username/password.");
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LogOut()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("LogIn");
         }
 
 

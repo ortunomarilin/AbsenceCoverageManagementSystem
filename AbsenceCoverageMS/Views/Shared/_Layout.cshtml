@@ -1,83 +1,235 @@
-﻿<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-
-    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-    <script src="~/lib/jquery/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> signInManager
 
 
-</head>
-<body>
+    <!DOCTYPE html>
 
-    <header>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <a href="#" class="navbar-brand">Absence & Coverage Management System</a>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>@ViewBag.Title</title>
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/css/Custom.css" rel="stylesheet" />
 
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+        <script src="~/lib/jquery/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <div class="collapse navbar-collapse" id="navbarMenu">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link">My Absences</a></li>
-                    <li class="nav-item"><a class="nav-link">My Absence Balances</a></li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Username@School.org
-                        </button>
-                        <!--Sub Menu-->
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">My Account</a>
-                            <a class="dropdown-item" href="#">Log Out</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <main>
-        <aside class="sidebarMenu">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+              integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+              crossorigin="anonymous">
 
-            <h3>MySidebar</h3>
 
-            <ul>
-                <li><a href="#">Dashboard</a></li>
 
-                @*@using Microsoft.AspNetCore.Identity
-        @inject SignInManager<User> signInManager
-        @if (signInManager.IsSignedIn(User))
-        {
-            if (User.IsInRole("admin"))
-            {
-                <li><a href="#">Manage Users</a></li>
-                <li><a href="#">Manage Roles</a></li>
+        <script>
+            function openSideBar() {
+                document.getElementById('sidebar').style.width = '200px';
+                document.getElementById('sidebar').style.left = '0px';
+                document.getElementById('content').style.left = '200px';
             }
-            <li><a href="#">All</a></li>
-        }*@
-                <li><a href="#">My Profile</a></li>
-                <li><a href="#">My Account</a></li>
 
+            function closeSideBar() {
+                document.getElementById('sidebar').style.width = '0px';
+                document.getElementById('sidebar').style.left = '-200px';
+                document.getElementById('content').style.left = '0px';
+            }
+        </script>
+
+
+    </head>
+    <body>
+
+        <header>
+
+            <nav class="navbar navbar-expand-sm ">
+                <a href="#" class="navbar-brand">Absence & Coverage Management System</a>
+
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarMenu">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link">Calendar</a></li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="text-light">@User.Identity.Name</span></button>
+                            <!--Log Out-->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">My Account</a>
+                                <form method="post" asp-controller="Account" asp-action="LogOut" asp-area="">
+                                    <button type="submit" class="dropdown-item">Log Out</button>
+                                </form>
+                                
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div id="topBorder">
+            <a onclick="openSideBar()">
+                <span class="openIcon">
+                    <i class="material-icons">double_arrow</i>
+                </span>
+            </a>
+        </div>
+
+        <aside id="sidebar" class="sidebarMenu ">
+
+            <div id="closeIcon">
+                <span onclick="closeSideBar()">
+                    <i class="material-icons">clear</i>
+                </span>
+            </div>
+
+            <!--Start SideMenu-->
+            <ul>
+                <li class="subHeader">
+                    <span>
+                        My Tools
+                        <i class="fas fa-wrench"></i>
+                    </span>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="material-icons">dashboard</i>
+                        </span>
+                        <span class="iconTitle">Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fas fa-calendar-alt fa-lg fa-fw"></i>
+                        </span>
+                        <span class="iconTitle">Calendar</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fas fa-calendar-times fa-lg fa-fw"></i>
+                        </span>
+                        <span class="iconTitle">Absences</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <i class="fas fa-balance-scale fa-lg fa-fw"></i>
+                        </span>
+                        <span class="iconTitle">Absence Balances</span>
+                    </a>
+                </li>
+                @if (signInManager.IsSignedIn(User))
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <!-- Dropright menu -->
+                            <div class="btn-group dropright rightDropDown">
+                                <a class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-wrench"></i>Admin
+                                </a>
+                                <div class="dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <a>Manage Users</a>
+                                    <a>Manage Roles</a>
+                                </div>
+                            </div>
+                        </li>
+
+                    }
+                    if (User.IsInRole("HR"))
+                    {
+                        <li>
+                            <!-- Dropright menu -->
+                            <div class="btn-group dropright rightDropDown">
+                                <a class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-wrench"></i>HR
+                                </a>
+                                <div class="dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <a>Leave Types</a>
+                                    <a>Assign Leave Balances</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    if (User.IsInRole("Manager"))
+                    {
+                        <li>
+                            <!-- Dropright menu -->
+                            <div class="btn-group dropright rightDropDown">
+                                <a class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-wrench"></i>Operations
+                                </a>
+                                <div class="dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <a>Manage Absence Requests</a>
+                                    <a>Manage Coverage</a>
+                                    <a>Manage Schedules</a>
+                                    <a>Campus Info</a>
+                                    <a>Periods Info</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    if (User.IsInRole("Instructional-Teacher"))
+                    {
+                        <li>
+                            <!-- Dropright menu -->
+                            <div class="btn-group dropright rightDropDown">
+                                <a class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-wrench"></i>Teacher
+                                </a>
+                                <div class="dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <a>Coverage Requests</a>
+                                    <a>Coverage Assignments</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    if (User.IsInRole("Instructional-Sub"))
+                    {
+                        <li>
+                            <!-- Dropright menu -->
+                            <div class="btn-group dropright rightDropDown">
+                                <a class=" dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-wrench"></i>Sub-Teacher
+                                </a>
+                                <div class="dropdown-menu">
+                                    <!-- Dropdown menu links -->
+                                    <a>Available Jobs</a>
+                                    <a>Scheduled Jobs</a>
+                                    <a>Sub History</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
             </ul>
         </aside>
 
-        <div>
-            @RenderBody()
-        </div>
 
 
-    </main>
+        <main>
+            <div id="content" class="view-content">
+                @RenderBody()
+            </div>
+        </main>
+
+    </body>
+    </html>
 
 
-
-
-
-
-
-</body>
-</html>
