@@ -4,14 +4,16 @@ using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbsenceCoverageMS.Migrations
 {
     [DbContext(typeof(AbsenceManagementContext))]
-    partial class AbsenceManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20200329103156_UpdatedUserModel")]
+    partial class UpdatedUserModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -344,6 +346,51 @@ namespace AbsenceCoverageMS.Migrations
                     b.ToTable("ProcessingRequests");
                 });
 
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Profile", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CampusId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TeachingSubjects")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampusId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Profiles");
+                });
+
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJob", b =>
                 {
                     b.Property<string>("Id")
@@ -662,6 +709,17 @@ namespace AbsenceCoverageMS.Migrations
                         .HasForeignKey("UserId");
                 });
 
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Profile", b =>
+                {
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.Campus", "Campus")
+                        .WithMany("Profiles")
+                        .HasForeignKey("CampusId");
+
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJob", b =>
                 {
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
@@ -672,7 +730,7 @@ namespace AbsenceCoverageMS.Migrations
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.User", b =>
                 {
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.Campus", "Campus")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("CampusId");
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", null)

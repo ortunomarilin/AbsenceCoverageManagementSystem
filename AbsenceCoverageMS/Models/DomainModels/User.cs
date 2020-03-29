@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,15 @@ namespace AbsenceCoverageMS.Models.DomainModels
     public class User : IdentityUser
     {
 
-        public string ProfileId { get; set; }  //FK
+        //public string ProfileId { get; set; }  //FK
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+
+        public string Position { get; set; }
+
+        public string TeachingSubjects { get; set; }
 
 
         //User is Manager of Campus 

@@ -19,7 +19,6 @@ namespace AbsenceCoverageMS.Models.DataLayer
         { }
 
         public DbSet<SubJob> SubJobs { get; set; }
-        public DbSet<Profile> Profiles { get; set; }
         public DbSet<ProcessingRequest> ProcessingRequests { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<LeaveType> LeaveTypes { get; set; }

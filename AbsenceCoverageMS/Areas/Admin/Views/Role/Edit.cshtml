@@ -1,0 +1,68 @@
+﻿@model EditRoleViewModel
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1 class="viewHeader">@Model.RoleName Role</h1>
+
+
+<div class="card">
+    <h5 class="card-header">Edit @Model.RoleName</h5>
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <div class="form-group">
+                <label>Role</label>
+                <input class="form-control" asp-for="@Model.RoleName" />
+                <span class="text-danger" asp-validation-for="RoleName"></span>
+            </div>
+
+            <div class="text-danger" asp-validation-summary="All"></div>
+
+            <button type="submit" class="btn btn-success">Update</button>
+            <a class="btn btn-warning" asp-action="List">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <h5 class="card-header">Users in @Model.RoleName</h5>
+    <div class="card-body">
+
+        @if (Model.roleUsers.Count == 0)
+        {
+            <p>There are currently no users assign to the @Model.RoleName role. </p>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover table-sm ">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Full Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model.roleUsers)
+                    {
+                        <tr>
+                            <td>@user.Id</td>
+                            <td>@user.UserName</td>
+                            <td>@user.FirstName @user.LastName</td>
+                            <td class="text-center">
+                                <form method="post" asp-action="Delete">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<a class="btn btn-info" asp-action="List">Back to List</a>  

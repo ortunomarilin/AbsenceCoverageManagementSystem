@@ -26,7 +26,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public string Id { get; set; }    //FK
 
 
-        public ICollection<Profile> Profiles { get; set; }  //Nav
+        public ICollection<User> Users { get; set; }  //Nav
     }
 }
 
