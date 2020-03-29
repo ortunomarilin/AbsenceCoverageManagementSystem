@@ -8,9 +8,29 @@ body {
     background-color: rgb(230, 234, 247);
 }
 
-.navbar {
-    background-color: black;
-    color: rgb(133, 161, 236);
+/*Navigation Style*/
+.myNavbar .navbar-brand {
+    color: white;
+    font-size: 18px;
+}
+
+.myNavbar .nav-link {
+    color: white;
+}
+
+    .myNavbar .nav-link:hover {
+        color: rgb(204, 226, 245);
+    }
+
+.navbar-toggler-icon {
+    color: white;
+    line-height: 25px;
+}
+
+
+.myNavbar {
+    background-color: #022444;
+    padding-right: 30px;
     position: fixed;
     top: 0;
     left: 0;
@@ -18,27 +38,19 @@ body {
     z-index: 100;
 }
 
-    .navbar a:hover {
-        color: rgba(143, 157, 218, 0.705);
-    }
-
-
+/*SideBar Navigation Style*/
 .sidebarMenu, .view-content {
-    top: 120px;
+    top: 101px;
 }
 
 .sidebarMenu {
-    background-color: black;
+    background-color: #022444;
     position: fixed;
     width: 200px;
     height: 100%;
     z-index: 1;
     /*overflow-y: scroll;
   bottom: 0; */
-}
-
-h2 {
-    padding: 20px;
 }
 
 .closeHeader {
@@ -48,83 +60,103 @@ h2 {
     padding-left: 14px;
 }
 
-.subHeader {
-    color: rgb(168, 185, 228);
-    margin: 0px;
-    padding: 1px;
-    text-align: center;
-    background-color: rgba(2, 42, 175, 0.445);
+#closeIcon {
+    padding-left: 146px;
     border: 1px solid rgba(179, 178, 178, 0.3);
 }
 
-#closeIcon {
-    padding-left: 146px;
-}
-
     #closeIcon i {
-        color: rgb(133, 161, 236);
-        /* font-size: 36px; */
-        line-height: 40px;
+        color: white;
+        line-height: 20px;
         margin-left: 20px;
-        padding: 0px 4px;
+        padding: 2px 4px;
         border: 1px solid rgba(179, 178, 178, 0.3);
         cursor: pointer;
     }
 
+.subHeader {
+    color: white;
+    margin: 0px;
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(2, 2, 49);
+    border-bottom: 1px solid rgba(179, 178, 178, 0.3);
+}
 
 .sidebarMenu ul li {
-    border: 1px solid rgba(179, 178, 178, 0.2);
     list-style: none;
+    border: 1px solid rgba(179, 178, 178, 0.2);
 }
 
 .sidebarMenu ul a {
     text-decoration: none;
     display: block;
     padding: 5px;
-    color: rgb(133, 161, 236);
-    /*border-left: solid 2px rgb(133, 161, 236);*/
-    /*border-right: solid 2px rgb(133, 161, 236);*/
+    color: #74BBFB;
     transition: .4s;
 }
 
 .sidebarMenu a:hover {
-    background-color: rgba(80, 107, 226, 0.8);
+    background-color: #4e7396;
+}
+
+.rightDropDown {
+    display: block;
+    width: 100%;
 }
 
 .icon {
-    padding-right: 15px;
-    color: rgb(133, 161, 236);
+    color: #74BBFB;
+    font-size: 16px;
+    padding-right: 8px;
+    padding-left: 5px;
 }
 
+.material-icons {
+    vertical-align: middle;
+    padding-bottom: 3px;
+}
+
+
+/*Main Body*/
 #topBorder {
-    background-color: rgba(35, 74, 202, 0.9);
-    border: solid 2px rgb(133, 161, 236);
-    padding: 8px;
+    background-color: rgb(2, 2, 49);
+    border-top: solid 1px rgb(133, 161, 236);
+    padding: 4px;
     position: fixed;
     top: 56px;
+    padding-left: 30px;
     width: 100%;
     z-index: 3;
 }
 
+
 .openIcon i {
     position: relative;
-    background-color: black;
-    color: rgb(133, 161, 236);
-    padding: 10px;
+    background-color: #022444;
+    color: white;
+    padding: 5px;
     border-radius: 50%;
     z-index: 1;
     cursor: pointer;
 }
 
-
 .view-content {
     background-color: transparent;
     position: absolute;
     left: 200px;
-    right:5px;
     min-height: 100%;
     padding: 0px 20px 20px 30px;
     z-index: 1;
+}
+
+.bodyHeader {
+    padding: 20px;
+    color: #022444;
+}
+
+.item_wrap {
+    padding: 10px;
 }
 
 .item {
@@ -134,14 +166,3 @@ h2 {
     font-size: 14px;
     line-height: 22px;
 }
-
-.dropdown-menu {
-    background-color: transparent;
-    background-color: rgba(2, 42, 175, 0.445);
-}
-
-
-
-
-
-

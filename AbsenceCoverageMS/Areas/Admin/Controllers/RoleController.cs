@@ -32,7 +32,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         public IActionResult Add()
         {
             var model = new AddRoleViewModel();
-            
+
             return View(model);
         }
 
@@ -64,13 +64,13 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Details(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
 
-            EditRoleViewModel model = new EditRoleViewModel()
+            RoleDetailsViewModel model = new RoleDetailsViewModel()
             {
-                id = role.Id,
+                Id = role.Id,
                 RoleName = role.Name
             };
 
@@ -86,37 +86,24 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(EditRoleViewModel model)
+        public async Task<IActionResult> Edit(RoleDetailsViewModel model)
         {
-            var role = await roleManager.FindByIdAsync(model.id);
+            var role = await roleManager.FindByIdAsync(model.Id);
             if (role != null)
             {
                 role.Name = model.RoleName;
                 var result = await roleManager.UpdateAsync(role);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("List");
-                }
-                else
+                if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                    return View(model);
+                    return View("Details", model);
                 }
             }
-            return View(model);
+            return View("Details", model);
         }
-
-
-
-        //[HttpGet]
-        //public IActionResult AssignRole()
-        //{
-        //    return View();
-        //}
-
 
 
         [HttpPost]

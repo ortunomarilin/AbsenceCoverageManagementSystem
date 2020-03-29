@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Areas.Admin.Models
 {
-    public class EditRoleViewModel
+    public class RoleDetailsViewModel
     {
-        public string id { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Role Name - Required.")]
         public string RoleName { get; set; }

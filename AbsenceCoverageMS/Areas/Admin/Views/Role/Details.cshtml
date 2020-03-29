@@ -1,4 +1,4 @@
-﻿@model EditRoleViewModel
+﻿@model RoleDetailsViewModel
 
 
 @{
@@ -9,19 +9,24 @@
 
 
 <div class="card">
-    <h5 class="card-header">Edit @Model.RoleName</h5>
+    <h5 class="card-header">Role Information</h5>
     <div class="card-body">
-        <form asp-action="Edit" method="post">
+        <form asp-action="Edit" method="post">  
             <div class="form-group">
-                <label>Role</label>
-                <input class="form-control" asp-for="@Model.RoleName" />
-                <span class="text-danger" asp-validation-for="RoleName"></span>
+                <label>Role Name</label>
+                <input class="form-control" asp-for="@Model.RoleName"/>
+                <span class="text-danger" asp-validation-for="RoleName"></span>  
             </div>
 
             <div class="text-danger" asp-validation-summary="All"></div>
 
-            <button type="submit" class="btn btn-success">Update</button>
-            <a class="btn btn-warning" asp-action="List">Cancel</a>
+            
+            <button type="submit" class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Id">Update
+                <span class="icon">
+                    <i class="far fa-edit"></i>
+                </span>
+            </button>
+            <a class="btn btn-warning" asp-action="List">Back to Roles</a>
         </form>
     </div>
 </div>
@@ -54,7 +59,12 @@
                             <td>@user.FirstName @user.LastName</td>
                             <td class="text-center">
                                 <form method="post" asp-action="Delete">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete
+                                        <span class="icon">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                    </button>
                                 </form>
                             </td>
                         </tr>
@@ -65,4 +75,4 @@
     </div>
 </div>
 
-<a class="btn btn-info" asp-action="List">Back to List</a>  
+
