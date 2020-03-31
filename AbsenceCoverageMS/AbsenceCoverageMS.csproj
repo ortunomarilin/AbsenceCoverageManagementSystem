@@ -11,10 +11,13 @@
     <Compile Remove="Migrations\20200324134702_AddAdmin.Designer.cs" />
     <Compile Remove="Migrations\20200325052525_SeedData.cs" />
     <Compile Remove="Migrations\20200325052525_SeedData.Designer.cs" />
+    <Compile Remove="Migrations\20200330041639_SeedCampusData.cs" />
+    <Compile Remove="Migrations\20200330041639_SeedCampusData.Designer.cs" />
+    <Compile Remove="Migrations\20200330100537_AddEmployeeEntity.cs" />
+    <Compile Remove="Migrations\20200330100537_AddEmployeeEntity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Views\User\" />
     <Folder Include="Areas\Manager\" />
     <Folder Include="Areas\Teacher\" />
     <Folder Include="Areas\SubTeacher\" />

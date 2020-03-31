@@ -22,9 +22,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required]
         public string ZipCode { get; set; }
 
-        [Required]  //Manager of Campus
-        public string Id { get; set; }    //FK
-
 
         public ICollection<User> Users { get; set; }  //Nav
     }

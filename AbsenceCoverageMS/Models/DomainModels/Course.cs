@@ -21,7 +21,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required]
         public string Room { get; set; }
         
-        //1 to Many 
+  
         [Required]
         public string Id { get; set; }
         public User User { get; set; }

@@ -21,7 +21,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public int Balance { get; set; }
 
         [Required]
-        public string Id { get; set; }  //Fk
-        public User User { get; set; }  //Nav
+        public string Id { get; set; }
+        public User User { get; set; }
     }
 }

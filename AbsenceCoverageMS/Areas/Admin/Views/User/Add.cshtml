@@ -1,0 +1,139 @@
+﻿@model AddUserViewModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+@*<script>
+
+    $(document).ready(function ()
+    {
+        $("#btn1").click(function ()
+        {
+            $("#roles option:selected").each(function ()
+            {
+                $(this).remove().appendTo("#selectedRoses");
+
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $("#btn2").click(function () {
+            $("#selectedRoses option:selected").each(function () {
+                $(this).remove().appendTo("#roles");
+
+            });
+        });
+    });
+
+
+ </script>*@
+
+
+
+    <h1>Add User</h1>
+
+    <div>
+        <div class="card">
+            <h4 class="card-header">New User</h4>
+            <div class="card-body">
+
+                <form asp-action="Add" method="post">
+
+                    <div class="form-row">
+                        <div class="col">
+                            <label asp-for="FirstName ">Firs Name </label>
+                            <input class="form-control" asp-for="FirstName" />
+                            <span class="text-danger" asp-validation-for="FirstName"></span>
+                        </div>
+                        <div class="col">
+                            <label asp-for="LastName ">Last Name </label>
+                            <input class="form-control" asp-for="LastName" />
+                            <span class="text-danger" asp-validation-for="LastName"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label asp-for="Position ">Position</label>
+                        <input class="form-control" asp-for="Position" />
+                        <span class="text-danger" asp-validation-for="Position"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label> Campus</label>
+                        <select class="form-control" asp-for="@Model.CampusId"
+                                asp-items="@(new SelectList(Model.Campuses,
+                                            "CampusId", "Name", Model.CampusId))">
+                            <option value="">Select a Campus</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="@Model.CampusId"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Email</label>
+                        <input class="form-control" asp-for="Email" />
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Username </label>
+                        <input class="form-control" asp-for="Username" />
+                        <span class="text-danger" asp-validation-for="Username"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Password </label>
+                        <input class="form-control" asp-for="Password" />
+                        <span class="text-danger" asp-validation-for="Password"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <label>Confirm Password </label>
+                        <input class="form-control" asp-for="confirmPassword" />
+                        <span class="text-danger" asp-validation-for="confirmPassword"></span>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col-5">
+                            <label> Roles</label>
+                            <select class="form-control" asp-for="@Model.Id"
+                                    asp-items="@(new SelectList(Model.Roles,
+                                        "Id", "Name", Model.Id))">
+                                <option value="">Select a Role</option>
+                            </select>
+                            <span class="text-danger" asp-validation-for="@Model.Id"></span>
+
+
+                        </div>
+                    </div>
+
+                        @*<div class="col-2">
+                            <button id="btn1" type="button" class="btn btn-primary d-block">>></button>
+                            <button id="btn2" type="button" class="btn btn-primary d-block"><<</button>
+                        </div>*@
+
+
+                        @*<div class="col-5">
+                            <label> Selected Roles</label>
+                            <select id="selectedRoses" multiple class="form-control" asp-for="UserRoles"
+                                    asp-items="@(new SelectList(Model.UserRoles,
+                                        "Id", "Name", Model.Role))">
+                            </select>
+                            <span class="text-danger" asp-validation-for="UserRoles"></span>
+                        </div>
+                    </div>*@
+
+                    <div class="text-danger text-sm-left" asp-validation-summary="All"></div>
+
+                    <button type="submit" class="btn btn-success">Add User</button>
+                    <a class="btn btn-warning" asp-action="List">Cancel</a>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+

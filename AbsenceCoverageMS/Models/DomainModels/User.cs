@@ -11,7 +11,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
     public class User : IdentityUser
     {
 
-        //public string ProfileId { get; set; }  //FK
         [Required]
         public string FirstName { get; set; }
         [Required]
@@ -22,21 +21,21 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public string TeachingSubjects { get; set; }
 
 
-        //User is Manager of Campus 
+        //User is Employee of Campus 
         public string CampusId { get; set; }   //Fk
         public Campus Campus { get; set; }     //Nav
-        
-       
+
+
         //Has Coverage Period
         public string CoveragePeriodId { get; set; } //FK
-        
-        
+
+
         //Teaches Courses 
         public ICollection<Course> Courses { get; set; }
 
         //Has Absence Balances
         public ICollection<AbsenceBalance> AbsenceBalances { get; set; }
-        
+
         //Submitted Absence Requests
         public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
 
@@ -49,6 +48,10 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
         [NotMapped]
         public IList<string> RoleNames { get; set; }
+
+
+        //Method
+        public string FullName => $"{FirstName} {LastName}";
 
     }
 }

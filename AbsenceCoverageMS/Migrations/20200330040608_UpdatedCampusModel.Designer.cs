@@ -4,14 +4,16 @@ using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbsenceCoverageMS.Migrations
 {
     [DbContext(typeof(AbsenceManagementContext))]
-    partial class AbsenceManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20200330040608_UpdatedCampusModel")]
+    partial class UpdatedCampusModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -124,44 +126,6 @@ namespace AbsenceCoverageMS.Migrations
                     b.HasKey("CampusId");
 
                     b.ToTable("Campuses");
-
-                    b.HasData(
-                        new
-                        {
-                            CampusId = "1",
-                            City = "Houston",
-                            Name = "South",
-                            State = 41,
-                            StreetAddress = "111 Street",
-                            ZipCode = "7701"
-                        },
-                        new
-                        {
-                            CampusId = "2",
-                            City = "Houston",
-                            Name = "West",
-                            State = 41,
-                            StreetAddress = "222 Street",
-                            ZipCode = "7702"
-                        },
-                        new
-                        {
-                            CampusId = "3",
-                            City = "Houston",
-                            Name = "East",
-                            State = 41,
-                            StreetAddress = "333 Street",
-                            ZipCode = "7703"
-                        },
-                        new
-                        {
-                            CampusId = "4",
-                            City = "Houston",
-                            Name = "North",
-                            State = 41,
-                            StreetAddress = "444 Street",
-                            ZipCode = "7704"
-                        });
                 });
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Course", b =>

@@ -1,0 +1,101 @@
+﻿@model UserDetailsViewModel
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>User Details</h1>
+
+
+
+
+<div class="card">
+    <h5 class="card-header">Account </h5>
+
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+            <div>
+                <label>Username</label>
+                <input readonly class="form-control" />
+            </div>
+            <div>
+                <label>Password</label>
+                <input readonly type="password" class="form-control" />
+            </div>
+
+
+            <button type="submit" class="btn bg-success">Edit</button>
+            <a class="btn btn-danger" asp-action="Details">Cancel</a>
+        </form>
+    </div>
+</div>
+         
+ 
+
+
+<div class="card">
+    <h5 class="card-header">Employee Info</h5>
+
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <label>First Name</label>
+                        <input readonly class="form-control" />
+                    </div>
+                </div>
+                <div class="col">
+                    <div>
+                        <label>Last Name</label>
+                        <input readonly class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <label>Postion</label>
+                <input readonly class="form-control" />
+            </div>
+            <div>
+                <label>Teaching Subject (optional)</label>
+                <input readonly class="form-control" />
+            </div>
+            <div>
+                <label>Campus</label>
+                <input readonly class="form-control" />
+            </div>
+            <div>
+                <label>Email</label>
+                <input readonly class="form-control" />
+            </div>
+
+
+            <button type="submit" class="btn bg-success">Edit</button>
+            <a class="btn btn-danger" asp-action="Details">Cancel</a>
+        </form>
+
+    </div>
+</div>
+    
+    
+
+
+
+<div class="card">
+    <h5 class="card-header">Roles</h5>
+
+    <div class="card-body">
+        <form method="post" asp-action="Edit">
+
+            <button type="submit" class="btn bg-success">Edit</button>
+            <a class="btn btn-danger" asp-action="Details">Cancel</a>
+        </form>
+
+    </div>
+</div>
+
+
+
+
+

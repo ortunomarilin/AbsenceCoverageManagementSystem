@@ -37,6 +37,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
             modelBuilder.ApplyConfiguration(new SeedLeaveTypes());
             modelBuilder.ApplyConfiguration(new SeedPeriods());
+            modelBuilder.ApplyConfiguration(new SeedCampuses());
         }
 
 
