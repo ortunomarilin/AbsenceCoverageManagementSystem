@@ -6,17 +6,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AbsenceCoverageMS.Areas.Admin.Models
+namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
 {
-    public class UserDetailsViewModel
+    public class UserAddViewModel
     {
-        
-        public string Action { get; set; }
-
-        public string buttonState { get; set; }
-        public string inputState { get; set; }
-
-
 
         [Required(ErrorMessage = "First Name required")]
         public string FirstName { get; set; }
@@ -44,36 +37,15 @@ namespace AbsenceCoverageMS.Areas.Admin.Models
         public string confirmPassword { get; set; }
 
 
-        //RoleId
-        public string Id { get; set; }
-
-        //For the Items list box.
-        public IEnumerable<IdentityRole> Roles { get; set; } = new List<IdentityRole>();
-
-
-        [Required]
+        //For the dropdown of campus options. 
+        [Required(ErrorMessage = "Campus Name required") ]
         public string CampusId { get; set; }
 
-        //For the dropdown of campus options. 
+        
         public IEnumerable<Campus> Campuses { get; set; } = new List<Campus>();
 
+        public List<UserManageRolesViewModel> UserRoles { get; set; } 
 
-
-        public void State(string action)
-        {
-            if(action == "Edit")
-            {
-                buttonState = "Active";
-                inputState = "";
-            }
-            else
-            {
-                buttonState = "Disabled";
-                inputState = "readonly";
-            }
-            
-
-        }
 
 
 

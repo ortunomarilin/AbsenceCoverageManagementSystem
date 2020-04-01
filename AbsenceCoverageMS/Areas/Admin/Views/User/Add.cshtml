@@ -1,36 +1,8 @@
-﻿@model AddUserViewModel
+﻿@model UserAddViewModel
 
 @{
     ViewData["Title"] = "Add";
 }
-
-
-@*<script>
-
-    $(document).ready(function ()
-    {
-        $("#btn1").click(function ()
-        {
-            $("#roles option:selected").each(function ()
-            {
-                $(this).remove().appendTo("#selectedRoses");
-
-            });
-        });
-    });
-
-    $(document).ready(function () {
-        $("#btn2").click(function () {
-            $("#selectedRoses option:selected").each(function () {
-                $(this).remove().appendTo("#roles");
-
-            });
-        });
-    });
-
-
- </script>*@
-
 
 
     <h1>Add User</h1>
@@ -95,36 +67,16 @@
                         <span class="text-danger" asp-validation-for="confirmPassword"></span>
                     </div>
 
-
-                    <div class="form-row">
-                        <div class="col-5">
-                            <label> Roles</label>
-                            <select class="form-control" asp-for="@Model.Id"
-                                    asp-items="@(new SelectList(Model.Roles,
-                                        "Id", "Name", Model.Id))">
-                                <option value="">Select a Role</option>
-                            </select>
-                            <span class="text-danger" asp-validation-for="@Model.Id"></span>
-
-
+                    @for (int i = 0; i < Model.UserRoles.Count; i++)
+                    {
+                        <div class="custom-control custom-checkbox">
+                            <input type="hidden" asp-for="@Model.UserRoles[i].RoleId" />
+                            <input type="hidden" asp-for="@Model.UserRoles[i].RoleName" />
+                            <input class="custom-control-input" asp-for="@Model.UserRoles[i].Checked" />
+                            <label class="custom-control-label" asp-for="@Model.UserRoles[i].Checked">@Model.UserRoles[i].RoleName</label>
                         </div>
-                    </div>
+                    }
 
-                        @*<div class="col-2">
-                            <button id="btn1" type="button" class="btn btn-primary d-block">>></button>
-                            <button id="btn2" type="button" class="btn btn-primary d-block"><<</button>
-                        </div>*@
-
-
-                        @*<div class="col-5">
-                            <label> Selected Roles</label>
-                            <select id="selectedRoses" multiple class="form-control" asp-for="UserRoles"
-                                    asp-items="@(new SelectList(Model.UserRoles,
-                                        "Id", "Name", Model.Role))">
-                            </select>
-                            <span class="text-danger" asp-validation-for="UserRoles"></span>
-                        </div>
-                    </div>*@
 
                     <div class="text-danger text-sm-left" asp-validation-summary="All"></div>
 

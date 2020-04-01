@@ -1,4 +1,5 @@
 ﻿using AbsenceCoverageMS.Areas.Admin.Models;
+using AbsenceCoverageMS.Areas.Admin.Models.ViewModels;
 using AbsenceCoverageMS.Models.DomainModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
