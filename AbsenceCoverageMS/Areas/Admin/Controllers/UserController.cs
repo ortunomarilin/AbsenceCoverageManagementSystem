@@ -71,6 +71,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Position = model.Position,
+                    TeachingSubjects = model.TeachingSubjects,
                     CampusId = model.CampusId,
                     Email = model.Email,
                     UserName = model.Username

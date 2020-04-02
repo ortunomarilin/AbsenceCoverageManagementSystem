@@ -20,6 +20,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
         [Required]
         public string Position { get; set; }
 
+        public string TeachingSubjects { get; set; }
 
         [Required]
         public string Email { get; set; }

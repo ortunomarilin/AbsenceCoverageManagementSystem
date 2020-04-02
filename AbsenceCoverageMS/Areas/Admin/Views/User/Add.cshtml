@@ -34,6 +34,11 @@
                     </div>
 
                     <div class="form-row">
+                        <label asp-for="TeachingSubjects">TeachingSubjects (optional)</label>
+                        <input class="form-control" asp-for="TeachingSubjects" />
+                    </div>
+
+                    <div class="form-row">
                         <label> Campus</label>
                         <select class="form-control" asp-for="@Model.CampusId"
                                 asp-items="@(new SelectList(Model.Campuses,
@@ -66,6 +71,8 @@
                         <input class="form-control" asp-for="confirmPassword" />
                         <span class="text-danger" asp-validation-for="confirmPassword"></span>
                     </div>
+
+                   <h6>Roles to Assign</h6>
 
                     @for (int i = 0; i < Model.UserRoles.Count; i++)
                     {
