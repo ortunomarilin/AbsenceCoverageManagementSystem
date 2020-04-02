@@ -1,0 +1,174 @@
+﻿@model RoleManageUsersViewModel
+
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<style>
+    .modal-dialog {
+        /*position: absolute;
+        background-color: gray;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;*/
+        margin-top: 10%;
+        /*width:500px;*/
+        /*width: 50%;*/
+    }
+    /*.userBoxes{
+        display:inline-block;
+        border: solid 1px black;
+        width:40%;
+        padding: 2%;
+    }
+
+    .btnBoxes {
+        display: inline-block;
+        border: solid 1px black;
+        width: 10%;
+        padding: 2%;
+    }*/
+
+
+</style>
+
+
+
+<h1 class="viewHeader">@Model.RoleName Role</h1>
+
+
+@*<aside>
+    <div>
+        <form method="post" asp-action="AddUsersToRole" asp-route-id="@Model.RoleId">
+
+            @for (int i = 0; i < Model.AvailableUsers.Count; i++)
+            {
+                <div class="custom-control custom-checkbox">
+                    <input type="hidden" asp-for="@Model.AvailableUsers[i].UserId" />
+                    <input type="hidden" asp-for="@Model.AvailableUsers[i].Name" />
+                    <input class="custom-control-input" asp-for="@Model.AvailableUsers[i].Checked" />
+                    <label class="custom-control-label" asp-for="@Model.AvailableUsers[i].Checked">@Model.AvailableUsers[i].Name</label>
+                </div>
+            }
+            <input type="hidden" asp-for="@Model.RoleId" />
+
+            <div class="text-danger text-sm-left" asp-validation-summary="All"></div>
+
+            <button type="submit" class="btn btn-success">Save</button>
+            <a class="btn btn-danger" asp-action="List">Cancel</a>
+        </form>
+    </div>
+</aside>*@
+
+
+
+
+<!--Page Content-->
+<table class="table table-bordered table-sm">
+    <thead>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+    <tbody>
+    @foreach (User user in Model.RoleUsers)
+    {
+        <tr>
+            <td>@user.FullName</td>
+            <td>@user.UserName</td>
+            <td>@user.Email</td>
+            <td>
+                <form method="post" asp-action="RemoveUserFromRole" asp-route-id="@user.Id">
+                    <button type="submit"  class="btn btn-outline-danger btn-sm">
+                        <span @*class="icon"*@>
+                            <i class="fas fa-trash"></i>
+                        </span>Delete
+                    </button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+
+
+<div>
+    <!-- Button trigger modal -->
+    <a asp-action="AddUsersToRole" asp-route-id="@Model.RoleId"  class="btn btn-primary" data-toggle="modal" data-target="#RoleAddUserModal">
+        Add Users
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade " id="RoleAddUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog " role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="exampleModalLabel">Add Role Users</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <!--BODY OF THE MODAL-->
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h6>Available Users</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>Selected Users</h6>
+                            </div>
+                            
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5  border">
+                                @*<h6>Available Users</h6>*@
+                                <aside id="AvailableUsers" class="userBoxes">
+
+                                </aside>
+                            </div>
+
+                            <div class="col-sm-1">
+                                <aside class="btnBoxes">
+                                    <button>>></button>
+                                    <button><<</button>
+                                </aside>
+                            </div>
+
+                            <div class="col-sm-5 border">
+                                <aside id="SelectedUsers" class="userBoxes">
+                                    <div>
+                                        Rith Side.
+                                    </div>
+                                </aside>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+

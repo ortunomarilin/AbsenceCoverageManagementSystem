@@ -32,14 +32,14 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            var model = new AddRoleViewModel();
+            var model = new RoleAddViewModel();
 
             return View(model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddRoleViewModel model)
+        public async Task<IActionResult> Add(RoleAddViewModel model)
         {
             if (model != null)
             {
@@ -65,31 +65,18 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
-
-            RoleDetailsViewModel model = new RoleDetailsViewModel()
-            {
-                Id = role.Id,
-                RoleName = role.Name
-            };
-
-
-            foreach (User user in userManager.Users)
-            {
-                if (await userManager.IsInRoleAsync(user, role.Name))
-                {
-                    model.roleUsers.Add(user);
-                }
-            }
+            RoleEditViewModel model = new RoleEditViewModel { RoleId = id, RoleName = role.Name };
             return View(model);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> Edit(RoleDetailsViewModel model)
+        public async Task<IActionResult> Edit(RoleEditViewModel model)
         {
-            var role = await roleManager.FindByIdAsync(model.Id);
+            var role = await roleManager.FindByIdAsync(model.RoleId);
             if (role != null)
             {
                 role.Name = model.RoleName;
@@ -100,11 +87,56 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                    return View("Details", model);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("List");
                 }
             }
-            return View("Details", model);
+            return View(model);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ManageUsers(string id)
+        {
+         
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+
+            RoleManageUsersViewModel model = new RoleManageUsersViewModel
+            {
+                RoleId = role.Id,
+                RoleName = role.Name
+            };
+
+            foreach (User user in userManager.Users)
+            {
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                {
+                    model.RoleUsers.Add(user);
+                }
+                
+                RoleAddUsers AvailableUser = new RoleAddUsers { UserId = user.Id, Name = user.FullName, Checked = false };
+                model.AvailableUsers.Add(AvailableUser);
+            }
+
+            return View(model);
+        }
+
+        //[HttpGet]
+        //public IActionResult AddUsersToRole()
+        //{
+
+        //    return View("ManageUsers");
+
+        //}
+
+
+
+
+
+
+
 
 
         [HttpPost]
