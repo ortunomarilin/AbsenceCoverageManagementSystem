@@ -10,6 +10,8 @@
 
 <h1>Edit Role</h1>
 
+<div class="text-danger text-sm-left" asp-validation-summary="All"></div>
+
 <div class="card">
     <h5 class="card-header ">Role</h5>
     <div class="card-body">
@@ -21,8 +23,6 @@
             </div>
 
             <input type="hidden" asp-for="RoleId" />
-
-            <div class="text-danger text-sm-left" asp-validation-summary="All"></div>
 
             <button type="submit" class="btn btn-primary ">Save </button>
             <a class="btn btn-success" asp-action="List">Cancel</a>

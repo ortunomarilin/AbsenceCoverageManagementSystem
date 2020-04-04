@@ -41,18 +41,10 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            var userRoles = new List<UserManageRolesViewModel>();
-
-            //Loop through all the roles in the system. 
-            foreach (var role in roleManager.Roles)
+            UserAddViewModel model = new UserAddViewModel
             {
-                var ViewRole = new UserManageRolesViewModel { RoleId = role.Id, RoleName = role.Name, Checked = false };
-                userRoles.Add(ViewRole);
-            }
-            var model = new UserAddViewModel
-            {
-                Campuses = campusData.GetAll(),
-                UserRoles = userRoles
+                Campuses = campusData.GetAll().ToList(),
+                AvailableRoles = roleManager.Roles.ToList()
             };
 
             return View(model);
@@ -62,7 +54,6 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(UserAddViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 //Set Properties for User Entity
@@ -81,15 +72,13 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    for(int i = 0; i < model.UserRoles.Count; i++)
+                    //Add to the selected role
+                    IdentityRole role = await roleManager.FindByIdAsync(model.Id);
+                    if(role != null)
                     {
-                        if(model.UserRoles[i].Checked)
-                        {
-                            await userManager.AddToRoleAsync(user, model.UserRoles[i].RoleName);
-                        }
-                        
-                    }
-                    return RedirectToAction("List");
+                        await userManager.AddToRoleAsync(user, role.Name);
+                        return RedirectToAction("List");
+                    }                   
                 }
                 else
                 {
@@ -101,7 +90,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 }
             }
             //Reset the dropdown list. 
-            model.Campuses = campusData.GetAll();
+            model.Campuses = campusData.GetAll().OrderBy(c => c.Name).ToList();
+            model.AvailableRoles = roleManager.Roles.OrderBy(r => r.Name).ToList();
             return View(model);
         }
 
@@ -170,55 +160,65 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         {
             
             User user = await userManager.FindByIdAsync(id);
-            ViewBag.UserName = user.FullName;
-            if (user != null)
+            UserManageRolesViewModel model = new UserManageRolesViewModel
             {
-                var model = new List<UserManageRolesViewModel>();             
+                UserId = user.Id,
+                UserName = user.FullName,
+                AvailableRoles = roleManager.Roles.ToList(),
+            };
 
-                //Loop through all the roles in the system. 
-                foreach(var role in roleManager.Roles)
+            foreach(var role in roleManager.Roles)
+            {
+                if(await userManager.IsInRoleAsync(user, role.Name))
                 {
-                    var ViewRole = new UserManageRolesViewModel{ RoleId = role.Id, RoleName = role.Name, Checked = false };
-                    if(await userManager.IsInRoleAsync(user, role.Name))
-                    {
-                        ViewRole.Checked = true;
-                    }
-                    model.Add(ViewRole);
+                    model.UsersRoles.Add(role);
                 }
-                return View(model);
             }
-            ModelState.AddModelError("", "Unable to find User.");
-            return View();
+
+            model.AvailableRoles =  model.AvailableRoles.OrderBy(r => r.Name).ToList();
+            model.UsersRoles = model.UsersRoles.OrderBy(r => r.Name).ToList();
+
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ManageRoles(List<UserManageRolesViewModel> model, string id)
+        public async Task<IActionResult> AddRoleToUser(UserManageRolesViewModel model, string id)
         {
-            User user = await userManager.FindByIdAsync(id);
-            if(user != null)
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+            User user = await userManager.FindByIdAsync(model.UserId);
+            
+            if(role != null && user != null)
             {
-                for (int i = 0; i < model.Count; i++)
+                var result = await userManager.AddToRoleAsync(user, role.Name);
+                if(result.Succeeded)
                 {
-                    if (model[i].Checked)
-                    {
-                        if (!await userManager.IsInRoleAsync(user, model[i].RoleName))
-                        {
-                            await userManager.AddToRoleAsync(user, model[i].RoleName);
-                        }
-                    }
-                    else
-                    {
-                        if (await userManager.IsInRoleAsync(user, model[i].RoleName))
-                        {
-                            await userManager.RemoveFromRoleAsync(user, model[i].RoleName);
-                        }
-                    }
+                    return RedirectToAction("ManageRoles", new { ID = model.UserId });
                 }
-                return RedirectToAction("List");
             }
 
-            ModelState.AddModelError("", "Unable to find User.");
-            return View(model);
+            TempData["ErrorMessage"] = "Unable to add the selected role.";
+            return RedirectToAction("ManageRoles", new { ID = model.UserId });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveRoleFromUser(UserManageRolesViewModel model, string id)
+        {
+            //Find User and role
+            User user = await userManager.FindByIdAsync(model.UserId);
+            IdentityRole role = await roleManager.FindByIdAsync(id);
+
+            //If finding user and role was successful
+            if (user != null && role != null)
+            {
+                var result = await userManager.RemoveFromRoleAsync(user, role.Name);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("ManageRoles", new { ID = model.UserId });
+                }
+            }
+            TempData["ErrorMessage"] = "Unable to delete the role from user.";
+            return RedirectToAction("ManageRoles", new { ID = model.UserId });
         }
 
 

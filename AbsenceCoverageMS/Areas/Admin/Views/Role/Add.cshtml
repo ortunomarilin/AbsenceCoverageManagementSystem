@@ -10,6 +10,8 @@
 
 <h1>New Role</h1>
 
+<div class="text-danger text-sm-left" asp-validation-summary="All"></div>
+
 <div class="card">
     <h5 class="card-header ">Role</h5>
     <div class="card-body">
@@ -19,8 +21,6 @@
                 <input class="form-control" asp-for="RoleName" />
                 <span class="text-danger" asp-validation-for="RoleName"></span>
             </div>
-
-            <div class="text-danger text-sm-left" asp-validation-summary="All"></div>
 
             <button class="btn btn-primary ">Add Role</button>
             <a class="btn btn-success " asp-action="List">Cancel</a>

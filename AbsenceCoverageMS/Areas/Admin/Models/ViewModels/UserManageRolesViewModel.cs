@@ -10,9 +10,14 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
 {
     public class UserManageRolesViewModel
     {
-        public string RoleId { get; set; }
-        public string RoleName { get; set; }
-        public bool Checked { get; set; }
+        public string UserId { get; set; }
+        public string UserName { get; set; }
+
+        public List<IdentityRole> UsersRoles { get; set; } = new List<IdentityRole>();
+
+
+        public string Id { get; set; }
+        public List<IdentityRole> AvailableRoles { get; set; } = new List<IdentityRole>();
 
 
     }

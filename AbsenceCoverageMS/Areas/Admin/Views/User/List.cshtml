@@ -6,68 +6,83 @@
     ViewData["Title"] = "Users";
 }
 
-<h1>Users</h1>
+<style>
+    .view-content{
+        right:0;
+        padding: 10px 50px 10px 50px;
+    }
 
-<a class="btn btn-info" asp-action="Add">
-    <span class="icon">
-        <i class="fas fa-plus-circle"></i>
-    </span>New User
-</a>
+    .ViewHeader {
+        padding: 5px 0px 50px 0px;
+        color: #022444;
+    }
 
-<table class="table-sm table table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+    .List-container {
+        padding: 30px 0px 0px 0px;
+    }
 
+    .btn {
+        border-radius: 20px;
+    }
+
+
+</style>
+
+
+
+    <h1 class="ViewHeader" >Users</h1>
+
+    <a class="btn btn-info btn-sm" asp-action="Add">
+        <span>
+            <i class="fas fa-plus-circle"></i>
+            New User
+        </span>
+    </a>
+
+
+    <div class="List-container ">
         @foreach (var user in Model)
         {
-        <tr>
-            <td>@user.FullName</td>
-            <td>@user.UserName</td>
-            <td>@user.Email</td>
-        <td>
-            <div class="dropdown show">
-                <a class="btn btn-outline-primary" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Settings
-                    <span class="icon">
-                        <i class="fas fa-cogs"></i>
-                    </span>
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" asp-action="Edit" asp-route-id="@user.Id">
-                        <span>
-                            <i class="fas fa-edit"></i>
-                        </span>
-                        Edit
-                    </a>
-                    <a class="dropdown-item" asp-action="ManageRoles" asp-route-id="@user.Id">
-                        @*Manage Roles*@
-                        <span>
-                            <i class="fas fa-user-tag"></i>
-                        </span>
-                        Manage Roles
-                    </a>
-                    <form method="post" asp-action="Delete" asp-route-id="@user.Id">
-                        <button type="submit" class="btn">
-                            @*Delete*@
-                            <span class="icon">
-                                <i class="fas fa-trash-alt"></i>
+            <div class="row border">
+                <div class="col-sm-10">
+                    <h5 class="d-block">@user.FullName</h5>
+                    <h6> Username: @user.UserName </h6>
+                    <h6> Email: @user.Email </h6>
+                </div>
+                <div class="col-sm-2 ">
+                    <div class="dropdown show">
+                        <a class="d-block text-right" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span>
+                                <i class="fas fa-cogs"></i>
                             </span>
-                            Delete
-                        </button>
-                    </form>
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" asp-action="Edit" asp-route-id="@user.Id">
+                                <span>
+                                    <i class="fas fa-edit"></i>
+                                </span>
+                                Edit
+                            </a>
+                            <a class="dropdown-item" asp-action="ManageRoles" asp-route-id="@user.Id">
+                                <span>
+                                    <i class="fas fa-user-tag"></i>
+                                </span>
+                                Manage Roles
+                            </a>
+                            <form method="post" asp-action="Delete" asp-route-id="@user.Id">
+                                <button type="submit" class="btn">
+                                    <span class="icon">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </span>
+                                    Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </td>
-        </tr>
         }
-    </tbody>
-</table>
+    </div>
+
 

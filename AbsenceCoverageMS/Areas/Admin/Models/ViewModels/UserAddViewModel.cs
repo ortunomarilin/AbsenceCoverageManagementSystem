@@ -28,6 +28,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
         [Required]
         public string Username { get; set; }
 
+
+
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -38,14 +40,19 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
         public string confirmPassword { get; set; }
 
 
+
         //For the dropdown of campus options. 
         [Required(ErrorMessage = "Campus Name required") ]
         public string CampusId { get; set; }
 
-        
-        public IEnumerable<Campus> Campuses { get; set; } = new List<Campus>();
+        public List<Campus> Campuses { get; set; } = new List<Campus>();
 
-        public List<UserManageRolesViewModel> UserRoles { get; set; } 
+
+
+        //For the dropdown of roles. 
+        public string Id { get; set; }
+        public List<IdentityRole> AvailableRoles { get; set; } = new List<IdentityRole>();
+
 
 
 

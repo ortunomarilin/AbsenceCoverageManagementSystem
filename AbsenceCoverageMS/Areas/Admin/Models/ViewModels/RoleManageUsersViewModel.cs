@@ -14,6 +14,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
 
         public List<User> RoleUsers { get; set; } = new List<User>();
 
-        public List<RoleAddUsers> AvailableUsers { get; set; } = new List<RoleAddUsers>();
+
+        public string Id { get; set; }
+        public List<User> AvailableUsers { get; set; } = new List<User>();
     }
 }
