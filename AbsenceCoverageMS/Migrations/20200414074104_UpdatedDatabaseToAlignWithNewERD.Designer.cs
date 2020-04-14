@@ -4,14 +4,16 @@ using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbsenceCoverageMS.Migrations
 {
     [DbContext(typeof(AbsenceManagementContext))]
-    partial class AbsenceManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20200414074104_UpdatedDatabaseToAlignWithNewERD")]
+    partial class UpdatedDatabaseToAlignWithNewERD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -361,6 +363,9 @@ namespace AbsenceCoverageMS.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CoveragePeriod")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CoveragePeriodId")
                         .HasColumnType("nvarchar(450)");
 
@@ -639,7 +644,7 @@ namespace AbsenceCoverageMS.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", "CoveragePeriod")
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", null)
                         .WithOne("User")
                         .HasForeignKey("AbsenceCoverageMS.Models.DomainModels.User", "CoveragePeriodId");
                 });

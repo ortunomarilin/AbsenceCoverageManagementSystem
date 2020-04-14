@@ -11,43 +11,39 @@ namespace AbsenceCoverageMS.Models.DomainModels
     public class User : IdentityUser
     {
 
-        [Required]
+        [Required(ErrorMessage = "First Name required.")]
         public string FirstName { get; set; }
-        [Required]
+
+
+        [Required(ErrorMessage = "Last Name required.")]
         public string LastName { get; set; }
 
-        public string Position { get; set; }
 
-        public string TeachingSubjects { get; set; }
+        [Required(ErrorMessage = "Position Title required.")]
+        public string PositionTitle { get; set; }
 
 
         //User is Employee of Campus 
+        [Required(ErrorMessage = "Campus required.")]
         public string CampusId { get; set; }   //Fk
         public Campus Campus { get; set; }     //Nav
 
 
         //Has Coverage Period
         public string CoveragePeriodId { get; set; } //FK
+        public CoveragePeriod CoveragePeriod { get; set; } //Nav
 
 
         //Teaches Courses 
         public ICollection<Course> Courses { get; set; }
 
-        //Has Absence Balances
-        public ICollection<AbsenceBalance> AbsenceBalances { get; set; }
 
         //Submitted Absence Requests
         public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
 
-        //Accepted SubJobs
+        //Assigned SubAssignments
         public ICollection<SubJob> SubJobs { get; set; }
 
-        //Assigned Emergency Coverage during coverage period. 
-        public ICollection<EmergencyCoverage> EmergencyCoverages { get; set; }
-
-
-        [NotMapped]
-        public IList<string> RoleNames { get; set; }
 
 
         //Method

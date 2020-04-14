@@ -13,10 +13,10 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
         public void Configure(EntityTypeBuilder<Campus> builder)
         {
             builder.HasData(
-                new Campus { CampusId = "1",  Name = "South", StreetAddress = "111 Street", City = "Houston", State = States.TX, ZipCode = "7701"},
-                new Campus { CampusId = "2", Name = "West", StreetAddress = "222 Street", City = "Houston", State = States.TX, ZipCode = "7702" },
-                new Campus { CampusId = "3", Name = "East", StreetAddress = "333 Street", City = "Houston", State = States.TX, ZipCode = "7703" },
-                new Campus { CampusId = "4", Name = "North", StreetAddress = "444 Street", City = "Houston", State = States.TX, ZipCode = "7704" }
+                new Campus { CampusId = "1",  Name = "South", Phone = "713-123-1231", StreetAddress = "111 Street", City = "Houston", State = States.TX, ZipCode = "7701"},
+                new Campus { CampusId = "2", Name = "West", Phone = "713-123-1232", StreetAddress = "222 Street", City = "Houston", State = States.TX, ZipCode = "7702" },
+                new Campus { CampusId = "3", Name = "East", Phone = "713-123-1233", StreetAddress = "333 Street", City = "Houston", State = States.TX, ZipCode = "7703" },
+                new Campus { CampusId = "4", Name = "North", Phone = "713-123-1234", StreetAddress = "444 Street", City = "Houston", State = States.TX, ZipCode = "7704" }
                 );
         }
     }

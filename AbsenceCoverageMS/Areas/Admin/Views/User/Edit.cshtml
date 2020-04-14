@@ -47,14 +47,14 @@
             <h5>Employee Info</h5>
             <div>
                 <label>Postion</label>
-                <input class="form-control" asp-for="Position" />
-                <span class="text-danger" asp-validation-for="Position"></span>
+                <input class="form-control" asp-for="PositionTitle" />
+                <span class="text-danger" asp-validation-for="PositionTitle"></span>
             </div>
-            <div>
+            @*<div>
                 <label>Teaching Subjects (optional)</label>
                 <input class="form-control" />
                 <span class="text-danger" asp-validation-for="TeachingSubjects"></span>
-            </div>
+            </div>*@
             <div>
                 <label> Campus</label>
                 <select class="form-control" asp-for="@Model.CampusId"

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DomainModels
 {
-    public class LeaveType
+    public class AbsenceType
     {
-        public string LeaveTypeId { get; set; }
-        
-        [Required]
+        public string AbsenceTypeId { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
         public string Name { get; set; }
 
-        public ICollection<AbsenceBalance> AbsenceBalances { get; set; }
+
+        public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
+
     }
 }
-
-

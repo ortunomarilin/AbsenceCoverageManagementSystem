@@ -61,8 +61,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    Position = model.Position,
-                    TeachingSubjects = model.TeachingSubjects,
+                    PositionTitle = model.PositionTitle,
+                    //TeachingSubjects = model.TeachingSubjects,
                     CampusId = model.CampusId,
                     Email = model.Email,
                     UserName = model.Username
@@ -108,8 +108,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 LastName = user.LastName,
                 Email = user.Email,
                 Username = user.UserName,
-                Position = user.Position,
-                TeachingSubjects = user.TeachingSubjects,
+                PositionTitle = user.PositionTitle,
+                //TeachingSubjects = user.TeachingSubjects,
                 CampusId = user.CampusId,
                 Campuses = campusData.GetAll(),
             };
@@ -129,8 +129,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                     user.LastName = model.LastName;
                     user.Email = model.Email;
                     user.UserName = model.Username;
-                    user.Position = model.Position;
-                    user.TeachingSubjects = model.TeachingSubjects;
+                    user.PositionTitle = model.PositionTitle;
+                    //user.TeachingSubjects = model.TeachingSubjects;
                     user.CampusId = model.CampusId;
 
                     var result = await userManager.UpdateAsync(user);

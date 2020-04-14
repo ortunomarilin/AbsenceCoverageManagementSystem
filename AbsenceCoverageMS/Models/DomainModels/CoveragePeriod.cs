@@ -10,18 +10,23 @@ namespace AbsenceCoverageMS.Models.DomainModels
     {
         public string CoveragePeriodId { get; set; }
 
-        public string Name { get; } = "Coverage";
        
-        [Required]
+        public string Name { get; } = "Coverage";
+
+
+        [Required(ErrorMessage = "A Period number is required. ")]
         public string PeriodId { get; set; }
         public Period Period { get; set; }
-        
-        [Required]
+
+
+        [Required(ErrorMessage = "Priority is required. ")]
         public PriorityType Priority { get; set; }
         
+
         public string Count { get; set; }
-        
-        [Required]
+
+
+        [Required(ErrorMessage = "A Teacher Name is required. ")]
         public string Id { get; set; }
         public User User { get; set; }
 

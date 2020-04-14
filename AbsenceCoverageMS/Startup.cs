@@ -40,10 +40,13 @@ namespace AbsenceCoverageMS
             services.AddDbContext<AbsenceManagementContext>(options => 
                 options.UseSqlServer(Configuration.GetConnectionString("AbsenceManagementContext")));
 
-            
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AbsenceManagementContext>()
-                .AddDefaultTokenProviders();
+            //To facilitate Testing. 
+            services.AddIdentity<User, IdentityRole>(options => {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            }).AddEntityFrameworkStores<AbsenceManagementContext>()
+              .AddDefaultTokenProviders();
         }
     
 

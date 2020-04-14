@@ -11,15 +11,28 @@ namespace AbsenceCoverageMS.Models.DomainModels
     {
         public string CampusId { get; set; }  
         
-        [Required]
-        public string Name { get; set; }  
-        [Required]
-        public string StreetAddress { get; set; } 
-        [Required]
-        public string City { get; set; }  
-        [Required]
+        
+        [Required(ErrorMessage ="Campus Name is required. ")]
+        public string Name { get; set; }
+
+
+        [Required(ErrorMessage = "Campus Phone number is required. ")]
+        public string Phone { get; set; }
+
+
+        [Required(ErrorMessage = "Street Address is required. ")]
+        public string StreetAddress { get; set; }
+
+        
+        [Required(ErrorMessage = "City is required. ")]
+        public string City { get; set; }
+
+        
+        [Required(ErrorMessage = "State is required. ")]
         public States State { get; set; }
-        [Required]
+
+       
+        [Required(ErrorMessage = "Zip-Code is required. ")]
         public string ZipCode { get; set; }
 
 

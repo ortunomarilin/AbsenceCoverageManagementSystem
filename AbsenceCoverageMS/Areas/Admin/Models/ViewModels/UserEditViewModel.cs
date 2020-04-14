@@ -18,7 +18,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
         public string LastName { get; set; }
 
         [Required]
-        public string Position { get; set; }
+        public string PositionTitle { get; set; }
 
         public string TeachingSubjects { get; set; }
 

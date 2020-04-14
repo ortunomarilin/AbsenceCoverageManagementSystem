@@ -10,26 +10,33 @@ namespace AbsenceCoverageMS.Models.DomainModels
     {
         public string SubJobId { get; set; }
 
-        //Accpeted By Sub
+
+
+        //Sub Job Produced by Absence Request
+        public string AbsenceRequestId { get; set; }
+        public string AbsenceRequest { get; set; }
+
+
+        //Date of SubJob
+        [Required(ErrorMessage = "The Date is required. ")]
+        public DateTime Date { get; set; }
+
+
+        //Sub Job For Period 
+        public string PeriodId { get; set; }
+        public Period Period { get; set; }
+
+
+        //Assigned To / Accepted By 
         public string Id { get; set; }
         public User User { get; set; }
 
 
-        //Sub Job for Absence Request
-        [Required]
-        public string AbsenceRequestId { get; set; }
-        public string AbsenceRequest { get; set; }
 
-        
-        //Status of Job
-        public SubJobStatus Status { get; set; }
 
-        public ICollection<EmergencyCoverage> EmergencyCoverages { get; set; }
+
+
     }
 }
 
-public enum SubJobStatus
-{
-    Open,
-    Closed
-}
+

@@ -9,20 +9,22 @@ namespace AbsenceCoverageMS.Models.DomainModels
     public class Course
     {
         public string CourseId { get; set; }
-        
-        [Required]
+
+
+        [Required(ErrorMessage = "A Course Name is required. ")]
         public string Name { get; set; }
-        
-        [Required]
+
+
+        [Required(ErrorMessage = "A Period number is required. ")]
         public string PeriodId { get; set; }
         public Period Period { get; set; }
 
-        
-        [Required]
+
+        [Required(ErrorMessage = "A Room number is required. ")]
         public string Room { get; set; }
-        
-  
-        [Required]
+
+
+        [Required(ErrorMessage = "Teacher Name is required. ")]
         public string Id { get; set; }
         public User User { get; set; }
 
