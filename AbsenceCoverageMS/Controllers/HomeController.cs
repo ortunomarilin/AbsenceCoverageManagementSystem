@@ -24,13 +24,17 @@ namespace AbsenceCoverageMS.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            if(signInManager.IsSignedIn(User))
+            if (signInManager.IsSignedIn(User))
             {
                 if (User.IsInRole("Admin"))
                 {
                     return RedirectToAction("Index", "Home", new { Area = "Admin" });
                 }
-            
+
+                //If Operations
+                //If Teacher
+                //If Sub-Teacher
+
             }
 
             return View();

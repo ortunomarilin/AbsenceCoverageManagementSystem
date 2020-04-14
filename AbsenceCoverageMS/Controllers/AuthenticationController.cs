@@ -9,13 +9,13 @@ using AbsenceCoverageMS.Models.ViewModels;
 
 namespace AbsenceCoverageMS.Controllers
 {
-    public class AccountController : Controller
+    public class AuthenticationController : Controller
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
 
-        public AccountController(UserManager<User> userM, SignInManager<User> signInM)
+        public AuthenticationController(UserManager<User> userM, SignInManager<User> signInM)
         {
             userManager = userM;
             signInManager = signInM;
@@ -44,8 +44,7 @@ namespace AbsenceCoverageMS.Controllers
                     
                     //Check to see which role the user is in to redirect to correct Home Page.  
                     bool isAdmin = await signInManager.UserManager.IsInRoleAsync(user, "admin");
-                    
-                    
+
                     if (isAdmin)
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });

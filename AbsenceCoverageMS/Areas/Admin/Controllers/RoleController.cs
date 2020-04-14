@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class RoleController : Controller
     {

@@ -77,15 +77,15 @@ body {
 .subHeader {
     color: white;
     margin: 0px;
-    padding: 10px;
+    padding: 2px;
     text-align: center;
     background-color: rgb(2, 2, 49);
-    border-bottom: 1px solid rgba(179, 178, 178, 0.3);
+    /*border-bottom: 1px solid rgba(179, 178, 178, 0.3);*/  
 }
 
 .sidebarMenu ul li {
     list-style: none;
-    border: 1px solid rgba(179, 178, 178, 0.2);
+    /*border: 1px solid rgba(179, 178, 178, 0.2);*/
 }
 
 .sidebarMenu ul a {
@@ -98,6 +98,7 @@ body {
 
 .sidebarMenu a:hover {
     background-color: #4e7396;
+    color: #74BBFB;
 }
 
 .rightDropDown {
@@ -107,7 +108,7 @@ body {
 
 .icon {
     color: #74BBFB;
-    font-size: 16px;
+    font-size: 15px;
     padding-right: 8px;
     padding-left: 5px;
 }
@@ -145,6 +146,7 @@ body {
     background-color: transparent;
     position: absolute;
     left: 200px;
+    right: 0px;
     min-height: 100%;
     padding: 0px 20px 20px 30px;
     z-index: 1;
@@ -166,3 +168,10 @@ body {
     font-size: 14px;
     line-height: 22px;
 }
+
+.validation-summary-errors ul {
+    list-style: none;
+    padding: 0px 0px 0px 10px;
+}
+
+

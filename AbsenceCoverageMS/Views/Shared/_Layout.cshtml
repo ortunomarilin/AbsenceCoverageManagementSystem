@@ -58,20 +58,15 @@
 
             <div class="collapse navbar-collapse" id="navbarMenu">
                 <ul class="navbar-nav ml-auto">
-
                     <!--Dropdown Menu-->
                     <li class="nav-item dropdown">
-
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
                             <span class="icon"><i class="fas fa-user fa-sm"></i></span>
                             <span class="text-light">@User.Identity.Name</span>
                         </a>
-
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">My Profile</a>
-                            <!-- <div class="dropdown-divider"></div> -->
-                            <a class="dropdown-item" href="#">My History</a>
-                            <form method="post" asp-controller="Account" asp-action="LogOut" asp-area="">
+                            <form method="post" asp-controller="Authentication" asp-action="LogOut" asp-area="">
                                 <button type="submit" class="dropdown-item">Log Out</button>
                             </form>
                         </div>
@@ -103,70 +98,55 @@
             </li>
 
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index" >
+                <a asp-area="" asp-controller="Home" asp-action="Index">
                     <span class="icon">
                         <i class="material-icons" style="font-size: 18px;">dashboard</i>
                     </span>Dashboard
                 </a>
             </li>
 
-            <li>
-                <a asp-area="" asp-controller="Calendar" asp-action="Index" >
-                    <span class="icon">
-                        <i class="fas fa-calendar-alt fa-fw"></i>
-                    </span>Calendar
-                </a>
-            </li>
 
-            <li>
-                <a asp-area="" asp-controller="Absence" asp-action="Index" >
-                    <span class="icon">
-                        <i class="fas fa-calendar-times fa-fw"></i>
-                    </span>Absences
-                </a>
-            </li>
+        <li>
+            <a asp-controller="" asp-action="" asp-area="">
+                <span class="icon">
+                    <i class="fas fa-calendar-times fa-fw"></i>
+                </span>
+                Request an Absence
+            </a>
+        </li>
+        <li>
+            <a asp-controller="" asp-action="" asp-area="">
+                <span class="icon">
+                    <i class="fas fa-history"></i>
+                </span>
+                Absence History
+            </a>
+        </li>
 
-            <li>
-                <a asp-area="" asp-controller="AbsenceBalance" asp-action="Index" >
-                    <span class="icon">
-                        <i class="fas fa-balance-scale fa-fw"></i>
-                    </span>Absence Balances
-                </a>
-            </li>
 
             @if (User.IsInRole("Admin"))
             {
+                <li class="subHeader">
+                    <span><b>Admin Tools</b><i class="fas fa-wrench icon"></i></span>
+                </li>
+
                 <li>
-                    <a href="#sideAdmin" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-user-cog icon"></i>Admin
+                    <a asp-area="Admin" asp-controller="User" asp-action="List">
+                        <span class="icon">
+                            <i class="fas fa-user-circle"></i>
+                        </span>Manage Users
                     </a>
-                    <ul class="collapse list-unstyled" id="sideAdmin">
-                        <li>
-                            <a asp-controller="User" asp-action="List" asp-area="Admin">Users</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Role" asp-action="List" asp-area="Admin">Roles</a>
-                        </li>
-                    </ul>
+                </li>
+
+                <li>
+                    <a asp-controller="User" asp-action="List" asp-area="Admin">
+                        <span class="icon">
+                            <i class="fas fa-users"></i>
+                        </span>Manage Roles
+                    </a>
                 </li>
             }
 
-            @if (User.IsInRole("HR"))
-            {
-                <li>
-                    <a href="#sideHr" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-user-cog icon"></i>HR
-                    </a>
-                    <ul class="collapse list-unstyled" id="sideHr">
-                        <li>
-                            <a href="#">Leave Types</a>
-                        </li>
-                        <li>
-                            <a href="#">Assign Leave Balance</a>
-                        </li>
-                    </ul>
-                </li>
-            }
             @if (User.IsInRole("Operations"))
             {
                 <li>
@@ -226,7 +206,7 @@
                 </li>
             }
 
-            </ul>
+        </ul>
     </aside>
 
     <!--Main Body-->

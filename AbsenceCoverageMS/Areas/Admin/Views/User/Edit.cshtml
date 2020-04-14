@@ -5,84 +5,100 @@
     ViewData["Title"] = "Details";
 }
 
-<h1 class="display-4 text-center">Edit User</h1>
+<h1>Edit User</h1>
+
+<!--Display all validation Errors-->
+<div class="text-light bg-danger text-sm-left mt-4 px-2 " asp-validation-summary="All"></div>
 
 
-<div class="card">
-    <h4 class="card-header">Edit User </h4>
 
-    <div class="card-body">
-        <form method="post" asp-action="Edit">
-
-            <h5>Account Info</h5>
-            <div class="row">
-                <div class="col">
-                    <div>
-                        <label>First Name</label>
-                        <input class="form-control" asp-for="FirstName" />
-                        <span class="text-danger" asp-validation-for="FirstName"></span>
-                    </div>
-                </div>
-                <div class="col">
-                    <div>
-                        <label>Last Name</label>
-                        <input class="form-control" asp-for="LastName" />
-                        <span class="text-danger" asp-validation-for="LastName"></span>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <label>Email</label>
-                <input class="form-control" asp-for="Email" />
-                <span class="text-danger" asp-validation-for="Email"></span>
-            </div>
-            <div>
-                <label>Username</label>
-                <input class="form-control" asp-for="Username" />
-                <span class="text-danger" asp-validation-for="Username"></span>
-            </div>
-
-            <br />
-
-            <h5>Employee Info</h5>
-            <div>
-                <label>Postion</label>
-                <input class="form-control" asp-for="PositionTitle" />
-                <span class="text-danger" asp-validation-for="PositionTitle"></span>
-            </div>
-            @*<div>
-                <label>Teaching Subjects (optional)</label>
-                <input class="form-control" />
-                <span class="text-danger" asp-validation-for="TeachingSubjects"></span>
-            </div>*@
-            <div>
-                <label> Campus</label>
-                <select class="form-control" asp-for="@Model.CampusId"
-                        asp-items="@(new SelectList(Model.Campuses,
-                                            "CampusId", "Name", Model.CampusId))">
-                    <option value="">Select a Campus</option>
-                </select>
-                <span class="text-danger" asp-validation-for="@Model.CampusId"></span>
-            </div>
-
-            <input type="hidden" asp-for="UserId" />
-
-            <!--Display all validation Errors-->
-            <div class="text-danger text-sm-left" asp-validation-summary="All"></div>
-
-            <button type="submit" class="btn bg-success">Save</button>
-            <a class="btn btn-danger" asp-action="List">Cancel</a>
-        </form>
+<form method="post" asp-action="Edit">
+    <div class="form-row border-bottom mb-3 mt-5">
+        <div class="col-sm-12 ">
+            <h6>Account Details</h6>
+        </div>
     </div>
-</div>
-         
- 
+
+    <div class="form-row mb-2 ">
+        <div class="col-sm-3 ">
+            <small>First Name</small>
+            <input class="form-control form-control-sm" asp-for="FirstName" />
+            <span class="text-danger" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="col-sm-3 ">
+            <small>Last Name</small>
+            <input class="form-control form-control-sm" asp-for="LastName" />
+            <span class="text-danger" asp-validation-for="LastName"></span>
+        </div>
+    </div>
+
+    <div class="form-row mb-2">
+        <div class="col-sm-6">
+            <small>Email</small>
+            <input class="form-control form-control-sm " asp-for="Email" />
+            <span class="text-danger" asp-validation-for="Email"></span>
+        </div>
+    </div>
+
+    <div class="form-row mb-2">
+        <div class="col-sm-6 ">
+            <small>Username</small>
+            <input class="form-control form-control-sm" asp-for="Username" />
+            <span class="text-danger " asp-validation-for="Username"></span>
+        </div>
+    </div>
+
+
+
+    <div class="form-row border-bottom mb-3 mt-4 ">
+        <div class="col-sm-12 ">
+            <h6>Employee Details</h6>
+        </div>
+    </div>
+
+    <div class="form-row mb-2">
+        <div class="col-sm-6 ">
+            <small>Phone Number</small>
+            <input class="form-control form-control-sm " asp-for="Phone" />
+            <span class="text-danger  Validation" asp-validation-for="Phone"></span>
+        </div>
+    </div>
+
+
+    <div class="form-row mb-2">
+        <div class="col-sm-6">
+            <small>Postion</small>
+            <input class="form-control form-control-sm " asp-for="PositionTitle" />
+            <span class="text-danger" asp-validation-for="PositionTitle"></span>
+        </div>
+    </div>
+
+    <div class="form-row mb-5">
+        <div class="col-sm-6">
+            <small> Campus</small>
+            <select class="form-control form-control-sm" asp-for="@Model.CampusId"
+                    asp-items="@(new SelectList(Model.Campuses,
+                                    "CampusId", "Name", Model.CampusId))">
+                <option value="">Select a Campus</option>
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.CampusId"></span>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="UserId" />
+
+    <button type="submit" class="btn bg-success">Save</button>
+    <a class="btn btn-danger" asp-action="List">Cancel</a>
+</form>
 
 
 
 
-    
-    
+
+
+
+
+
 
 
 

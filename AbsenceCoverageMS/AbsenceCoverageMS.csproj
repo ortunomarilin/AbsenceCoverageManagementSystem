@@ -5,6 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Manager\**" />
+    <Compile Remove="Areas\SubTeacher\**" />
+    <Compile Remove="Areas\Teacher\**" />
+    <Content Remove="Areas\Manager\**" />
+    <Content Remove="Areas\SubTeacher\**" />
+    <Content Remove="Areas\Teacher\**" />
+    <EmbeddedResource Remove="Areas\Manager\**" />
+    <EmbeddedResource Remove="Areas\SubTeacher\**" />
+    <EmbeddedResource Remove="Areas\Teacher\**" />
+    <None Remove="Areas\Manager\**" />
+    <None Remove="Areas\SubTeacher\**" />
+    <None Remove="Areas\Teacher\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20200324131234_AddAdmin.cs" />
     <Compile Remove="Migrations\20200324131234_AddAdmin.Designer.cs" />
     <Compile Remove="Migrations\20200324134702_AddAdmin.cs" />
@@ -15,12 +30,6 @@
     <Compile Remove="Migrations\20200330041639_SeedCampusData.Designer.cs" />
     <Compile Remove="Migrations\20200330100537_AddEmployeeEntity.cs" />
     <Compile Remove="Migrations\20200330100537_AddEmployeeEntity.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Manager\" />
-    <Folder Include="Areas\Teacher\" />
-    <Folder Include="Areas\SubTeacher\" />
   </ItemGroup>
 
   <ItemGroup>

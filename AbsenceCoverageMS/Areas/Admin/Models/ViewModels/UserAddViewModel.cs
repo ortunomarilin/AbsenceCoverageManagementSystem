@@ -17,20 +17,21 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
         [Required(ErrorMessage = "Last Name required")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Position Title is required.")]
         public string PositionTitle { get; set; }
 
-        public string TeachingSubjects { get; set; }
+        [Required(ErrorMessage = "A Phone Number is required.")]
+        public string Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "An Email Address is required.")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Username is required.")]
         public string Username { get; set; }
 
 
 
-        [Required]
+        [Required(ErrorMessage = "A Password is required.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -42,7 +43,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
 
 
         //For the dropdown of campus options. 
-        [Required(ErrorMessage = "Campus Name required") ]
+        [Required(ErrorMessage = "A Campus Name is required.") ]
         public string CampusId { get; set; }
 
         public List<Campus> Campuses { get; set; } = new List<Campus>();

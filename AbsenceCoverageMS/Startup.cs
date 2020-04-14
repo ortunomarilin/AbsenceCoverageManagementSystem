@@ -61,8 +61,8 @@ namespace AbsenceCoverageMS
 
             app.UseRouting();
 
-            app.UseAuthentication();   
-            app.UseAuthorization();   
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -70,7 +70,14 @@ namespace AbsenceCoverageMS
                 endpoints.MapAreaControllerRoute(
                     name: "admin",
                     areaName: "Admin",
-                    pattern: "Admin/{controller=Book}/{action=Index}/{id?}");
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+                // route for Employee area
+                endpoints.MapAreaControllerRoute(
+                    name: "employee",
+                    areaName: "Employee",
+                    pattern: "Employee/{controller=Home}/{action=Index}/{id?}");
+
 
                 //Default Route
                 endpoints.MapControllerRoute(
