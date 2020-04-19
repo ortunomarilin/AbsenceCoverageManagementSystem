@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,6 +9,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
 {
     public class Course
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string CourseId { get; set; }
 
 
@@ -25,7 +27,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         [Required(ErrorMessage = "Teacher Name is required. ")]
-        public string Id { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
 
     }

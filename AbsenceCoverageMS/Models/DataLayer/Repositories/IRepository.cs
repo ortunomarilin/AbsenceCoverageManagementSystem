@@ -5,17 +5,21 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DataLayer.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<T> where T : class
     {
-        IEnumerable<TEntity> GetAll();
         
-        TEntity Get(string id);
+        IEnumerable<T> List(QueryOptions<T> options);
+        IEnumerable<T> List();
+       
 
-        void Add(TEntity entity);
+        //T Get(QueryOptions<T> options);
+        T Get(string id);
 
-        void Update(TEntity entity);
+        void Insert(T entity);
 
-        void Delete(TEntity entity);
+        void Update(T entity);
+
+        void Delete(T entity);
 
         void Save();
 

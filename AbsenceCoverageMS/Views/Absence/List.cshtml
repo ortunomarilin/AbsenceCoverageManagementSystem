@@ -1,0 +1,49 @@
+﻿@model IEnumerable<AbsenceRequest> 
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>Absent Request List</h1>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            @*<th>ID#</th>*@
+            <th>Date of Submission</th>
+            <th>Name</th>
+            <th>Absent Type</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Start Time</th>
+            <th>End time</th>
+            <th>Duration</th>
+            <th>Need Coverage</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (AbsenceRequest ar in Model)
+        {
+        <tr>
+            @*<td>@ar.AbsenceRequestId</td>*@
+            <td>@ar.DateSubmitted</td>
+            <td>@ar.User.FullName</td>
+            <td>@ar.AbsenceType.Name</td>
+            <td>@ar.StartDate</td>
+            <td>@ar.EndDate</td>
+            <td>@ar.StartTime</td>
+            <td>@ar.EndTime</td>
+            <td>@(ar.Duration == Enums.Duration.FullDay ? "Full Day" : "Half Day")</td>
+            <td>@(ar.NeedCoverage == true ? "Yes" : "No") </td>
+            <td>@ar.Status</td>
+            <td>Action</td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+
+

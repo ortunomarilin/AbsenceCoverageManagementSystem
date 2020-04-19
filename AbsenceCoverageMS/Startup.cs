@@ -72,12 +72,6 @@ namespace AbsenceCoverageMS
                     areaName: "Admin",
                     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-                // route for Employee area
-                endpoints.MapAreaControllerRoute(
-                    name: "employee",
-                    areaName: "Employee",
-                    pattern: "Employee/{controller=Home}/{action=Index}/{id?}");
-
 
                 //Default Route
                 endpoints.MapControllerRoute(

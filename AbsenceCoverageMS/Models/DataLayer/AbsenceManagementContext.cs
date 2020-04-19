@@ -43,12 +43,31 @@ namespace AbsenceCoverageMS.Models.DataLayer
                 .WithMany(ar => ar.PeriodsNeedCoverage)
                 .HasForeignKey(arp => arp.AbsenceRequestId);
 
-
             //One ot Many relationship between Period and AbsenceRequestPeriod
             modelBuilder.Entity<AbsenceRequestPeriod>()
                 .HasOne(arp => arp.Period)
                 .WithMany(p => p.PeriodsNeedCoverage)
                 .HasForeignKey(arp => arp.PeriodId);
+
+
+
+            //Primary key for AbsenceRequest
+            modelBuilder.Entity<AbsenceRequest>()
+                .HasKey(k => new { k.AbsenceRequestId});
+
+            //Primary key for Course
+            modelBuilder.Entity<Course>()
+                .HasKey(k => new { k.CourseId });
+
+            //Primary key for SubJob
+            modelBuilder.Entity<SubJob>()
+                .HasKey(k => new { k.SubJobId });
+
+            //Primary key for CoveragePeriod
+            modelBuilder.Entity<CoveragePeriod>()
+                .HasKey(k => new { k.CoveragePeriodId });
+
+
 
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AbsenceCoverageMS.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class UserController : Controller
     {
@@ -43,7 +43,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         {
             UserAddViewModel model = new UserAddViewModel
             {
-                Campuses = campusData.GetAll().ToList(),
+                Campuses = campusData.List().ToList(),
                 AvailableRoles = roleManager.Roles.ToList()
             };
 
@@ -90,7 +90,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 }
             }
             //Reset the dropdown list. 
-            model.Campuses = campusData.GetAll().OrderBy(c => c.Name).ToList();
+            model.Campuses = campusData.List().OrderBy(c => c.Name).ToList();
             model.AvailableRoles = roleManager.Roles.OrderBy(r => r.Name).ToList();
             return View(model);
         }
@@ -111,7 +111,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 PositionTitle = user.PositionTitle,
                 Phone = user.PhoneNumber,
                 CampusId = user.CampusId,
-                Campuses = campusData.GetAll(),
+                Campuses = campusData.List(),
             };
 
             return View(model);
@@ -144,13 +144,13 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
-                        model.Campuses = campusData.GetAll();
+                        model.Campuses = campusData.List();
                         return View(model);
                     }
                 }
                 ModelState.AddModelError("", "Unable to find User.");
             }
-            model.Campuses = campusData.GetAll();
+            model.Campuses = campusData.List();
             return View(model);
         }
 

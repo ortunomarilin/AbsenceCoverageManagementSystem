@@ -9,11 +9,13 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/jqueryui/jquery-ui.min.css" rel="stylesheet" />
     <link href="~/css/MainLayout.css" rel="stylesheet" />
 
 
 
     <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jqueryui/jquery-ui.min.js"></script>
     <script src="~/lib/popper.js/umd/popper.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -66,7 +68,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">My Profile</a>
-                            <form method="post" asp-controller="Authentication" asp-action="LogOut" asp-area="">
+                            <form method="post" asp-controller="Account" asp-action="LogOut" asp-area="">
                                 <button type="submit" class="dropdown-item">Log Out</button>
                             </form>
                         </div>
@@ -98,7 +100,7 @@
             </li>
 
             <li>
-                <a asp-area="" asp-controller="Home" asp-action="Index">
+                <a asp-controller="Home" asp-action="Index" asp-area="" >
                     <span class="icon">
                         <i class="material-icons" style="font-size: 18px;">dashboard</i>
                     </span>Dashboard
@@ -107,7 +109,7 @@
 
 
         <li>
-            <a asp-controller="" asp-action="" asp-area="">
+            <a asp-controller="Absence" asp-action="AbsenceRequest" asp-area="">
                 <span class="icon">
                     <i class="fas fa-calendar-times fa-fw"></i>
                 </span>
@@ -115,7 +117,7 @@
             </a>
         </li>
         <li>
-            <a asp-controller="" asp-action="" asp-area="">
+            <a asp-controller="Absence" asp-action="List" asp-area="">
                 <span class="icon">
                     <i class="fas fa-history"></i>
                 </span>
@@ -131,7 +133,7 @@
                 </li>
 
                 <li>
-                    <a asp-area="Admin" asp-controller="User" asp-action="List">
+                    <a asp-controller="User" asp-action="List" asp-area="Admin">
                         <span class="icon">
                             <i class="fas fa-user-circle"></i>
                         </span>Manage Users
@@ -139,7 +141,7 @@
                 </li>
 
                 <li>
-                    <a asp-controller="User" asp-action="List" asp-area="Admin">
+                    <a asp-controller="Role" asp-action="List" asp-area="Admin">
                         <span class="icon">
                             <i class="fas fa-users"></i>
                         </span>Manage Roles

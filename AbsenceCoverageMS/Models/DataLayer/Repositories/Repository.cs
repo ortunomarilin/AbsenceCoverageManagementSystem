@@ -6,44 +6,108 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DataLayer.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<T> : IRepository<T> where T : class
     {
-        protected readonly AbsenceManagementContext context;
 
+        private readonly AbsenceManagementContext context;
+        private DbSet<T> dbSet { get; set; }
+        
+
+        
+        //Constructor 
         public Repository(AbsenceManagementContext ctx)
         {
             context = ctx;
+            dbSet = context.Set<T>(); //Will hold the DbSet<TEntity> 
         }
 
 
-        public IEnumerable<TEntity> GetAll()
+
+  
+        public IEnumerable<T> List(QueryOptions<T> options)
         {
-            return context.Set<TEntity>().ToList();
+            IQueryable<T> query = QueryData(options);
+            return query.ToList();
         }
 
-        public TEntity Get(string id)
+
+        public IEnumerable<T> List()
         {
-            return context.Set<TEntity>().Find(id);
+            return dbSet.ToList();
         }
 
-        public void Add(TEntity entity)
+
+        public T Get(string id)
         {
-            context.Set<TEntity>().Add(entity);
+            return dbSet.Find(id);
         }
 
-        public void Delete(TEntity entity)
+        public T Get(int id)
         {
-            context.Set<TEntity>().Remove(entity);
+            return dbSet.Find(id);
         }
 
-        public void Update(TEntity entity)
+
+        public void Insert(T entity)
         {
-            context.Set<TEntity>().Update(entity);
+            dbSet.Add(entity);
         }
+
+
+        public void Delete(T entity)
+        {
+            dbSet.Remove(entity);
+        }
+
+
+        public void Update(T entity)
+        {
+            dbSet.Update(entity);
+        }
+
 
         public void Save()
         {
             context.SaveChanges();
+        }
+
+
+        private IQueryable<T> QueryData(QueryOptions<T> options)
+        {
+            IQueryable<T> query = dbSet;
+
+            //Includes
+            if (options.GetIncludes() != null)
+            {
+                foreach (string include in options.GetIncludes())
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            //Where
+            if (options.GetWheres() != null)
+            {
+                foreach (var where in options.GetWheres())
+                {
+                    query = query.Where(where);
+                }
+            }
+
+            //OrderBy
+            if (options.OrderBy != null)
+            {
+                query = query.OrderBy(options.OrderBy);
+            }
+
+
+            //Paging 
+            if (options.PageNumber > 0 && options.PageSize > 0)
+            {
+                query = query.Skip((options.PageNumber - 1) * options.PageSize).Take(options.PageSize);
+            }
+
+            return query;
         }
 
 

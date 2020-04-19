@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required(ErrorMessage = "Campus Phone number is required. ")]
         public string Phone { get; set; }
 
-
+     
         [Required(ErrorMessage = "Street Address is required. ")]
         public string StreetAddress { get; set; }
 

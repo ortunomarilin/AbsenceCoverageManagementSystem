@@ -1,0 +1,117 @@
+﻿@model AbsenceRequestViewModel
+
+@{
+    ViewData["Title"] = "Absent Request";
+}
+
+
+
+<h1>Absence Request</h1>
+
+<input type="text" id="datepicker" />
+
+
+<!--Display all validation Errors-->
+<div class="text-light bg-danger text-sm-left mt-4 px-2 " asp-validation-summary="All"></div>
+
+<form method="post" asp-action="AbsenceRequest">
+    <div class="row">
+        <div class="col-sm-6 border">
+
+            <div class="form-row">
+                <label> Absence Type</label>
+                <select class="form-control" asp-for="@Model.AbsenceTypeId"
+                        asp-items="@(new SelectList(Model.AbsenceTypes,
+                                "AbsenceTypeId", "Name", Model.AbsenceTypeId))">
+                    <option value="">Select Absence Type</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.AbsenceTypeId"></span>
+            </div>
+
+            <div class="form-row">
+                <label>Start Date </label>
+                <input class="form-control " type="date" asp-for="@Model.StartDate" />
+                <span class="text-danger" asp-validation-for="@Model.StartDate"></span>
+            </div>
+
+            <div class="form-row">
+                <label>End Date </label>
+                <input class="form-control" type="date" asp-for="@Model.EndDate" />
+                <span class="text-danger" asp-validation-for="@Model.EndDate"></span>
+            </div>
+
+            <div class="form-row">
+                <label>Start Time </label>
+                <input class="form-control" type="time" asp-for="@Model.StartTime" />
+                <span class="text-danger" asp-validation-for="@Model.StartTime"></span>
+            </div>
+
+            <div class="form-row">
+                <label>End Time </label>
+                <input class="form-control" type="time" asp-for="@Model.EndTime" />
+                <span class="text-danger" asp-validation-for="@Model.EndTime"></span>
+            </div>
+
+
+            <div class="form-row">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" id="1" value="@Enums.Duration.FullDay" asp-for="@Model.Duration" autocomplete="off">
+                        Full Day
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" id="2" value="@Enums.Duration.HalfDay" asp-for="@Model.Duration" autocomplete="off">
+                        Half Day
+                    </label>
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.Duration"></span>
+            </div>
+
+
+            <div class="form-row">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" id="1" value="@Enums.NeedCoverage.Yes" asp-for="@Model.NeedCoverage" autocomplete="off">
+                        Yes
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" id="2" value="@Enums.NeedCoverage.No" asp-for="@Model.NeedCoverage" autocomplete="off">
+                        No
+                    </label>
+                </div>
+                <span class="text-danger" asp-validation-for="@Model.NeedCoverage"></span>
+            </div>
+
+
+            <div class="form-row">
+                <label class="col-form-label">Periods Need Covered</label>
+            </div>
+            <div class="form-row">
+                @for (int i = 0; i < Model.SelectablePeriods.Count(); i++)
+                {
+                    <div class="form-check form-check-inline">
+                        <input hidden asp-for="@Model.SelectablePeriods[i].PeriodId" />
+                        <input class="form-check-input" type="checkbox" asp-for="@Model.SelectablePeriods[i].Checked" />
+                        <label class="form-check-label" asp-for="@Model.SelectablePeriods[i].PeriodId">@Model.SelectablePeriods[i].PeriodId</label>
+                    </div>
+                }
+            </div>
+
+            <input type="hidden" asp-for="@Model.AbsenceRequestId" />
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-warning" asp-action="List">Cancel</a>
+
+        </div>
+    </div>
+</form>
+
+@*<script>
+    $("#datepicker").datepicker();
+</script>*@
+<script>
+    $(function () {
+        $("#datepicker").datepicker({ minDate: 0 });
+    });
+</script>
+

@@ -30,7 +30,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         //Has Coverage Period
-        public string CoveragePeriodId { get; set; } //FK
         public CoveragePeriod CoveragePeriod { get; set; } //Nav
 
 
