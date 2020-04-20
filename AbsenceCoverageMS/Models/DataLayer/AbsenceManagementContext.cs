@@ -40,7 +40,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
             //One to Many relationship between AbsenceRequest and AbsenceRequestPeriod
             modelBuilder.Entity<AbsenceRequestPeriod>()
                 .HasOne(arp => arp.AbsenceRequest)
-                .WithMany(ar => ar.PeriodsNeedCoverage)
+                .WithMany(ar => ar.AbsenceRequestPeriods)
                 .HasForeignKey(arp => arp.AbsenceRequestId);
 
             //One ot Many relationship between Period and AbsenceRequestPeriod

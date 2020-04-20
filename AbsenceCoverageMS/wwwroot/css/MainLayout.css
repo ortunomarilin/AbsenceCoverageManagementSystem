@@ -5,7 +5,8 @@
 }
 
 body {
-    background-color: rgb(230, 234, 247);
+    /*background-color: rgb(230, 234, 247);*/
+    background-color: #eff6fc;
 }
 
 /*Navigation Style*/
@@ -143,7 +144,7 @@ body {
 }
 
 .view-content {
-    background-color: transparent;
+    background-color: #eff6fc;
     position: absolute;
     left: 200px;
     right: 0px;

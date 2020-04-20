@@ -73,7 +73,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
 
-        public ICollection<AbsenceRequestPeriod> PeriodsNeedCoverage { get; set; }
+        public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
 
 
         //Status 

@@ -9,7 +9,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
 
-        private readonly AbsenceManagementContext context;
+        protected readonly AbsenceManagementContext context;
         private DbSet<T> dbSet { get; set; }
         
 
@@ -42,10 +42,12 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
             return dbSet.Find(id);
         }
 
-        public T Get(int id)
+        public virtual T Get(QueryOptions<T> options)
         {
-            return dbSet.Find(id);
+            IQueryable<T> query = QueryData(options);
+            return query.FirstOrDefault();
         }
+
 
 
         public void Insert(T entity)

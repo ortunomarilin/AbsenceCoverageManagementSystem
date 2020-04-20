@@ -8,7 +8,6 @@ using AbsenceCoverageMS.Models.DomainModels;
 using AbsenceCoverageMS.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using static AbsenceCoverageMS.Models.DomainModels.Enums;
 
 namespace AbsenceCoverageMS.Controllers
@@ -16,65 +15,58 @@ namespace AbsenceCoverageMS.Controllers
     public class AbsenceController : Controller
     {
         private readonly UserManager<User> userManager;
-
         private readonly UnitOfWork data;
-       
-        //private readonly AbsenceManagementContext context; 
-        //private readonly Repository<AbsenceRequest> arData;
-        //private readonly Repository<AbsenceType> atData;
-        //private readonly Repository<Period> periodData;
-
 
         public AbsenceController(UserManager<User> userM, AbsenceManagementContext ctx)
         {
             userManager = userM;
             data = new UnitOfWork(ctx);
-
-            //arData = new Repository<AbsenceRequest>(ctx);
-            //atData = new Repository<AbsenceType>(ctx);
-            //periodData = new Repository<Period>(ctx);
         }
 
 
+
         [HttpGet]
-        public IActionResult List()
+        public async Task<IActionResult> List()
         {
+            User user = await userManager.FindByNameAsync(User.Identity.Name);
             var model = data.AbsenceRequests.List(new QueryOptions<AbsenceRequest>
             {
+                Where = ar => ar.UserId == user.Id,
                 OrderBy = ar => ar.StartDate,
-                Include = "AbsenceType, User, PeriodsNeedCoverage"
+                Include = "AbsenceType, User, AbsenceRequestPeriods"
             });
-
             return View(model);
         }
        
 
 
         [HttpGet]
-        public IActionResult AbsenceRequest()
+        public async Task<IActionResult> AddAsync()
         {
-            var model = new AbsenceRequestViewModel
+            User user = await userManager.FindByNameAsync(User.Identity.Name);
+            Campus campus = data.Campuses.Get(new QueryOptions<Campus> { Where = c => c.CampusId == user.CampusId });
+
+            var model = new AbsenceAddViewModel
             {
                 AbsenceTypes = data.AbsenceTypes.List(new QueryOptions<AbsenceType> { OrderBy = at => at.Name}).ToList(),
                 SelectablePeriods = new List<SelectablePeriodViewModel>(),
-                StartTime = new DateTime(1,1,1,8,0,0),
-                EndTime = new DateTime(1,1,1,16,0,0)
+                StartTime = campus.OpenTime, 
+                EndTime = campus.CloseTime 
             };
 
             foreach(Period p in data.Periods.List())
             {
-                SelectablePeriodViewModel period = new SelectablePeriodViewModel
-                {
-                    PeriodId = p.PeriodId,
-                    Checked = false
-                };
+                SelectablePeriodViewModel period = new SelectablePeriodViewModel { PeriodId = p.PeriodId };
                 model.SelectablePeriods.Add(period);
             }
             return View(model);
         }
 
+
+
+
         [HttpPost]
-        public async Task<IActionResult> AbsenceRequest(AbsenceRequestViewModel model)
+        public async Task<IActionResult> Add(AbsenceAddViewModel model)
         {
             if(model != null)
             {
@@ -92,7 +84,7 @@ namespace AbsenceCoverageMS.Controllers
                         EndTime = model.EndTime,
                         Duration = model.Duration,
                         NeedCoverage = model.NeedCoverage == NeedCoverage.Yes ? true : false,
-                        PeriodsNeedCoverage = new List<AbsenceRequestPeriod>(),
+                        AbsenceRequestPeriods = new List<AbsenceRequestPeriod>(),
                         Status = Status.Submitted
                     };
 
@@ -100,13 +92,13 @@ namespace AbsenceCoverageMS.Controllers
                     {
                         if (p.Checked == true)
                         {
-                            //Create a new Joint Entity AbsentRequestPeriod
+                            //Add to Joint Entity AbsentRequestPeriod
                             AbsenceRequestPeriod absentRequestPeriod = new AbsenceRequestPeriod
                             {
                                 AbsenceRequest = absentRequest,
                                 PeriodId = p.PeriodId,
                             };
-                            absentRequest.PeriodsNeedCoverage.Add(absentRequestPeriod);
+                            absentRequest.AbsenceRequestPeriods.Add(absentRequestPeriod);
                         }     
                     }
 
@@ -116,15 +108,12 @@ namespace AbsenceCoverageMS.Controllers
                 }
             }
 
-            //If Fail re-populate Lists for Form selected options. 
+            //If failed re-populate Lists for Form select options. 
             model.AbsenceTypes = data.AbsenceTypes.List(new QueryOptions<AbsenceType> { OrderBy = at => at.Name }).ToList();
             model.SelectablePeriods = new List<SelectablePeriodViewModel>();
             foreach (Period p in data.Periods.List())
             {
-                SelectablePeriodViewModel period = new SelectablePeriodViewModel
-                {
-                    PeriodId = p.PeriodId,
-                };
+                SelectablePeriodViewModel period = new SelectablePeriodViewModel{ PeriodId = p.PeriodId };
                 model.SelectablePeriods.Add(period);
             }
 

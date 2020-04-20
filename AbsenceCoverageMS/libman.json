@@ -17,6 +17,14 @@
     {
       "library": "jqueryui@1.12.1",
       "destination": "wwwroot/lib/jqueryui/"
+    },
+    {
+      "library": "bootstrap-timepicker@0.5.2",
+      "destination": "wwwroot/bootstrap-timepicker/"
+    },
+    {
+      "library": "jquery-timepicker@1.10.0",
+      "destination": "wwwroot/lib/jquery-timepicker/"
     }
   ]
 }

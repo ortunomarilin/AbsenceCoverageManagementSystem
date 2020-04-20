@@ -20,7 +20,18 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required(ErrorMessage = "Campus Phone number is required. ")]
         public string Phone { get; set; }
 
-     
+
+
+        [Required(ErrorMessage ="Campus Open time required.")]
+        [DataType(DataType.Time)]
+        public DateTime? OpenTime { get; set; }
+
+        [Required(ErrorMessage = "Campus close time required.")]
+        [DataType(DataType.Time)]
+        public DateTime? CloseTime { get; set; }
+
+
+
         [Required(ErrorMessage = "Street Address is required. ")]
         public string StreetAddress { get; set; }
 
