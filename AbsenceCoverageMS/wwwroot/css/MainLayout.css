@@ -9,28 +9,14 @@ body {
     background-color: #eff6fc;
 }
 
+
+
 /*Navigation Style*/
-.myNavbar .navbar-brand {
-    color: white;
-    font-size: 18px;
-}
-
-.myNavbar .nav-link {
-    color: white;
-}
-
-    .myNavbar .nav-link:hover {
-        color: rgb(204, 226, 245);
-    }
-
-.navbar-toggler-icon {
-    color: white;
-    line-height: 25px;
-}
-
-
 .myNavbar {
-    background-color: #022444;
+    /*background-color: #022444;*/
+    background-color: #00316E;
+    border-bottom: solid 2px #00224D;
+    box-shadow: 0 0.125rem 0.25rem #001D42;
     padding-right: 30px;
     position: fixed;
     top: 0;
@@ -39,29 +25,43 @@ body {
     z-index: 100;
 }
 
-/*SideBar Navigation Style*/
+    .myNavbar .navbar-brand, .myNavbar .nav-link {
+        color: white;
+        font-size: 15px;
+    }
+
+        .myNavbar .navbar-brand:hover, .myNavbar .nav-link:hover {
+            color: rgb(204, 226, 245);
+        }
+
+
+
 .sidebarMenu, .view-content {
-    top: 101px;
+    /*top: 101px;*/
+    top: 57px;
 }
 
+
+/*SideBar Navigation Style*/
 .sidebarMenu {
-    background-color: #022444;
+    /*background-color: #022444;*/
+    background-color: #00316E;
     position: fixed;
-    width: 200px;
+    /*width: 200px;*/
+    padding-top: 10px;
+    width: 230px;
     height: 100%;
     z-index: 1;
-    /*overflow-y: scroll;
-  bottom: 0; */
 }
 
-.closeHeader {
+/*.closeHeader {
     border-bottom: 1px solid rgba(179, 178, 178, 0.3);
     color: rgb(133, 161, 236);
     text-align: center;
     padding-left: 14px;
-}
+}*/
 
-#closeIcon {
+/*#closeIcon {
     padding-left: 146px;
     border: 1px solid rgba(179, 178, 178, 0.3);
 }
@@ -73,55 +73,83 @@ body {
         padding: 2px 4px;
         border: 1px solid rgba(179, 178, 178, 0.3);
         cursor: pointer;
-    }
+    }*/
 
-.subHeader {
+/*.subHeader {
     color: white;
     margin: 0px;
     padding: 2px;
     text-align: center;
     background-color: rgb(2, 2, 49);
-    /*border-bottom: 1px solid rgba(179, 178, 178, 0.3);*/  
+    border-bottom: 1px solid rgba(179, 178, 178, 0.3);  
+}*/
+
+    .sidebarMenu ul li {
+        list-style: none;
+        /*border: 1px solid rgba(179, 178, 178, 0.2);*/
+        /*border-bottom: 1px solid rgba(179, 178, 178, 0.2);*/
+    }
+
+    .sidebarMenu ul a {
+        text-decoration: none;
+        display: block;
+        /*padding: 5px;*/
+        padding: 5px 5px 5px 15px;
+        /*color: #74BBFB;*/
+        color: #c7e0f4;
+        transition: .4s;
+        font-size: 16px;
+    }
+
+    .sidebarMenu a:hover {
+        /*background-color: #4e7396;*/
+        background-color: #001D42;
+        /*color: #74BBFB;*/
+    }
+
+
+.sidebarMenu-Header {
+    color: #c7e0f4;
+    font-family: Arial;
+    word-wrap: break-word;
+    background-color: #00142C;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
 }
 
-.sidebarMenu ul li {
-    list-style: none;
-    /*border: 1px solid rgba(179, 178, 178, 0.2);*/
+.sidebarMenu-subHeader {
+    color: #92bef5;
+    font-family: Arial;
+    font-size: medium;
+    text-shadow: 5px 5px 10px black;
+    padding: 10px 10px 5px 10px;
+    border-bottom: 1px solid rgba(179, 178, 178, 0.3);
 }
 
-.sidebarMenu ul a {
-    text-decoration: none;
-    display: block;
-    padding: 5px;
-    color: #74BBFB;
-    transition: .4s;
-}
 
-.sidebarMenu a:hover {
-    background-color: #4e7396;
-    color: #74BBFB;
-}
 
-.rightDropDown {
-    display: block;
-    width: 100%;
-}
+
 
 .icon {
-    color: #74BBFB;
+    /*color: #74BBFB;*/
     font-size: 15px;
-    padding-right: 8px;
+    padding-right: 5px;
     padding-left: 5px;
 }
 
 .material-icons {
     vertical-align: middle;
-    padding-bottom: 3px;
+    padding-right: 5px;
+    padding-left: 5px;
+    /*padding-bottom: 3px;*/
 }
 
 
 /*Main Body*/
-#topBorder {
+/*#topBorder {
     background-color: rgb(2, 2, 49);
     border-top: solid 1px rgb(133, 161, 236);
     padding: 4px;
@@ -130,10 +158,10 @@ body {
     padding-left: 30px;
     width: 100%;
     z-index: 3;
-}
+}*/
 
 
-.openIcon i {
+/*.openIcon i {
     position: relative;
     background-color: #022444;
     color: white;
@@ -141,22 +169,23 @@ body {
     border-radius: 50%;
     z-index: 1;
     cursor: pointer;
-}
+}*/
 
 .view-content {
     background-color: #eff6fc;
     position: absolute;
-    left: 200px;
+    /*left: 200px;*/
+    left: 230px;
     right: 0px;
     min-height: 100%;
     padding: 0px 20px 20px 30px;
     z-index: 1;
 }
 
-.bodyHeader {
+/*.bodyHeader {
     padding: 20px;
     color: #022444;
-}
+}*/
 
 .item_wrap {
     padding: 10px;
