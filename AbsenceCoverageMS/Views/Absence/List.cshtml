@@ -1,47 +1,84 @@
-﻿@model IEnumerable<AbsenceRequest> 
+﻿@model IEnumerable<AbsenceRequest>
 
 @{
     ViewData["Title"] = "List";
 }
 
-<h1>Absent Request List</h1>
+<div class="view-header">
+    <h3>Absence History</h3>
+</div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Date of Submission</th>
-            <th>Name</th>
-            <th>Absent Type</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Start Time</th>
-            <th>End time</th>
-            <th>Duration</th>
-            <th>Need Coverage</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (AbsenceRequest ar in Model)
-        {
-        <tr>
-            <td>@ar.DateSubmitted.Value.ToShortDateString() </td>
-            <td>@ar.User.FullName</td>
-            <td>@ar.AbsenceType.Name</td>
-            <td>@ar.StartDate.Value.ToShortDateString() </td>
-            <td>@ar.EndDate.Value.ToShortDateString()</td>
-            <td>@ar.StartTime.Value.ToShortTimeString()</td>
-            <td>@ar.EndTime.Value.ToShortTimeString() </td>
-            <td>@(ar.Duration == Enums.Duration.FullDay ? "Full Day" : "Half Day")</td>
-            <td>@(ar.NeedCoverage == true ? "Yes" : "No") </td>
-            <td>@ar.Status</td>
-            <td>Action</td>
-        </tr>
-        }
 
-    </tbody>
-</table>
+<div class="overflow-auto">
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Absent Type</th>
+                <th>Duration</th>
+                <th>Time</th>
+                <th>Need Coverage</th>
+                <th>Status</th>
+                <th colspan="3" class="text-center">
+                    <span>
+                        <i class="fas fa-cogs"></i>
+                    </span>
+                    Options
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AbsenceRequest ar in Model)
+            {
+            <tr>
+                @if (ar.StartDate == ar.EndDate)
+                {
+                    <td>@ar.StartDate.Value.ToShortDateString() </td>
+                }
+                else
+                {
+                    <td>@ar.StartDate.Value.ToShortDateString() - @ar.EndDate.Value.ToShortDateString()</td>
+                }
+
+                <td>@ar.AbsenceType.Name</td>
+                <td>@(ar.Duration == Enums.Duration.FullDay ? "Full Day" : "Half Day")</td>
+                <td>@ar.StartTime.Value.ToShortTimeString() - @ar.EndTime.Value.ToShortTimeString() </td>
+                <td>@(ar.NeedCoverage == true ? "Yes" : "No") </td>
+                <td>@ar.Status</td>
+
+                <td class="text-center">
+                    <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@ar.AbsenceRequestId">
+                        <span>
+                            <i class="fas fa-binoculars"></i>
+                        </span>
+                        Details
+                    </a>
+                </td>
+
+                <td class="text-center">
+                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@ar.AbsenceRequestId">
+                        <span>
+                            <i class="fas fa-edit"></i>
+                        </span>
+                        Edit
+                    </a>
+                </td>
+                <td class="text-center">
+                    <form method="post" asp-action="Delete" asp-route-id="@ar.AbsenceRequestId">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <span>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
 
 
 

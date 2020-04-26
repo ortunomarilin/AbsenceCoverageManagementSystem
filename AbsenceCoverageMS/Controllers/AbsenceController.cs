@@ -37,87 +37,184 @@ namespace AbsenceCoverageMS.Controllers
             });
             return View(model);
         }
-       
 
 
         [HttpGet]
-        public async Task<IActionResult> AddAsync()
+        public IActionResult Details(string id)
         {
-            User user = await userManager.FindByNameAsync(User.Identity.Name);
-            Campus campus = data.Campuses.Get(new QueryOptions<Campus> { Where = c => c.CampusId == user.CampusId });
-
-            var model = new AbsenceAddViewModel
+            AbsenceDetailsViewModel model = new AbsenceDetailsViewModel
             {
-                AbsenceTypes = data.AbsenceTypes.List(new QueryOptions<AbsenceType> { OrderBy = at => at.Name}).ToList(),
-                SelectablePeriods = new List<SelectablePeriodViewModel>(),
-                StartTime = campus.OpenTime, 
-                EndTime = campus.CloseTime 
+                AbsenceRequest = GetAbsenceRequest(id)
             };
 
-            foreach(Period p in data.Periods.List())
-            {
-                SelectablePeriodViewModel period = new SelectablePeriodViewModel { PeriodId = p.PeriodId };
-                model.SelectablePeriods.Add(period);
-            }
             return View(model);
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            User user = await userManager.FindByNameAsync(User.Identity.Name);
+            AbsenceViewModel model = new AbsenceViewModel
+            {
+                AbsenceRequest = new AbsenceRequest { UserId = user.Id, DateSubmitted = DateTime.Now, Status = Enums.Status.Submitted },
+            };
+
+            //Populate Select Lists (Dropdown / Checklist)
+            model = PopulateSelectLists(model);
+
+            return View("Absence", model);
+        }
 
 
         [HttpPost]
-        public async Task<IActionResult> Add(AbsenceAddViewModel model)
+        public IActionResult Add(AbsenceViewModel model)
         {
-            if(model != null)
+            if (ModelState.IsValid)
             {
-                if(ModelState.IsValid)
+                //Check to make sure Need Coverage and Periods need covered input match. 
+                List<SelectablePeriodViewModel> checkedPeriods = model.SelectablePeriods.Where(p => p.Checked == true).ToList();
+
+                if(model.NeedCoverage == Enums.NeedCoverage.Yes && checkedPeriods.Count == 0)
                 {
-                    User user = await userManager.FindByNameAsync(User.Identity.Name);
-                    AbsenceRequest absentRequest = new AbsenceRequest
-                    {
-                        UserId = user.Id,
-                        DateSubmitted = DateTime.Now,
-                        AbsenceTypeId = model.AbsenceTypeId,
-                        StartDate = model.StartDate,
-                        EndDate = model.EndDate,
-                        StartTime = model.StartTime,
-                        EndTime = model.EndTime,
-                        Duration = model.Duration,
-                        NeedCoverage = model.NeedCoverage == NeedCoverage.Yes ? true : false,
-                        AbsenceRequestPeriods = new List<AbsenceRequestPeriod>(),
-                        Status = Status.Submitted
-                    };
+                    //Checked periods are required if need coverage is selected. 
+                    ModelState.AddModelError("", "If coverage is needed, please check the periods that will need coverage.");
+                    model = PopulateSelectLists(model);
+                    return View("Absence", model);
+                }
+                else if (model.NeedCoverage == Enums.NeedCoverage.No && checkedPeriods.Count != 0)
+                {
+                    //Checked periods are not allowed if no coverage is needed.
+                    ModelState.AddModelError("", "If no coverage is needed, checked periods are not allowed.");
+                    model = PopulateSelectLists(model);
+                    return View("Absence", model);
+                }
+                else
+                {
+                    model.AbsenceRequest.NeedCoverage = model.NeedCoverage == NeedCoverage.Yes ? true : false;
 
-                    foreach (SelectablePeriodViewModel p in model.SelectablePeriods)
-                    {
-                        if (p.Checked == true)
-                        {
-                            //Add to Joint Entity AbsentRequestPeriod
-                            AbsenceRequestPeriod absentRequestPeriod = new AbsenceRequestPeriod
-                            {
-                                AbsenceRequest = absentRequest,
-                                PeriodId = p.PeriodId,
-                            };
-                            absentRequest.AbsenceRequestPeriods.Add(absentRequestPeriod);
-                        }     
-                    }
+                    //Initialize the list of AbsenceRequestPeriod (Many-To-Many)
+                    model.AbsenceRequest.AbsenceRequestPeriods = new List<AbsenceRequestPeriod>();
 
-                    data.AbsenceRequests.Insert(absentRequest);
+                    //Add AbsenceRequestPeriod (Periods Need Coverage)
+                    data.AddNewAbsenceRequestPeriods(model.AbsenceRequest, model.SelectablePeriods);
+
+                    //Insert and save into database. 
+                    data.AbsenceRequests.Insert(model.AbsenceRequest);
                     data.AbsenceRequests.Save();
+
+                    return RedirectToAction("List");
+                }
+            }
+            //If fail re-populate the lists
+            model = PopulateSelectLists(model);
+            return View("Absence", model);
+        }
+
+
+
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            AbsenceRequest absenceReqest = GetAbsenceRequest(id);
+            AbsenceViewModel model = new AbsenceViewModel
+            {
+                AbsenceRequest = absenceReqest,
+                NeedCoverage = absenceReqest.NeedCoverage == true ? Enums.NeedCoverage.Yes : Enums.NeedCoverage.No,
+            };
+
+            //Populate Select Lists (Dropdown / Checklist)
+            model = PopulateSelectLists(model);
+
+            //Show Check marks on AbsenceRequestPeriod records. (Periods Need Coverage)
+            for (int i = 0; i < absenceReqest.AbsenceRequestPeriods.ToList().Count(); i++)
+            {
+                model.SelectablePeriods[i].Checked = true;
+            }
+
+            return View("Absence", model);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(AbsenceViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //Check to make sure Need Coverage and Periods need covered input match. 
+                List<SelectablePeriodViewModel> checkedPeriods = model.SelectablePeriods.Where(p => p.Checked == true).ToList();
+
+                if (model.NeedCoverage == Enums.NeedCoverage.Yes && checkedPeriods.Count == 0)
+                {
+                    //Checked periods are required if need coverage is selected. 
+                    ModelState.AddModelError("", "If coverage is needed, please check the periods that will need coverage.");
+                    model = PopulateSelectLists(model);
+                    return View("Absence", model);
+                }
+                else if (model.NeedCoverage == Enums.NeedCoverage.No && checkedPeriods.Count != 0)
+                {
+                    //Checked periods are not allowed if no coverage is needed. 
+                    ModelState.AddModelError("", "If no coverage is needed, checked periods are not allowed.");
+                    model = PopulateSelectLists(model);
+                    return View("Absence", model);
+                }
+                else
+                {
+                    model.AbsenceRequest.NeedCoverage = model.NeedCoverage == NeedCoverage.Yes ? true : false;
+
+                    //Initialize the list of AbsenceRequestPeriod (Many-To-Many)
+                    model.AbsenceRequest.AbsenceRequestPeriods = new List<AbsenceRequestPeriod>();
+
+                    //Delete Old AbsenceRequestPeriod (Many-To-Many)
+                    data.DeleteAbsenceRequestPeriods(model.AbsenceRequest);
+
+                    //Add AbsenceRequestPeriod (Many-To-Many)
+                    data.AddNewAbsenceRequestPeriods(model.AbsenceRequest, model.SelectablePeriods);
+
+                    //Insert and save into database. 
+                    data.AbsenceRequests.Update(model.AbsenceRequest);
+                    data.AbsenceRequests.Save();
+
                     return RedirectToAction("List");
                 }
             }
 
-            //If failed re-populate Lists for Form select options. 
-            model.AbsenceTypes = data.AbsenceTypes.List(new QueryOptions<AbsenceType> { OrderBy = at => at.Name }).ToList();
+            //If fail re-populate the lists
+            model = PopulateSelectLists(model);
+            return View("Absence", model);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            data.AbsenceRequests.Delete(GetAbsenceRequest(id));
+            data.AbsenceRequests.Save();
+            return RedirectToAction("List");
+        }
+
+
+        private AbsenceRequest GetAbsenceRequest(string id)
+        {
+            AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
+            {
+                Where = ar => ar.AbsenceRequestId == id,
+                Include = "AbsenceType, User, AbsenceRequestPeriods"
+            });
+            return absenceRequest;
+        }
+
+        private AbsenceViewModel PopulateSelectLists(AbsenceViewModel model)
+        {
+            model.AbsenceTypes = data.AbsenceTypes.List().ToList();
+
             model.SelectablePeriods = new List<SelectablePeriodViewModel>();
             foreach (Period p in data.Periods.List())
             {
-                SelectablePeriodViewModel period = new SelectablePeriodViewModel{ PeriodId = p.PeriodId };
+                SelectablePeriodViewModel period = new SelectablePeriodViewModel { PeriodId = p.PeriodId };
                 model.SelectablePeriods.Add(period);
             }
 
-            return View(model);
+            return model;
         }
 
     }

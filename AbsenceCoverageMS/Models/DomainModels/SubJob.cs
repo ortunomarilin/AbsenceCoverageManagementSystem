@@ -24,9 +24,9 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public DateTime Date { get; set; }
 
 
-        //Sub Job For Period 
-        public string PeriodId { get; set; }
-        public Period Period { get; set; }
+        //Sub Job For Courese 
+        public string CourseId { get; set; }
+        public Course Course { get; set; }
 
 
         //Assigned To / Accepted By 

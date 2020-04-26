@@ -10,22 +10,24 @@ namespace AbsenceCoverageMS.Models.DomainModels
     {
         public enum Duration
         {
-            FullDay = 1,
-            HalfDay = 2
+            [Display(Name = "Full Day")]
+            FullDay,
+            [Display(Name = "Half Day")]
+            HalfDay,
         }
 
         public enum Status
         {
-            Submitted = 1,
-            Approved = 2,
-            Denied = 3,
-            Cancelled = 4
+            Submitted,
+            Approved,
+            Denied,
+            Cancelled
         }
 
         public enum NeedCoverage
         {
-            Yes = 1,
-            No = 2
+            Yes,
+            No
         }
     }
 }

@@ -1,0 +1,278 @@
+﻿@model AbsenceViewModel
+
+@{
+    ViewData["Title"] = "Absence";
+    string action = ViewContext.RouteData.Values["action"].ToString();
+}
+
+<!--View used for Add Edit and Delete-->
+
+<div class="view-header">
+    <h3>@(action == "Edit" ? "Edit" : "") Absence Request   </h3>
+</div>
+
+
+
+@if(TempData["ErrorMessage"] != null)
+{
+    <div class="temp-data-error">
+        <h6>
+            <i class="far fa-times-circle"></i>
+            @TempData["ErrorMessage"]
+        </h6>
+    </div>
+}
+
+<div asp-validation-summary="All" >
+    <h6>
+        <i class="far fa-times-circle"></i>
+        Please correct the following errors.
+    </h6>
+</div>
+
+<form method="post" asp-action="@action">
+
+    <input type="hidden" asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
+    <input type="hidden" asp-for="@Model.AbsenceRequest.UserId" />
+    <input type="hidden" asp-for="@Model.AbsenceRequest.DateSubmitted" />
+
+    <div class="row justify-content-center">
+        <div class="col-md-10  form-section  ">
+
+            <div class="form-row border-0 ">
+                <div class="form-group col-md-12 form-section-title ">
+                    <h6>Absence Details </h6>
+                </div>
+            </div>
+
+            @if (action == "Edit")
+            {
+                <div class="form-row  ">
+                    <div class="form-group col-md-2">
+                        <label class="form-label ">Absence Request #</label>
+                    </div>
+                    <div class="form-group col-md-6  ">
+                        <input class="form-control" readonly asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-row  ">
+                <div class="form-group col-md-2">
+                    <label class="form-label ">Absence Type</label>
+                </div>
+                <div class="form-group col-md-3  ">
+                    <select class="custom-select custom-select-sm" asp-for="@Model.AbsenceRequest.AbsenceTypeId"
+                            asp-items="@(new SelectList(Model.AbsenceTypes,
+                                                "AbsenceTypeId", "Name", Model.AbsenceRequest.AbsenceTypeId))">
+                        <option value="">Select One</option>
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.AbsenceTypeId"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row ">
+                <div class="form-group col-md-2  ">
+                    <label class="form-label">Start Date</label>
+                </div>
+                <div class="form-group col-md-3 ">
+                    <div class="input-group">
+                        <div class="input-group">
+                            <input id="SD" class="form-control  form-control-sm  bg-white " type="text" readonly onkeydown="event.preventDefault()" asp-for="@Model.AbsenceRequest.StartDate" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.StartDate"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row ">
+                <div class="form-group col-md-2  ">
+                    <label class="form-label">End Date</label>
+                </div>
+                <div class="form-group col-md-3 ">
+                    <div class="input-group ">
+                        <div class="input-group ">
+                            <input id="ED" class="form-control form-control-sm bg-white" readonly onkeydown="event.preventDefault()" type="text" asp-for="@Model.AbsenceRequest.EndDate" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.EndDate"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row ">
+                <div class="col-md-2">
+                    <label class="form-label">Duration</label>
+                </div>
+                <div class="form-group col-md-3">
+                    <select class="custom-select custom-select-sm" asp-for="@Model.AbsenceRequest.Duration"
+                            asp-items="Html.GetEnumSelectList<Enums.Duration>()">
+                        <option value="">Select One</option>
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.Duration"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row ">
+                <div class="form-group col-md-2  ">
+                    <label class="form-label">Start Time</label>
+                </div>
+                <div class="form-group col-md-3 ">
+                    <div class="input-group">
+                        <div class="input-group">
+                            <input id="ST" class="form-control form-control-sm" type="text" asp-for="@Model.AbsenceRequest.StartTime" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.StartTime"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row ">
+                <div class="form-group col-md-2  ">
+                    <label class="form-label">End Time</label>
+                </div>
+                <div class="form-group col-md-3 ">
+                    <div class="input-group ">
+                        <div class="input-group ">
+                            <input id="ET" class="form-control form-control-sm" type="text" asp-for="@Model.AbsenceRequest.EndTime" />
+                            <div class="input-group-append">
+                                <span class="input-group-text form-icon">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.EndTime"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row  ">
+                <div class="col-md-2">
+                    <label class="form-label">Need Coverage</label>
+                </div>
+                <div class="form-group col-md-3">
+                    <select class="custom-select custom-select-sm" asp-for="@Model.NeedCoverage"
+                            asp-items="Html.GetEnumSelectList<Enums.NeedCoverage>()">
+                        <option value="">Select One</option>
+                    </select>
+                </div>
+                <div class="form-group col">
+                    <span class="text-danger" asp-validation-for="@Model.NeedCoverage"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row border-0">
+                <div class="col-md-2">
+                    <label class="form-label">Periods</label>
+                </div>
+                <div class="form-group col-md-6">
+                    @for (int i = 0; i < Model.SelectablePeriods.Count(); i++)
+                    {
+                        <div class="form-check form-check-inline">
+                            <input hidden asp-for="@Model.SelectablePeriods[i].PeriodId" />
+                            <input class="form-check-input" type="checkbox" asp-for="@Model.SelectablePeriods[i].Checked" />
+                            <label class="form-check-label" asp-for="@Model.SelectablePeriods[i].PeriodId">@Model.SelectablePeriods[i].PeriodId</label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-start">
+        <div class="col-md-3">
+            @if (action == "Add")
+            {
+                <button type="submit" class="btn btn-success ">Submit </button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-warning ">Update </button>
+            }
+            <a class="btn btn-secondary" asp-action="List">Cancel </a>
+
+        </div>
+    </div>
+
+</form>
+
+<script>
+
+    $(function () {
+        $("#SD").datepicker({
+            beforeShowDay: $.datepicker.noWeekends,
+            minDate: 0,
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#ED").datepicker("option", "minDate", dt);
+            }
+        });
+    });
+
+    $(function () {
+        $("#ED").datepicker({
+            beforeShowDay: $.datepicker.noWeekends,
+            minDate: 0,
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#SD").datepicker("option", "maxDate", dt);
+            }
+        });
+    });
+
+
+    $(function () {
+        $('#ST').timepicker({
+            'minTime': '7:00am',
+            'maxTime': '6:00pm',
+            'step': 15
+        });
+    });
+    $(function () {
+        $('#ET').timepicker({
+            'minTime': '7:00am',
+            'maxTime': '6:00pm',
+            'step': 15
+        });
+    });
+
+
+</script>
+

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AbsenceCoverageMS.Models.DataLayer.SeedData;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,20 +30,20 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         //Absence Type 
-        [Required(ErrorMessage = "* Please select an Absence Type.")]
+        [Required(ErrorMessage = "Please select an Absence Type.")]
         public string AbsenceTypeId { get; set; }
         public AbsenceType AbsenceType { get; set; }
 
 
 
         //Date Range 
-        [Required(ErrorMessage = "* Please select a Start Date.")]
+        [Required(ErrorMessage = "Please select a Start Date.")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? StartDate { get; set; }
 
 
-        [Required(ErrorMessage = "* Please select an End Date.")]
+        [Required(ErrorMessage = "Please select an End Date.")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime? EndDate { get; set; }
@@ -51,12 +52,12 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         //Time Range 
-        [Required(ErrorMessage = "* Please select a Start Time.")]
+        [Required(ErrorMessage = "Please select a Start Time.")]
         [DataType(DataType.Time)]
         public DateTime? StartTime { get; set; }
 
 
-        [Required(ErrorMessage = "* Please select an End Time.")]
+        [Required(ErrorMessage = "Please select an End Time.")]
         [DataType(DataType.Time)]
         public DateTime? EndTime { get; set; }
 
@@ -71,9 +72,12 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required(ErrorMessage = "Please select if coverage is needed.")]
         public bool NeedCoverage { get; set; }
 
-
-
         public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
+
+        //Produces SubJobs
+        public ICollection<SubJob> SubJobs { get; set; }  //Nav
+
+
 
 
         //Status 
@@ -84,8 +88,8 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public DateTime DateProcessed { get; set; }
 
 
-        //Produces SubJobs
-        public ICollection<SubJob> SubJobs { get; set; }  //Nav
+
+
 
     }
 }

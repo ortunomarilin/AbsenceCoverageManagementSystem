@@ -1,4 +1,5 @@
 ﻿using AbsenceCoverageMS.Models.DomainModels;
+using AbsenceCoverageMS.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,6 +131,39 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
                     subJobRepo = new Repository<SubJob>(context);
                 }
                 return subJobRepo;
+            }
+        }
+
+
+        public void AddNewAbsenceRequestPeriods(AbsenceRequest absenceRequest, List<SelectablePeriodViewModel> selectablePeriods)
+        {
+            //Add the AbsenceRequestPeriods 
+            foreach (SelectablePeriodViewModel p in selectablePeriods)
+            {
+                if (p.Checked == true)
+                {
+                    AbsenceRequestPeriod absentRequestPeriod = new AbsenceRequestPeriod
+                    {
+                        AbsenceRequest = absenceRequest,
+                        PeriodId = p.PeriodId,
+                    };
+                    absenceRequest.AbsenceRequestPeriods.Add(absentRequestPeriod);
+                }
+            }
+        }
+
+        public void DeleteAbsenceRequestPeriods(AbsenceRequest absenceRequest)
+        {
+            //Get the current AbsenceRequestPeriods for this absenceRequest 
+            var currentPeriods = AbsenceRequestsPeriods.List(new QueryOptions<AbsenceRequestPeriod>
+            {
+                Where = arp => arp.AbsenceRequestId == absenceRequest.AbsenceRequestId
+            });
+
+            //Delete all of the records aquired above. 
+            foreach (AbsenceRequestPeriod arp in currentPeriods)
+            {
+                AbsenceRequestsPeriods.Delete(arp);
             }
         }
 

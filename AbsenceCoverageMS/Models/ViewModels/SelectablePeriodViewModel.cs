@@ -8,6 +8,7 @@ namespace AbsenceCoverageMS.Models.ViewModels
     public class SelectablePeriodViewModel
     {
         public string PeriodId { get; set; }
+
         public bool Checked { get; set; }
     }
 }
