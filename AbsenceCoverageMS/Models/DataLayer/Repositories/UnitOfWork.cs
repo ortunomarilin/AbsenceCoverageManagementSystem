@@ -38,7 +38,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
 
 
         private Repository<AbsenceRequestPeriod> absenceRequestPeriodRepo;
-        public Repository<AbsenceRequestPeriod> AbsenceRequestsPeriods
+        public Repository<AbsenceRequestPeriod> AbsenceRequestPeriods
         {
             get
             {
@@ -61,6 +61,34 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
                     absenceTypeRepo = new Repository<AbsenceType>(context);
                 }
                 return absenceTypeRepo;
+            }
+        }
+
+
+        private Repository<DurationType> durationTypeRepo;
+        public Repository<DurationType> DurationTypes
+        {
+            get
+            {
+                if (durationTypeRepo == null)
+                {
+                    durationTypeRepo = new Repository<DurationType>(context);
+                }
+                return durationTypeRepo;
+            }
+        }
+
+
+        private Repository<StatusType> statusTypeRepo;
+        public Repository<StatusType> StatusTypes
+        {
+            get
+            {
+                if (statusTypeRepo == null)
+                {
+                    statusTypeRepo = new Repository<StatusType>(context);
+                }
+                return statusTypeRepo;
             }
         }
 
@@ -142,12 +170,12 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
             {
                 if (p.Checked == true)
                 {
-                    AbsenceRequestPeriod absentRequestPeriod = new AbsenceRequestPeriod
+                    AbsenceRequestPeriod arp = new AbsenceRequestPeriod
                     {
                         AbsenceRequest = absenceRequest,
-                        PeriodId = p.PeriodId,
+                        PeriodId = p.PeriodId
                     };
-                    absenceRequest.AbsenceRequestPeriods.Add(absentRequestPeriod);
+                    AbsenceRequestPeriods.Insert(arp);
                 }
             }
         }
@@ -155,7 +183,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         public void DeleteAbsenceRequestPeriods(AbsenceRequest absenceRequest)
         {
             //Get the current AbsenceRequestPeriods for this absenceRequest 
-            var currentPeriods = AbsenceRequestsPeriods.List(new QueryOptions<AbsenceRequestPeriod>
+            var currentPeriods = AbsenceRequestPeriods.List(new QueryOptions<AbsenceRequestPeriod>
             {
                 Where = arp => arp.AbsenceRequestId == absenceRequest.AbsenceRequestId
             });
@@ -163,7 +191,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
             //Delete all of the records aquired above. 
             foreach (AbsenceRequestPeriod arp in currentPeriods)
             {
-                AbsenceRequestsPeriods.Delete(arp);
+                AbsenceRequestPeriods.Delete(arp);
             }
         }
 

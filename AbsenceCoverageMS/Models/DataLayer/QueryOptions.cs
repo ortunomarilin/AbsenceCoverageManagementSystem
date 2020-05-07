@@ -11,6 +11,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
         //Properties for Sorting 
         public Expression<Func<T, Object>> OrderBy { get; set; }
+        public string OrderByDirection { get; set; } = "asc";
 
 
         //Properties for Paging 
@@ -18,8 +19,8 @@ namespace AbsenceCoverageMS.Models.DataLayer
         public int PageSize { get; set; }
 
 
-        //Properties / private Variables for Filtering 
-        private List<Expression<Func<T, bool>>> WhereExpressions;
+        //Will hold all the where in a class with List of Where(s). 
+        public WhereExpressions<T> WhereExpressions { get; set; }
 
         public Expression<Func<T, bool>> Where
         {
@@ -28,19 +29,13 @@ namespace AbsenceCoverageMS.Models.DataLayer
                 //If the List that holds the where expressions is null initialize it so you can add the current Where Expression to the List.
                 if(WhereExpressions == null)
                 {
-                    WhereExpressions = new List<Expression<Func<T, bool>>>();
+                    WhereExpressions = new WhereExpressions<T>();
                 }
                 WhereExpressions.Add(value);
             }
         }
 
-        public List<Expression<Func<T, bool>>> GetWheres()
-        {
-            return WhereExpressions;
-        }
 
-
-        //Private Variable / Property / Get Method for Includes 
 
         //Will hold all the includes in a string array. 
         private string[] includes;
@@ -61,3 +56,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
         }
     }
 }
+
+//For the pupose of workign with multiple Where clauses. 
+//This class will contain a list of where expressions. 
+public class WhereExpressions<T> : List<Expression<Func<T, bool>>> { }

@@ -9,7 +9,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
     public interface IUnitOfWork
     {
         Repository<AbsenceRequest> AbsenceRequests { get; }
-        Repository<AbsenceRequestPeriod> AbsenceRequestsPeriods { get; }
+        Repository<AbsenceRequestPeriod> AbsenceRequestPeriods { get; }
         Repository<AbsenceType> AbsenceTypes { get; }
         Repository<Campus> Campuses { get; }
         Repository<Course> Courses { get; }

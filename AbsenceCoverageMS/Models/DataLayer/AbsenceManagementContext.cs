@@ -20,6 +20,8 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
         public DbSet<AbsenceRequest> AbsenceRequests { get; set; }
         public DbSet<AbsenceType> AbsenceTypes { get; set; }
+        public DbSet<DurationType> DurationTypes { get; set; }
+        public DbSet<StatusType> StatusTypes { get; set; }
         public DbSet<Campus> Campuses { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CoveragePeriod> CoveragePeriods { get; set; }
@@ -46,7 +48,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
             //One ot Many relationship between Period and AbsenceRequestPeriod
             modelBuilder.Entity<AbsenceRequestPeriod>()
                 .HasOne(arp => arp.Period)
-                .WithMany(p => p.PeriodsNeedCoverage)
+                .WithMany(p => p.AbsenceRequestPeriods)
                 .HasForeignKey(arp => arp.PeriodId);
 
 
@@ -71,6 +73,8 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());
+            modelBuilder.ApplyConfiguration(new SeedDurationTypes());
+            modelBuilder.ApplyConfiguration(new SeedStatusTypes());
             modelBuilder.ApplyConfiguration(new SeedPeriods());
             modelBuilder.ApplyConfiguration(new SeedCampuses());
         }

@@ -1,11 +1,11 @@
 ﻿@model AbsenceViewModel
 
 @{
-    ViewData["Title"] = "Absence";
+    ViewData["Title"] = "Absence Request";
     string action = ViewContext.RouteData.Values["action"].ToString();
 }
 
-<!--View used for Add Edit and Delete-->
+<!--View used for Add, Edit, and Delete-->
 
 <div class="view-header">
     <h3>@(action == "Edit" ? "Edit" : "") Absence Request   </h3>
@@ -13,76 +13,71 @@
 
 
 
-@if(TempData["ErrorMessage"] != null)
-{
-    <div class="temp-data-error">
-        <h6>
-            <i class="far fa-times-circle"></i>
-            @TempData["ErrorMessage"]
-        </h6>
-    </div>
-}
-
-<div asp-validation-summary="All" >
+<div class="alert alert-danger"  asp-validation-summary="All">
     <h6>
-        <i class="far fa-times-circle"></i>
-        Please correct the following errors.
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        Please correct the following.
     </h6>
 </div>
+
+
+
+
 
 <form method="post" asp-action="@action">
 
     <input type="hidden" asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
     <input type="hidden" asp-for="@Model.AbsenceRequest.UserId" />
     <input type="hidden" asp-for="@Model.AbsenceRequest.DateSubmitted" />
+    <input type="hidden" asp-for="@Model.AbsenceRequest.StatusTypeId" />
 
-    <div class="row justify-content-center">
-        <div class="col-md-10  form-section  ">
 
-            <div class="form-row border-0 ">
-                <div class="form-group col-md-12 form-section-title ">
+    <div class="row justify-content-center  ">
+        <div class="col-md-8  form-section  shadow ">
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
                     <h6>Absence Details </h6>
                 </div>
             </div>
 
+
             @if (action == "Edit")
             {
-                <div class="form-row  ">
-                    <div class="form-group col-md-2">
-                        <label class="form-label ">Absence Request #</label>
-                    </div>
+                <div class="form-row ml-5 ">
                     <div class="form-group col-md-6  ">
-                        <input class="form-control" readonly asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
+                        <label class="form-label small ">Absence Request #</label>
+                        <input class="form-control form-control-sm" readonly asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
                     </div>
                 </div>
             }
 
-
-            <div class="form-row  ">
-                <div class="form-group col-md-2">
-                    <label class="form-label ">Absence Type</label>
-                </div>
-                <div class="form-group col-md-3  ">
-                    <select class="custom-select custom-select-sm" asp-for="@Model.AbsenceRequest.AbsenceTypeId"
+            <div class="form-row  ml-5">
+                <div class="form-group col-md-4">
+                    <label class="form-label small ">Absence Type</label>
+                    <select class="form-control form-control-sm" asp-for="@Model.AbsenceRequest.AbsenceTypeId"
                             asp-items="@(new SelectList(Model.AbsenceTypes,
                                                 "AbsenceTypeId", "Name", Model.AbsenceRequest.AbsenceTypeId))">
                         <option value="">Select One</option>
                     </select>
                 </div>
-                <div class="form-group col">
+            </div>
+            <div class="form-row  ml-5">
+                <div class="col-md-4">
                     <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.AbsenceTypeId"></span>
                 </div>
             </div>
 
 
-            <div class="form-row ">
-                <div class="form-group col-md-2  ">
-                    <label class="form-label">Start Date</label>
-                </div>
-                <div class="form-group col-md-3 ">
+
+            <div class="form-row  ml-5">
+                <div class="form-group col-md-3  ">
+                    <label class="form-label small">Start Date</label>
                     <div class="input-group">
                         <div class="input-group">
-                            <input id="SD" class="form-control  form-control-sm  bg-white " type="text" readonly onkeydown="event.preventDefault()" asp-for="@Model.AbsenceRequest.StartDate" />
+                            <input id="SD" class="form-control  form-control-sm  bg-white " placeholder="mm/dd/yyyy" readonly onkeydown="event.preventDefault()" type="text" asp-for="@Model.AbsenceRequest.StartDate" />
                             <div class="input-group-append">
                                 <span class="input-group-text  form-icon">
                                     <i class="fas fa-calendar-alt"></i>
@@ -90,21 +85,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group col">
-                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.StartDate"></span>
-                </div>
-            </div>
-
-
-            <div class="form-row ">
-                <div class="form-group col-md-2  ">
-                    <label class="form-label">End Date</label>
                 </div>
                 <div class="form-group col-md-3 ">
+                    <label class="form-label small">End Date</label>
                     <div class="input-group ">
                         <div class="input-group ">
-                            <input id="ED" class="form-control form-control-sm bg-white" readonly onkeydown="event.preventDefault()" type="text" asp-for="@Model.AbsenceRequest.EndDate" />
+                            <input id="ED" class="form-control form-control-sm bg-white" placeholder="mm/dd/yyyy" readonly onkeydown="event.preventDefault()" type="text" asp-for="@Model.AbsenceRequest.EndDate" />
                             <div class="input-group-append">
                                 <span class="input-group-text  form-icon">
                                     <i class="fas fa-calendar-alt"></i>
@@ -113,33 +99,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col">
+            </div>
+            <div class="form-row ml-5">
+                <div class="col-md-3">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.StartDate"></span>
+                </div>
+                <div class="col-md-3">
                     <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.EndDate"></span>
                 </div>
             </div>
 
 
-            <div class="form-row ">
-                <div class="col-md-2">
-                    <label class="form-label">Duration</label>
-                </div>
-                <div class="form-group col-md-3">
-                    <select class="custom-select custom-select-sm" asp-for="@Model.AbsenceRequest.Duration"
-                            asp-items="Html.GetEnumSelectList<Enums.Duration>()">
+
+            <div class="form-row  ml-5">
+                <div class="form-group col-md-4">
+                    <label class="form-label small">Duration</label>
+                    <select class="form-control form-control-sm" asp-for="@Model.AbsenceRequest.DurationTypeId"
+                            asp-items="@(new SelectList(Model.DurationTypes,
+                                                "DurationTypeId", "Name", Model.AbsenceRequest.DurationTypeId))">
                         <option value="">Select One</option>
                     </select>
                 </div>
-                <div class="form-group col">
-                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.Duration"></span>
+            </div>
+            <div class="form-row ml-5">
+                <div class="col-md-4 ">
+                    <span class="text-danger " asp-validation-for="@Model.AbsenceRequest.DurationTypeId"></span>
                 </div>
             </div>
 
 
-            <div class="form-row ">
-                <div class="form-group col-md-2  ">
-                    <label class="form-label">Start Time</label>
-                </div>
+            <div class="form-row ml-5">
                 <div class="form-group col-md-3 ">
+                    <label class="form-label small">Start Time</label>
                     <div class="input-group">
                         <div class="input-group">
                             <input id="ST" class="form-control form-control-sm" type="text" asp-for="@Model.AbsenceRequest.StartTime" />
@@ -151,17 +142,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col">
-                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.StartTime"></span>
-                </div>
-            </div>
-
-
-            <div class="form-row ">
-                <div class="form-group col-md-2  ">
-                    <label class="form-label">End Time</label>
-                </div>
                 <div class="form-group col-md-3 ">
+                    <label class="form-label small">End Time</label>
                     <div class="input-group ">
                         <div class="input-group ">
                             <input id="ET" class="form-control form-control-sm" type="text" asp-for="@Model.AbsenceRequest.EndTime" />
@@ -173,36 +155,41 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group col">
+            </div>
+            <div class="form-row  ml-5">
+                <div class="col-md-3">
+                    <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.StartTime"></span>
+                </div>
+                <div class="col-md-3">
                     <span class="text-danger" asp-validation-for="@Model.AbsenceRequest.EndTime"></span>
                 </div>
             </div>
 
 
-            <div class="form-row  ">
-                <div class="col-md-2">
-                    <label class="form-label">Need Coverage</label>
-                </div>
-                <div class="form-group col-md-3">
-                    <select class="custom-select custom-select-sm" asp-for="@Model.NeedCoverage"
-                            asp-items="Html.GetEnumSelectList<Enums.NeedCoverage>()">
-                        <option value="">Select One</option>
+            <div class="form-row ml-5 ">
+                <div class="form-group col-md-4">
+                    <label class="form-label small">Need Coverage</label>
+                    <select class="form-control form-control-sm" asp-for="@Model.NeedCoverageInput">
+                        <option value="">select One</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
                     </select>
                 </div>
-                <div class="form-group col">
-                    <span class="text-danger" asp-validation-for="@Model.NeedCoverage"></span>
+            </div>
+            <div class="form-row  ml-5">
+                <div class="col-md-4">
+                    <span class="text-danger" asp-validation-for="@Model.NeedCoverageInput"></span>
                 </div>
             </div>
 
 
-            <div class="form-row border-0">
-                <div class="col-md-2">
-                    <label class="form-label">Periods</label>
-                </div>
-                <div class="form-group col-md-6">
+            <div class="form-row  ml-5">
+                @*<label class="form-label  mr-3 mt-2">Periods : </label>*@
+                <div class="form-group col-md-8">
+                    <label class="form-label  mr-3 mt-2 mb-2">Periods : </label>
                     @for (int i = 0; i < Model.SelectablePeriods.Count(); i++)
                     {
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline mt-2 mb-2">
                             <input hidden asp-for="@Model.SelectablePeriods[i].PeriodId" />
                             <input class="form-check-input" type="checkbox" asp-for="@Model.SelectablePeriods[i].Checked" />
                             <label class="form-check-label" asp-for="@Model.SelectablePeriods[i].PeriodId">@Model.SelectablePeriods[i].PeriodId</label>
@@ -211,25 +198,40 @@
                 </div>
             </div>
 
-        </div>
-    </div>
+            <div class="form-row justify-content-end form-section-footer pr-2">
+                <div class="col-md-2 ">
+                    @if (action == "Add")
+                    {
+                        <button type="submit" class="btn btn-primary btn-block ">
+                            <span>
+                                <i class="fas fa-check"></i>
+                            </span>
+                            Submit
+                        </button>
+                    }
+                    else
+                    {
+                    <button type="submit" class="btn btn-warning btn-block text-white ">
+                        <span>
+                            <i class="fas fa-edit text-white"></i>
+                        </span>
+                        Update
+                    </button>
+                    }
 
-    <div class="row justify-content-start">
-        <div class="col-md-3">
-            @if (action == "Add")
-            {
-                <button type="submit" class="btn btn-success ">Submit </button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-warning ">Update </button>
-            }
-            <a class="btn btn-secondary" asp-action="List">Cancel </a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-secondary btn-block" asp-action="List">Cancel </a>
+                </div>
+            </div>
+
+
 
         </div>
     </div>
 
 </form>
+
 
 <script>
 

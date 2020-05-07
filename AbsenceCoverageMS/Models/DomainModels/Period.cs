@@ -10,15 +10,19 @@ namespace AbsenceCoverageMS.Models.DomainModels
     {
         public string PeriodId { get; set; }
 
+
+        [Required(ErrorMessage ="The Period Number is required.")]
+        public int PeriodNumber { get; set; }
+
         [Required(ErrorMessage = "Period Number is required. ")]
-        public int Number { get; set; }
+        public string Name { get; set; }
 
 
         public ICollection<Course> Courses { get; set; }
         public ICollection<CoveragePeriod> CoveragePeriods { get; set; }
 
 
-        public ICollection<AbsenceRequestPeriod> PeriodsNeedCoverage { get; set; }
+        public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
         public ICollection<SubJob> SubJobs { get; set; }
 
     }

@@ -92,10 +92,23 @@
     <Compile Remove="Migrations\20200417103027_AutoGeneratePK.Designer.cs" />
     <Compile Remove="Migrations\20200418073446_ConfiguredAbsentRequestRelationshipsWithFluentAPI.cs" />
     <Compile Remove="Migrations\20200418073446_ConfiguredAbsentRequestRelationshipsWithFluentAPI.Designer.cs" />
+    <Compile Remove="Migrations\20200429071103_SeedDurationTypeAndStatusType.cs" />
+    <Compile Remove="Migrations\20200429071103_SeedDurationTypeAndStatusType.Designer.cs" />
+    <Compile Remove="Migrations\20200429071453_SeedDurationTypeAndStatusType.cs" />
+    <Compile Remove="Migrations\20200429071453_SeedDurationTypeAndStatusType.Designer.cs" />
+    <Compile Remove="Migrations\20200429072308_SeedDurationTypeAndStatusType.cs" />
+    <Compile Remove="Migrations\20200429072308_SeedDurationTypeAndStatusType.Designer.cs" />
+    <Compile Remove="Migrations\20200429090548_SeedDurationTypes.cs" />
+    <Compile Remove="Migrations\20200429090548_SeedDurationTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200429090859_AppliedSeedDurationTypeAndStatusTypeDataToDatabase.cs" />
+    <Compile Remove="Migrations\20200429090859_AppliedSeedDurationTypeAndStatusTypeDataToDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.cs" />
+    <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using static AbsenceCoverageMS.Models.DomainModels.Enums;
+
 
 namespace AbsenceCoverageMS.Models.ViewModels
 {
@@ -14,14 +14,16 @@ namespace AbsenceCoverageMS.Models.ViewModels
         public AbsenceRequest AbsenceRequest { get; set; }
 
 
-        
+
         [Required(ErrorMessage = "Please select if Need Coverage.")]
-        public NeedCoverage? NeedCoverage { get; set; }
+        public string NeedCoverageInput { get; set; }
 
 
 
-        //For the dropdown list of Absence Types 
-        public List<AbsenceType> AbsenceTypes { get; set; } 
+        //For the dropdown lists 
+        public IEnumerable<AbsenceType> AbsenceTypes { get; set; }
+
+        public IEnumerable<DurationType> DurationTypes { get; set; }
 
 
 
