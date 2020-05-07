@@ -4,14 +4,16 @@ using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbsenceCoverageMS.Migrations
 {
     [DbContext(typeof(AbsenceManagementContext))]
-    partial class AbsenceManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20200429114802_CorrectedManyToManyConfiguration")]
+    partial class CorrectedManyToManyConfiguration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -329,9 +331,6 @@ namespace AbsenceCoverageMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PeriodNumber")
-                        .HasColumnType("int");
-
                     b.HasKey("PeriodId");
 
                     b.ToTable("Periods");
@@ -340,56 +339,47 @@ namespace AbsenceCoverageMS.Migrations
                         new
                         {
                             PeriodId = "1",
-                            Name = "Period 1",
-                            PeriodNumber = 1
+                            Name = "Period 1"
                         },
                         new
                         {
                             PeriodId = "2",
-                            Name = "Period 2",
-                            PeriodNumber = 2
+                            Name = "Period 2"
                         },
                         new
                         {
                             PeriodId = "3",
-                            Name = "Period 3",
-                            PeriodNumber = 3
+                            Name = "Period 3"
                         },
                         new
                         {
                             PeriodId = "4",
-                            Name = "Period 4",
-                            PeriodNumber = 4
+                            Name = "Period 4"
                         },
                         new
                         {
                             PeriodId = "5",
-                            Name = "Period 5",
-                            PeriodNumber = 5
+                            Name = "Period 5"
                         },
                         new
                         {
                             PeriodId = "6",
-                            Name = "Period 6",
-                            PeriodNumber = 6
+                            Name = "Period 6"
                         },
                         new
                         {
                             PeriodId = "7",
-                            Name = "Period 7",
-                            PeriodNumber = 7
+                            Name = "Period 7"
                         },
                         new
                         {
                             PeriodId = "8",
-                            Name = "Period 8",
-                            PeriodNumber = 8
+                            Name = "Period 8"
                         },
                         new
                         {
                             PeriodId = "9",
-                            Name = "Period 9",
-                            PeriodNumber = 9
+                            Name = "Period 9"
                         });
                 });
 

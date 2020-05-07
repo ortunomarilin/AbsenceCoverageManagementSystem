@@ -88,9 +88,9 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
             }
 
             //Where
-            if (options.GetWheres() != null)
+            if (options.WhereExpressions != null)
             {
-                foreach (var where in options.GetWheres())
+                foreach (var where in options.WhereExpressions)
                 {
                     query = query.Where(where);
                 }
@@ -99,7 +99,12 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
             //OrderBy
             if (options.OrderBy != null)
             {
-                query = query.OrderBy(options.OrderBy);
+                //query = query.OrderBy(options.OrderBy);
+
+                if (options.OrderByDirection == "desc")
+                    query = query.OrderByDescending(options.OrderBy);
+                else
+                    query = query.OrderBy(options.OrderBy);
             }
 
 

@@ -33,7 +33,11 @@ namespace AbsenceCoverageMS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddControllersWithViews();
+
+            services.AddMemoryCache();
+            services.AddSession();
+
+            services.AddControllersWithViews().AddNewtonsoftJson(); ; 
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -64,14 +68,29 @@ namespace AbsenceCoverageMS
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
+
                 // route for Admin area
                 endpoints.MapAreaControllerRoute(
                     name: "admin",
                     areaName: "Admin",
                     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
+
+
+                // route for date range, filtering, and sorting 
+                endpoints.MapControllerRoute(
+                    name: "",
+                    pattern: "{controller}/{action}/fromdate/{fromdate}/todate/{todate}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
+
+
+                // route for filtering and sorting 
+                endpoints.MapControllerRoute(
+                    name: "",
+                    pattern: "{controller}/{action}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
 
                 //Default Route
                 endpoints.MapControllerRoute(

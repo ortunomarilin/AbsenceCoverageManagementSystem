@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using static AbsenceCoverageMS.Models.DomainModels.Enums;
 
 namespace AbsenceCoverageMS.Models.DomainModels
 {
@@ -65,7 +64,9 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
         //Full or Half Day 
         [Required(ErrorMessage = "Please select a duration.")]
-        public Duration? Duration { get; set; }
+        public string DurationTypeId { get; set; }
+        public DurationType DurationType { get; set; }
+        
 
 
 
@@ -81,14 +82,14 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         //Status 
-        public Status Status { get; set; }
+        public string StatusTypeId { get; set; }
+        public StatusType StatusType { get; set; }
+
+
         public string StatusRemarks { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateProcessed { get; set; }
-
-
-
 
 
     }

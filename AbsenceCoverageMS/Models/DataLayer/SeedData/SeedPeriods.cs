@@ -14,15 +14,15 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
         public void Configure(EntityTypeBuilder<Period> builder)
         {
             builder.HasData(
-                new Period { PeriodId = "1", Number = 1},
-                new Period { PeriodId = "2", Number = 2},
-                new Period { PeriodId = "3", Number = 3},
-                new Period { PeriodId = "4", Number = 4},
-                new Period { PeriodId = "5", Number = 5},
-                new Period { PeriodId = "6", Number = 6},
-                new Period { PeriodId = "7", Number = 7},
-                new Period { PeriodId = "8", Number = 8},
-                new Period { PeriodId = "9", Number = 9}
+                new Period { PeriodId = "1", Name = "Period 1", PeriodNumber = 1},
+                new Period { PeriodId = "2", Name = "Period 2", PeriodNumber = 2},
+                new Period { PeriodId = "3", Name = "Period 3", PeriodNumber = 3},
+                new Period { PeriodId = "4", Name = "Period 4", PeriodNumber = 4},
+                new Period { PeriodId = "5", Name = "Period 5", PeriodNumber = 5},
+                new Period { PeriodId = "6", Name = "Period 6", PeriodNumber = 6},
+                new Period { PeriodId = "7", Name = "Period 7", PeriodNumber = 7},
+                new Period { PeriodId = "8", Name = "Period 8", PeriodNumber = 8},
+                new Period { PeriodId = "9", Name = "Period 9", PeriodNumber = 9}
             );
         }
 
