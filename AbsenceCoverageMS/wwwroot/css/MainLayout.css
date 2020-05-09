@@ -111,46 +111,50 @@ body {
 
 .form-section {
     background-color: white;
-    padding: 0px 5px;
-    margin-bottom: 20px;
+    padding: 0px 5px 5px 5px;
+    margin-bottom: 10px;
     border: 1px solid #c7e0f4;
 }
 
 .form-section-header {
     background-color: #01579b;
-    padding: 5px;
+    padding: 5px 5px 0px 5px;
     margin-bottom: 10px;
     color: white;
 }
 
 .form-section-footer {
-    background-color: #F2F8FD;
+    /*background-color: #01579b;*/
+    background-color: white;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-top: 1px solid #c7e0f4;
+    /*border-top: 1px solid #c7e0f4;*/
 }
 
-
-.form-label {
-    color: #005a9e;
-    margin-bottom: 0px;
-    font-family: Arial;
-}
-
-label {
-    margin-bottom: 0px;
-    font-family: Arial;
-}
-
-.form-group {
-    margin-bottom: 5px;
-}
 
 /*Calendar/Time icons*/
 .form-icon {
     background-color: #eff6fc;
     color: #005a9e;
 }
+
+
+.form-label {
+    color: #005a9e;
+    font-weight: bold;
+}
+
+label {
+    margin-bottom: 3px;
+    font-family: Arial;
+    font-size: small;
+}
+
+
+.form-group {
+    margin-bottom: 5px;
+}
+
 
 
 
@@ -191,15 +195,21 @@ tbody {
 }
 
 
+.content-container {
+    background-color: white;
+    margin: 20px 15px 25px 15px;
+    padding: 10px 20px 10px 20px;
+}
 
 
 
 
-.temp-data-error, .temp-data-message, .validation-summary-errors {
+
+/*.temp-data-message, .validation-summary-errors {
     padding-left: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
-}
+}*/
 
 
 .validation-summary-valid{

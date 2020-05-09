@@ -6,83 +6,207 @@
     ViewData["Title"] = "Users";
 }
 
-<style>
-    .view-content{
-        right:0;
-        padding: 10px 50px 10px 50px;
-    }
-
-    .ViewHeader {
-        padding: 5px 0px 50px 0px;
-        color: #022444;
-    }
-
-    .List-container {
-        padding: 30px 0px 0px 0px;
-    }
-
-    .btn {
-        border-radius: 20px;
-    }
-
-
-</style>
 
 
 
-    <h1 class="ViewHeader" >Users</h1>
 
-    <a class="btn btn-info btn-sm" asp-action="Add">
-        <span>
-            <i class="fas fa-plus-circle"></i>
-            New User
-        </span>
-    </a>
+<div class="view-header">
+    <h3>Users</h3>
+</div>
 
 
-    <div class="List-container ">
-        @foreach (var user in Model)
-        {
-            <div class="row border">
-                <div class="col-sm-10">
-                    <h5 class="d-block">@user.FullName</h5>
-                    <h6> Username: @user.UserName </h6>
-                    <h6> Email: @user.Email </h6>
-                </div>
-                <div class="col-sm-2 ">
-                    <div class="dropdown show">
-                        <a class="d-block text-right" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span>
-                                <i class="fas fa-cogs"></i>
-                            </span>
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" asp-action="Edit" asp-route-id="@user.Id">
-                                <span>
-                                    <i class="fas fa-edit"></i>
-                                </span>
-                                Edit
-                            </a>
-                            <a class="dropdown-item" asp-action="ManageRoles" asp-route-id="@user.Id">
-                                <span>
-                                    <i class="fas fa-user-tag"></i>
-                                </span>
-                                Manage Roles
-                            </a>
-                            <form method="post" asp-action="Delete" asp-route-id="@user.Id">
-                                <button type="submit" class="btn">
-                                    <span class="icon">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </span>
-                                    Delete
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
     </div>
+}
+
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
+
+    </div>
+}
+
+
+<div class="content-container shadow-sm">
+
+    <div class="form-row  ml-3">
+        <div class="form-group col-md-3  ">
+            <label class="form-label small ">Full Name</label>
+        </div>
+        <div class="form-group col-md-4">
+            <input class="form-control form-control-sm " placeholder="First Name" />
+            <span class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <input class="form-control form-control-sm " placeholder="Last Name" />
+            <span class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-row  ml-3">
+        <div class="form-group col-md-3">
+            <label class="form-label small ">Position Title</label>
+        </div>
+        <div class="form-group col-md-8">
+            <input class="form-control form-control-sm " />
+            <span class="text-danger"></span>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+<a class="btn btn-info btn-sm" asp-action="Add">
+    <span>
+        <i class="fas fa-plus-circle"></i>
+        New User
+    </span>
+</a>
+
+
+<div class="row justify-content-end">
+    <div class="col-md-2 text-right">
+        <label class="text-dark font-weight-bold ">Showing Page @*@Model.Route.PageNumber of @Model.TotalPages*@</label>
+    </div>
+</div>
+
+<div class="overflow-auto table-container">
+
+    <table class="table table-sm shadow-sm  mb-0">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                    <a>
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    Username
+                    <a>
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>
+                    Position Title
+                    <a>
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>Email</th>
+                
+                <th>
+                    <a>
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+                <th colspan="4">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (User u in Model)
+            {
+            <tr>
+                <td>@u.FullName</td>
+                <td>@u.UserName</td>
+                <td>@u.PositionTitle</td>
+                <td>@u.Email</td>
+   
+
+
+                <td class="text-center">
+                    <a class="btn btn-info btn-sm" title="Details" asp-action="Details" asp-route-id="@u.Id">
+                        <span>
+                            <i class="fas fa-binoculars"></i>
+                        </span>
+                    </a>
+                </td>
+
+                @*<td class="text-center">
+                    <a class="btn btn-success btn-sm" title="Edit" asp-action="Edit" asp-route-id="@u.Id">
+                        <span>
+                            <i class="fas fa-edit text-white"></i>
+                        </span>
+                    </a>
+                </td>*@
+                <td class="text-right">
+                    <a class="btn btn-sm btn-secondary " title="User Roles" asp-action="UserRoles" asp-route-id="@u.Id">
+                        <span>
+                            <i class="fas fa-users"></i>
+                        </span>
+                    </a>
+                </td>
+                <td class="text-left">
+                    <form method="post" title="Delete" asp-action="Delete" asp-route-id="@u.Id">
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <span>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @*@for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="List"
+               asp-route-sortby="@Model.Route.SortBy"
+               asp-route-absencetype="@Model.Route.AbsenceType"
+               asp-route-duration="@Model.Route.Duration"
+               asp-route-status="@Model.Route.Status"
+               asp-route-pagenumber="@i"
+               asp-route-pagesize="@Model.Route.PageSize"
+               class="btn btn-link   @(i==Model.Route.PageNumber ? "active" : "" )">
+                @if (i == Model.Route.PageNumber)
+                {
+                    <u>@i</u>
+
+                }
+                else
+                {
+                    @i
+                }
+            </a>
+        }*@
+
+
+</div>
+
+
 
 

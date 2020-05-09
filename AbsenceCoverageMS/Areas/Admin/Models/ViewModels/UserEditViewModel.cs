@@ -1,4 +1,5 @@
 ﻿using AbsenceCoverageMS.Models.DomainModels;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,32 +12,44 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
     {
         public string UserId { get; set; }
 
-        [Required(ErrorMessage = "First Name required.")]
+
+        [Required(ErrorMessage = "Please provide a First Name.")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Last Name required.")]
+
+        [Required(ErrorMessage = "Please provide a Last Name.")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Position Title is required.")]
+
+        [Required(ErrorMessage = "Please provide a Position Title.")]
+        [Display(Name = "Position Title")]
         public string PositionTitle { get; set; }
 
-        [Required(ErrorMessage = "* A Phone Number is required.")]
+
+        [Required(ErrorMessage = "Please provide a Phone number.")]
+        [RegularExpression(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}", ErrorMessage = "Invalid Phone Number - Please enter a valid phone number.")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "An Email address is required.")]
+
+        [Required(ErrorMessage = "Please provide an Email address.")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Invalid Email - Please enter a valid email address.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "A Username is required.")]
+
+        [Required(ErrorMessage = "Please select a Campus.")]
+        public string CampusId { get; set; }
+
+
+
+        [Required(ErrorMessage = "Please provide a Username.")]
         public string Username { get; set; }
 
 
-        //For the select dropdown. 
-        [Required(ErrorMessage = "A Campus name required.")]
-        public string CampusId { get; set; }
 
         //For the dropdown of campus options. 
-        public IEnumerable<Campus> Campuses { get; set; } = new List<Campus>();
-
+        public IEnumerable<Campus> Campuses { get; set; }
 
     }
 }

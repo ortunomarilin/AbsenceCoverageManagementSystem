@@ -21,7 +21,7 @@ namespace AbsenceCoverageMS.Models.DTO
 
         //Sort Route parameters
         public string SortBy { get; set; } = "date";             // Has Default Value
-        public string SortDirection { get; set; } = "desc";      // Has Default Value
+        public string SortDirection { get; set; } = "asc";      // Has Default Value
 
 
         //Paging 

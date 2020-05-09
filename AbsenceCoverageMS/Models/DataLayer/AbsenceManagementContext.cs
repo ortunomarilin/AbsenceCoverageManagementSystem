@@ -70,6 +70,11 @@ namespace AbsenceCoverageMS.Models.DataLayer
                 .HasKey(k => new { k.CoveragePeriodId });
 
 
+            ////Don't delete dependent rows. 
+            //modelBuilder.Entity<User>()
+            //    .HasOne(u => u.Approver)
+            //    .WithMany(a => a.Employees)
+            //    .OnDelete(DeleteBehavior.Restrict); 
 
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());

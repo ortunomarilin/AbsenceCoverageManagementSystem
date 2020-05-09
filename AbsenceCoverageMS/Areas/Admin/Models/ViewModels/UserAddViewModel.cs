@@ -11,27 +11,49 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
     public class UserAddViewModel
     {
 
-        [Required(ErrorMessage = "First Name required")]
+        public string UserId { get; set; }
+
+
+        [Required(ErrorMessage = "Please provide a First Name.")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Last Name required")]
+
+        [Required(ErrorMessage = "Please provide a Last Name.")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "A Position Title is required.")]
+
+        [Required(ErrorMessage = "Please provide a Position Title.")]
+        [Display(Name = "Position Title")]
         public string PositionTitle { get; set; }
 
-        [Required(ErrorMessage = "A Phone Number is required.")]
+
+        [Required(ErrorMessage = "Please provide a Phone number.")]
+        [RegularExpression(@"((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}", ErrorMessage = "Invalid Phone Number - Please enter a valid phone number.")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "An Email Address is required.")]
+
+        [Required(ErrorMessage = "Please provide an Email address.")]
+        [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*", ErrorMessage = "Invalid Email - Please enter a valid email address.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "A Username is required.")]
+
+        [Required(ErrorMessage = "Please select a Campus.")]
+        public string CampusId { get; set; }
+
+
+
+        public string RoleId { get; set; }
+
+
+
+        [Required(ErrorMessage = "Please provide a Username.")]
         public string Username { get; set; }
 
 
 
-        [Required(ErrorMessage = "A Password is required.")]
+        [Required(ErrorMessage = "Please provide a Password.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
@@ -42,21 +64,8 @@ namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
 
 
 
-        //For the dropdown of campus options. 
-        [Required(ErrorMessage = "A Campus Name is required.") ]
-        public string CampusId { get; set; }
-
-        public List<Campus> Campuses { get; set; } = new List<Campus>();
-
-
-
-        //For the dropdown of roles. 
-        public string Id { get; set; }
-        public List<IdentityRole> AvailableRoles { get; set; } = new List<IdentityRole>();
-
-
-
-
-
+        //Dropdown Lists 
+        public IEnumerable<Campus> Campuses { get; set; }
+        public IEnumerable<IdentityRole> Roles { get; set; }
     }
 }

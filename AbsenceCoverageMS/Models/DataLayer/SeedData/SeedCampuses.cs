@@ -14,7 +14,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
         {
             builder.HasData(
                 new Campus {
-                    CampusId = "0",
+                    CampusId = "1",
                     Name = "Home Office", 
                     Phone = "713-111-1111",
                     OpenTime = new DateTime(2020, 8, 01, 7, 0, 0),
@@ -26,7 +26,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
                 },
 
                 new Campus {
-                    CampusId = "1",
+                    CampusId = "2",
                     Name = "South", 
                     Phone = "713-123-1231",
                     OpenTime = new DateTime(2020, 8, 01, 7, 0, 0),
@@ -38,7 +38,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
                 },
 
                 new Campus {
-                    CampusId = "2",
+                    CampusId = "3",
                     Name = "West", 
                     Phone = "713-123-1232",
                     OpenTime = new DateTime(2020, 8, 01, 8, 0, 0),
@@ -50,7 +50,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
                 },
 
                 new Campus {
-                    CampusId = "3",
+                    CampusId = "4",
                     Name = "East", 
                     Phone = "713-123-1233",
                     OpenTime = new DateTime(2020, 8, 01, 8, 0, 0),
@@ -62,7 +62,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
                 },
 
                 new Campus {
-                    CampusId = "4",
+                    CampusId = "5",
                     Name = "North", 
                     Phone = "713-123-1234",
                     OpenTime = new DateTime(2020, 8, 01, 7, 0, 0),

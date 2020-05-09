@@ -148,7 +148,7 @@ namespace AbsenceCoverageMS.Controllers
                     //Save the changes to the database. 
                     data.Save();
 
-                    TempData["Message"] = "The Absence Request # " + model.AbsenceRequest.AbsenceRequestId + ", was created successfully.";
+                    TempData["Message"] = "The Absence Request with ID# " + model.AbsenceRequest.AbsenceRequestId + ", was created successfully.";
 
                     return RedirectToAction("List");
                 }

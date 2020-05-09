@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,9 +6,11 @@ using AbsenceCoverageMS.Areas.Admin.Models.ViewModels;
 using AbsenceCoverageMS.Models.DataLayer;
 using AbsenceCoverageMS.Models.DataLayer.Repositories;
 using AbsenceCoverageMS.Models.DomainModels;
+using AbsenceCoverageMS.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AbsenceCoverageMS.Areas.Admin.Controllers
 {
@@ -19,23 +21,33 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly Repository<Campus> campusData;
+        private readonly UnitOfWork data;
 
 
         public UserController(UserManager<User> userM, RoleManager<IdentityRole> roleM, AbsenceManagementContext ctx)
         {
             userManager = userM;
             roleManager = roleM;
-            campusData = new Repository<Campus>(ctx);
+            data = new UnitOfWork(ctx);
         }
+
+
 
 
         [HttpGet]
         public IActionResult List()
         {
-            var users = userManager.Users;
+            var users = userManager.Users.Include(u => u.Campus);
+
+
+
             return View(users);
         }
+
+
+
+
+
 
 
         [HttpGet]
@@ -43,10 +55,10 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         {
             UserAddViewModel model = new UserAddViewModel
             {
-                Campuses = campusData.List().ToList(),
-                AvailableRoles = roleManager.Roles.ToList()
+                //DropDowns 
+                Campuses = data.Campuses.List(),
+                Roles = roleManager.Roles
             };
-
             return View(model);
         }
 
@@ -54,7 +66,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(UserAddViewModel model)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
                 //Set Properties for User Entity
                 User user = new User
@@ -72,26 +84,40 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //Add to the selected role
-                    IdentityRole role = await roleManager.FindByIdAsync(model.Id);
-                    if(role != null)
+                    //Check to see if a Role was selected 
+                    if(model.RoleId != null)
                     {
-                        await userManager.AddToRoleAsync(user, role.Name);
-                        return RedirectToAction("List");
-                    }                   
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
+                        //If a role was selected, find the selected role in the database. 
+                        IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);
+                        if (role != null)
+                        {
+                            //If the role was found, add the user to the role selected. 
+                            await userManager.AddToRoleAsync(user, role.Name);
+
+                            //User and role where added, so redirect to User List page. 
+                            TempData["SucessMessage"] = "User with name " + user.FullName + ", was created successfully.";
+                            return RedirectToAction("List");
+                        }
+                        else
+                        {
+                            //If adding the user to the role selected failed add model errors to display on page. 
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                        }
                     }
-                    return View(model);
+                    else
+                    {
+                        //User was added, so redirect to User List page.
+                        TempData["SucessMessage"] = "User with name " + user.FullName + ", was created successfully.";
+                        return RedirectToAction("List");
+                    }
                 }
             }
-            //Reset the dropdown list. 
-            model.Campuses = campusData.List().OrderBy(c => c.Name).ToList();
-            model.AvailableRoles = roleManager.Roles.OrderBy(r => r.Name).ToList();
+
+            model.Campuses = data.Campuses.List();
+            model.Roles = roleManager.Roles;
             return View(model);
         }
 
@@ -100,27 +126,27 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             User user = await userManager.FindByIdAsync(id);
-
             var model = new UserEditViewModel
             {
                 UserId = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email,
-                Username = user.UserName,
                 PositionTitle = user.PositionTitle,
+                Email = user.Email,
                 Phone = user.PhoneNumber,
                 CampusId = user.CampusId,
-                Campuses = campusData.List(),
+                Username = user.UserName,
+                Campuses = data.Campuses.List(),
             };
-
             return View(model);
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Edit(UserEditViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 User user = await userManager.FindByIdAsync(model.UserId);
                 if (user != null)
@@ -136,6 +162,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                     var result = await userManager.UpdateAsync(user);
                     if (result.Succeeded)
                     {
+                        TempData["SucessMessage"] = "The User with name " + user.FullName + ", was updated successfully.";
                         return RedirectToAction("List");
                     }
                     else
@@ -144,100 +171,135 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
-                        model.Campuses = campusData.List();
-                        return View(model);
                     }
                 }
-                ModelState.AddModelError("", "Unable to find User.");
+                else
+                {
+                    TempData["FailureMessage"] = "Unable to submit the user changes. Please try again.";
+                } 
             }
-            model.Campuses = campusData.List();
+            model.Campuses = data.Campuses.List();
             return View(model);
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> ManageRoles(string id)
+
+        public async Task<ViewResult> UserRoles(string id)
         {
-            
             User user = await userManager.FindByIdAsync(id);
-            UserManageRolesViewModel model = new UserManageRolesViewModel
+            var model = new UserRolesViewModel
             {
                 UserId = user.Id,
-                UserName = user.FullName,
-                AvailableRoles = roleManager.Roles.ToList(),
+                FullName = user.FullName,
+                UserName = user.UserName,
+                PositionTitle = user.PositionTitle,
+                AvailableRoles = roleManager.Roles,
             };
 
-            foreach(var role in roleManager.Roles)
+            foreach (var role in roleManager.Roles)
             {
-                if(await userManager.IsInRoleAsync(user, role.Name))
+                if (await userManager.IsInRoleAsync(user, role.Name))
                 {
-                    model.UsersRoles.Add(role);
+                    model.UserRoles.Add(role);
                 }
             }
 
-            model.AvailableRoles =  model.AvailableRoles.OrderBy(r => r.Name).ToList();
-            model.UsersRoles = model.UsersRoles.OrderBy(r => r.Name).ToList();
+            //Order the Lists by name. 
+            model.AvailableRoles = model.AvailableRoles.OrderBy(r => r.Name).ToList();
+            model.UserRoles = model.UserRoles.OrderBy(r => r.Name).ToList();
 
             return View(model);
         }
 
+
+
         [HttpPost]
-        public async Task<IActionResult> AddRoleToUser(UserManageRolesViewModel model, string id)
+        public async Task<RedirectToActionResult> AddRoleToUser(UserRolesViewModel model)
         {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
+            //First find both the current user, and role selected by ID. 
             User user = await userManager.FindByIdAsync(model.UserId);
-            
-            if(role != null && user != null)
+            IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);
+
+            if(user != null && role != null )
             {
                 var result = await userManager.AddToRoleAsync(user, role.Name);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
-                    return RedirectToAction("ManageRoles", new { ID = model.UserId });
+                    TempData["SucessMessage"] = "The role " + role.Name + ", was added to the user successfully.";
+                    return RedirectToAction("UserRoles", new { ID = model.UserId });
                 }
             }
 
-            TempData["ErrorMessage"] = "Unable to add the selected role.";
-            return RedirectToAction("ManageRoles", new { ID = model.UserId });
+            TempData["FailureMessage"] = "Unable to add the selected role. Please try again.";
+            return RedirectToAction("UserRoles", new { ID = model.UserId });
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> RemoveRoleFromUser(UserManageRolesViewModel model, string id)
+        public async Task<RedirectToActionResult> DeleteRoleFromUser(UserRolesViewModel model)
         {
             //Find User and role
             User user = await userManager.FindByIdAsync(model.UserId);
-            IdentityRole role = await roleManager.FindByIdAsync(id);
+            IdentityRole role = await roleManager.FindByIdAsync(model.RoleId);
 
-            //If finding user and role was successful
             if (user != null && role != null)
             {
                 var result = await userManager.RemoveFromRoleAsync(user, role.Name);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ManageRoles", new { ID = model.UserId });
+                    TempData["SucessMessage"] = "The role " + role.Name + ", was deleted from the user roles successfully.";
+                    return RedirectToAction("UserRoles", new { ID = model.UserId });
                 }
             }
-            TempData["ErrorMessage"] = "Unable to delete the role from user.";
-            return RedirectToAction("ManageRoles", new { ID = model.UserId });
+
+            TempData["FailureMessage"] = "Unable to delete the selected role from the user roles. Please try again.";
+            return RedirectToAction("UserRoles", new { ID = model.UserId });
         }
 
 
+        [HttpGet]
+        public async Task<ViewResult> Details(string id)
+        {
+
+            User user = await userManager.FindByIdAsync(id);
+            var model = new UserEditViewModel
+            {
+                UserId = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PositionTitle = user.PositionTitle,
+                Email = user.Email,
+                Phone = user.PhoneNumber,
+                CampusId = user.CampusId,
+                Username = user.UserName,
+                Campuses = data.Campuses.List(),
+            };
+            return View(model);
+        }
+
+
+
         [HttpPost]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<RedirectToActionResult> Delete(string id)
         {
             User user = await userManager.FindByIdAsync(id);
             if (user != null)
             {
                 var result = await userManager.DeleteAsync(user);
-                if (!result.Succeeded) // if failed
+                if (result.Succeeded) 
+                {
+                    TempData["SucessMessage"] = "The User with name " + user.FullName + ", was deleted successfully.";
+                    return RedirectToAction("List");
+                }
+                else
                 {
                     foreach (IdentityError error in result.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
                     }
-                    return View("List");
                 }
             }
+            TempData["FailureMessage"] = "Unable to delete the user. Please try again.";
             return RedirectToAction("List");
         }
     }

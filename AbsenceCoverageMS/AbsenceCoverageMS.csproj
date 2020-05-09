@@ -104,6 +104,16 @@
     <Compile Remove="Migrations\20200429090859_AppliedSeedDurationTypeAndStatusTypeDataToDatabase.Designer.cs" />
     <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.cs" />
     <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200507065253_UpdatedUserEntityWithApproverProperty.cs" />
+    <Compile Remove="Migrations\20200507065253_UpdatedUserEntityWithApproverProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200507065752_20200507065253_UpdatedUserEntityWithApproverProperty.cs" />
+    <Compile Remove="Migrations\20200507065752_20200507065253_UpdatedUserEntityWithApproverProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200507065832_UpdatedUserEntityWithApproverProperty.cs" />
+    <Compile Remove="Migrations\20200507065832_UpdatedUserEntityWithApproverProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200507070205_UpdatedUserEntityWithApproverProperty.cs" />
+    <Compile Remove="Migrations\20200507070205_UpdatedUserEntityWithApproverProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200507071416_UpdatedUserEntityWithApproverProperty.cs" />
+    <Compile Remove="Migrations\20200507071416_UpdatedUserEntityWithApproverProperty.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

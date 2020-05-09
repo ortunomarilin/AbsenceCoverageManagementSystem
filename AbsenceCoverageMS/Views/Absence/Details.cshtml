@@ -7,14 +7,14 @@
 }
 
 <div class="view-header">
-    <h3>Absence Request Details</h3>
+    <h6>Absence Request Details</h6>
 </div>
 
 
 <form method="post" asp-action="Delete" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
 
     <div class="row justify-content-center">
-        <div class="col-md-8  form-section  shadow-sm ">
+        <div class="col-md-11  form-section  shadow-sm ">
 
             <div class="form-row form-section-header ">
                 <div class=" col-md-12  ">
@@ -24,8 +24,8 @@
 
 
 
-            <div class="form-row  ml-5">
-                <div class=" col-md-3">
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2  text-md-right ">
                     <label class="form-label ">Absence Request #</label>
                 </div>
                 <div class=" col-md-6  ">
@@ -34,8 +34,8 @@
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class=" col-md-3">
+            <div class="form-row ml-5  mr-5   ">
+                <div class=" col-md-2  text-md-right  ">
                     <label class="form-label ">Absence Type</label>
                 </div>
                 <div class=" col-md-3  ">
@@ -44,32 +44,28 @@
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class=" col-md-3  ">
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2   text-md-right ">
                     <label class="form-label">Start Date</label>
                 </div>
                 <div class=" col-md-3 ">
-                    <div class="input-group">
-                        <label>@Model.AbsenceRequest.StartDate.Value.ToShortDateString()</label>
-                    </div>
+                    <label>@Model.AbsenceRequest.StartDate.Value.ToShortDateString()</label>
                 </div>
             </div>
 
 
-            <div class="form-row   ml-5 ">
-                <div class=" col-md-3  ">
+            <div class="form-row   ml-5  mr-5  ">
+                <div class=" col-md-2  text-md-right ">
                     <label class="form-label">End Date</label>
                 </div>
                 <div class=" col-md-3 ">
-                    <div class="input-group ">
-                        <label>@Model.AbsenceRequest.EndDate.Value.ToShortDateString()</label>
-                    </div>
+                    <label>@Model.AbsenceRequest.EndDate.Value.ToShortDateString()</label>
                 </div>
             </div>
 
 
-            <div class="form-row  ml-5">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5   ">
+                <div class="col-md-2   text-md-right ">
                     <label class="form-label">Duration</label>
                 </div>
                 <div class=" col-md-3">
@@ -78,32 +74,28 @@
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class=" col-md-3  ">
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2   text-md-right ">
                     <label class="form-label">Start Time</label>
                 </div>
-                <div class=" col-md-3 ">
-                    <div class="input-group">
-                        <label>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString()</label>
-                    </div>
+                <div class=" col-md-3  ">
+                    <label>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString()</label>
                 </div>
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class=" col-md-3  ">
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2  text-md-right ">
                     <label class="form-label">End Time</label>
                 </div>
                 <div class=" col-md-3 ">
-                    <div class="input-group ">
-                        <label>@Model.AbsenceRequest.EndTime.Value.ToShortTimeString()</label>
-                    </div>
+                    <label>@Model.AbsenceRequest.EndTime.Value.ToShortTimeString()</label>
                 </div>
             </div>
 
 
-            <div class="form-row  ml-5">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5    ">
+                <div class="col-md-2   text-md-right ">
                     <label class="form-label">Need Coverage</label>
                 </div>
                 <div class=" col-md-3">
@@ -112,15 +104,12 @@
             </div>
 
 
-            <div class="form-row   ml-5">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5   ">
+                <div class="col-md-2  text-md-right  ">
                     <label class="form-label">Periods</label>
                 </div>
                 <div class=" col-md-3">
-                    <label>
-                        @Model.GetPeriodsNeedCoverage()
-                    </label>
-
+                    <label>@Model.GetPeriodsNeedCoverage()</label>
                 </div>
             </div>
         </div>
@@ -128,7 +117,7 @@
 
 
     <div class="row justify-content-center">
-        <div class="col-md-8  form-section shadow-sm ">
+        <div class="col-md-11  form-section shadow-sm ">
 
             <div class="form-row form-section-header ">
                 <div class=" col-md-12  ">
@@ -137,8 +126,8 @@
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right">
                     <label class="form-label">Status</label>
                 </div>
                 <div class=" col-md-3">
@@ -147,13 +136,12 @@
             </div>
 
 
-            <div class="form-row  ml-5">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right  ">
                     <label class="form-label">Date Processed</label>
                 </div>
                 <div class=" col-md-3">
                     <label>@(Model.AbsenceRequest.DateProcessed.ToShortDateString() == "1/1/0001" ? "Waiting for Approval" : Model.AbsenceRequest.DateProcessed.ToShortDateString())</label>
-
                 </div>
             </div>
         </div>
@@ -162,7 +150,7 @@
 
 
     <div class="row justify-content-center">
-        <div class="col-md-8  form-section shadow-sm ">
+        <div class="col-md-11  form-section shadow-sm ">
 
             <div class="form-row form-section-header ">
                 <div class=" col-md-12  ">
@@ -171,8 +159,8 @@
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2   text-md-right  ">
                     <label class="form-label">Submitted By</label>
                 </div>
                 <div class=" col-md-3">
@@ -181,8 +169,8 @@
             </div>
 
 
-            <div class="form-row  ml-5 ">
-                <div class="col-md-3">
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2   text-md-right ">
                     <label class="form-label">Date Submitted</label>
                 </div>
                 <div class=" col-md-3">
@@ -195,7 +183,7 @@
 
 
     <div class="form-row justify-content-center ">
-        <div class="col-md-8   ">
+        <div class="col-md-11   ">
 
             <div class="form-row ">
                 <div class="col-md-2 ">

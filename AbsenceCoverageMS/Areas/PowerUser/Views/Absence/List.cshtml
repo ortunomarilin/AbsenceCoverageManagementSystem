@@ -1,14 +1,13 @@
-﻿@model AbsenceListViewModel
+﻿
+@model AbsenceListViewModel
+
 
 @{
-    ViewData["Title"] = "Absence History";
+    ViewData["Title"] = "List";
 }
 
-
-
-
 <div class="view-header">
-    <h3>Absence History</h3>
+    <h3>Manage Absence</h3>
 </div>
 
 @if (TempData["Message"] != null)
@@ -33,7 +32,6 @@
         </h6>
     </div>
 }
-
 
 <div class="search-container shadow-sm">
 
@@ -109,20 +107,19 @@
             </div>
         </div>
 
-
     </form>
 
 </div>
 
 
 
-<div class="row justify-content-end">
-    <div class="col-md-2 text-right">
-        <label class="text-dark font-weight-bold ">Showing Page @Model.Route.PageNumber of @Model.TotalPages</label>
-    </div>
-</div>
-
 <div class="overflow-auto table-container">
+    <div class="row justify-content-end">
+        <div class="col-md-2 text-right">
+            <label class="text-dark font-weight-bold ">Showing Page @Model.Route.PageNumber of @Model.TotalPages</label>
+        </div>
+    </div>
+
 
     <table class="table table-sm shadow-sm  mb-0">
         <thead>

@@ -19,14 +19,18 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public string LastName { get; set; }
 
 
+
         [Required(ErrorMessage = "Position Title required.")]
         public string PositionTitle { get; set; }
+
+
 
 
         //User is Employee of Campus 
         [Required(ErrorMessage = "Campus required.")]
         public string CampusId { get; set; }   //Fk
         public Campus Campus { get; set; }     //Nav
+
 
 
         //Has Coverage Period
@@ -47,6 +51,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
         //Method
         public string FullName => $"{FirstName} {LastName}";
+
 
     }
 }

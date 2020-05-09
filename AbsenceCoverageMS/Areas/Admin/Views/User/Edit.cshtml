@@ -2,106 +2,139 @@
 
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Edit User</h1>
+<div class="view-header">
+    <h3> Edit User</h3>
+</div>
 
-<!--Display all validation Errors-->
-<div class="text-light bg-danger text-sm-left mt-4 px-2 " asp-validation-summary="All"></div>
-
+<div class="alert alert-danger" asp-validation-summary="All">
+    <h6>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        Please correct the following.
+    </h6>
+</div>
 
 
 <form method="post" asp-action="Edit">
-    <div class="form-row border-bottom mb-3 mt-5">
-        <div class="col-sm-12 ">
-            <h6>Account Details</h6>
+
+    <input type="hidden" asp-for="@Model.UserId" />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8  form-section  shadow-sm   ">
+
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>Edit User </h6>
+                </div>
+            </div>
+
+            <div class="form-row  ml-5 mr-5 mb-3 mt-2 text-right">
+                <div class="form-group col-md-12   ">
+                    <h6 class="form-label   ">Employee Details</h6>
+                </div>
+            </div>
+
+
+
+            <div class="form-row  ml-5   mr-5  ">
+            <div class="form-group col-md-2  ">
+                <label class="form-label small ">Full Name</label>
+            </div>
+            <div class="form-group col-md-4">
+                <input class="form-control form-control-sm " placeholder="First Name" asp-for="@Model.FirstName" />
+                <span class="text-danger" asp-validation-for="@Model.FirstName"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <input class="form-control form-control-sm " placeholder="Last Name" asp-for="@Model.LastName" />
+                <span class="text-danger" asp-validation-for="@Model.LastName"></span>
+            </div>
+        </div>
+
+            <div class="form-row  ml-5   mr-5   ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Position Title</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.PositionTitle" />
+                    <span class="text-danger" asp-validation-for="@Model.PositionTitle"></span>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5   ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Email</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.Email" />
+                    <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5   ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Phone</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " placeholder="(xxx)xxx-xxxx" asp-for="@Model.Phone" />
+                    <span class="text-danger" asp-validation-for="@Model.Phone"></span>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5    ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Campus</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <select class="form-control form-control-sm" asp-for="@Model.CampusId"
+                            asp-items="@(new SelectList(Model.Campuses,
+                                                "CampusId", "Name", Model.CampusId))">
+                        <option value="">Select One</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.CampusId"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5 mr-5 mb-3 mt-2 text-right">
+                <div class="form-group col-md-12   ">
+                    <h6 class="form-label  ">Account Details</h6>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5  ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Username</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.Username" />
+                    <span class="text-danger" asp-validation-for="@Model.Username"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row justify-content-end form-section-footer bg-white border-0  pr-2 mt-2">
+                <div class="col-md-2 ">
+                    <button type="submit" class="btn btn-success btn-block ">
+                        <span>
+                            <i class="fas fa-edit text-white"></i>
+                        </span>
+                        Update
+                    </button>
+
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-secondary btn-block" asp-action="List">Cancel </a>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="form-row mb-2 ">
-        <div class="col-sm-3 ">
-            <small>First Name</small>
-            <input class="form-control form-control-sm" asp-for="FirstName" />
-            <span class="text-danger" asp-validation-for="FirstName"></span>
-        </div>
-        <div class="col-sm-3 ">
-            <small>Last Name</small>
-            <input class="form-control form-control-sm" asp-for="LastName" />
-            <span class="text-danger" asp-validation-for="LastName"></span>
-        </div>
-    </div>
 
-    <div class="form-row mb-2">
-        <div class="col-sm-6">
-            <small>Email</small>
-            <input class="form-control form-control-sm " asp-for="Email" />
-            <span class="text-danger" asp-validation-for="Email"></span>
-        </div>
-    </div>
-
-    <div class="form-row mb-2">
-        <div class="col-sm-6 ">
-            <small>Username</small>
-            <input class="form-control form-control-sm" asp-for="Username" />
-            <span class="text-danger " asp-validation-for="Username"></span>
-        </div>
-    </div>
-
-
-
-    <div class="form-row border-bottom mb-3 mt-4 ">
-        <div class="col-sm-12 ">
-            <h6>Employee Details</h6>
-        </div>
-    </div>
-
-    <div class="form-row mb-2">
-        <div class="col-sm-6 ">
-            <small>Phone Number</small>
-            <input class="form-control form-control-sm " asp-for="Phone" />
-            <span class="text-danger  Validation" asp-validation-for="Phone"></span>
-        </div>
-    </div>
-
-
-    <div class="form-row mb-2">
-        <div class="col-sm-6">
-            <small>Postion</small>
-            <input class="form-control form-control-sm " asp-for="PositionTitle" />
-            <span class="text-danger" asp-validation-for="PositionTitle"></span>
-        </div>
-    </div>
-
-    <div class="form-row mb-5">
-        <div class="col-sm-6">
-            <small> Campus</small>
-            <select class="form-control form-control-sm" asp-for="@Model.CampusId"
-                    asp-items="@(new SelectList(Model.Campuses,
-                                    "CampusId", "Name", Model.CampusId))">
-                <option value="">Select a Campus</option>
-            </select>
-            <span class="text-danger" asp-validation-for="@Model.CampusId"></span>
-        </div>
-    </div>
-
-    <input type="hidden" asp-for="UserId" />
-
-    <button type="submit" class="btn bg-success">Save</button>
-    <a class="btn btn-danger" asp-action="List">Cancel</a>
 </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

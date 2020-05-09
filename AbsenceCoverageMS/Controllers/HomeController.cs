@@ -30,6 +30,10 @@ namespace AbsenceCoverageMS.Controllers
                 {
                     return RedirectToAction("Index", "Home", new { Area = "Admin" });
                 }
+                else if(User.IsInRole("Power-User"))
+                {
+                    return RedirectToAction("Index", "Home", new { Area = "PowerUser" });
+                }
 
                 //If Operations
                 //If Teacher

@@ -8,7 +8,7 @@
 <!--View used for Add, Edit, and Delete-->
 
 <div class="view-header">
-    <h3>@(action == "Edit" ? "Edit" : "") Absence Request   </h3>
+    <h6>@(action == "Edit" ? "Edit" : "") Absence Request   </h6>
 </div>
 
 
@@ -35,20 +35,23 @@
 
 
     <div class="row justify-content-center  ">
-        <div class="col-md-8  form-section  shadow ">
+        <div class="col-md-11  form-section  shadow ">
 
             <div class="form-row form-section-header ">
                 <div class=" col-md-12  ">
-                    <h6>Absence Details </h6>
+                    <h6>Absence Request </h6>
                 </div>
             </div>
 
 
             @if (action == "Edit")
             {
-                <div class="form-row ml-5 ">
-                    <div class="form-group col-md-6  ">
-                        <label class="form-label small ">Absence Request #</label>
+
+                <div class="form-row ml-5   ">
+                    <div class="form-group col-md-2  ">
+                        <label class=" font-weight-bold small ">Absence Request #</label>
+                    </div>
+                    <div class="col-md-6">
                         <input class="form-control form-control-sm" readonly asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
                     </div>
                 </div>
@@ -184,7 +187,6 @@
 
 
             <div class="form-row  ml-5">
-                @*<label class="form-label  mr-3 mt-2">Periods : </label>*@
                 <div class="form-group col-md-8">
                     <label class="form-label  mr-3 mt-2 mb-2">Periods : </label>
                     @for (int i = 0; i < Model.SelectablePeriods.Count(); i++)
@@ -211,12 +213,12 @@
                     }
                     else
                     {
-                    <button type="submit" class="btn btn-warning btn-block text-white ">
-                        <span>
-                            <i class="fas fa-edit text-white"></i>
-                        </span>
-                        Update
-                    </button>
+                        <button type="submit" class="btn btn-warning btn-block text-white ">
+                            <span>
+                                <i class="fas fa-edit text-white"></i>
+                            </span>
+                            Update
+                        </button>
                     }
 
                 </div>

@@ -1,0 +1,165 @@
+﻿
+@model UserRolesViewModel
+
+@{
+    ViewData["Title"] = "UserRoles";
+}
+
+
+
+
+
+<div class="view-header  ">
+    <h6>User Roles </h6>
+</div>
+
+
+
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
+    </div>
+}
+
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
+
+    </div>
+}
+
+
+
+
+<div class="row  justify-content-center ">
+    <div class="col-md-11  form-section  ">
+
+        <div class="form-row form-section-header ">
+            <div class=" col-md-12  ">
+                <h6>User Roles </h6>
+            </div>
+        </div>
+
+
+        <div class="row  ml-5  mr-5">
+            <div class="col-md-12 view-header">
+                <h3>@Model.FullName</h3>
+                <h6 class="mb-0">@Model.UserName</h6>
+                <label>@Model.PositionTitle</label>
+            </div>
+        </div>
+
+
+
+ 
+
+
+
+
+        <div class="form-row  ml-5  justify-content-center  ">
+            <div class="col-md-10   ">
+
+                <form method="post" asp-action="AddRoleToUser">
+
+                    <div class="form-row ">
+                        <div class=" col-md-5">
+                            <label class=" ">Available Roles</label>
+                            <select class="form-control form-control-sm" asp-for="@Model.RoleId"
+                                    asp-items="@(new SelectList(Model.AvailableRoles,
+                                                    "Id", "Name", Model.RoleId))">
+                                <option value="">Select One</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" asp-for="@Model.UserId" />
+
+                        <div class=" col-md-2  mt-4">
+                            <button class="btn btn-primary  btn-sm ">Add Role To User</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+
+        <div class="form-row  mt-4  mb-5 ml-5  justify-content-center ">
+            <div class="col-md-10">
+
+                <div class="form-row">
+                    <div class="col-md-12  view-header">
+                        <h4>User Roles</h4>
+                    </div>
+                </div>
+
+                @if (Model.UserRoles.Count() == 0)
+                {
+                    <p class=" m-0 ">None at the moment.</p>
+
+                }
+                else
+                {
+
+                    <table class="table   table-sm  shadow-sm  mb-0">
+                        <thead >
+                            <tr>
+                                <th class="col-md-1">Role</th>
+                                <th class="col-md-1">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var role in Model.UserRoles)
+                            {
+                                <tr>
+                                    <td class="pl-5 " >@role.Name</td>
+                                    <td>
+                                        <form method="post" asp-action="DeleteRoleFromUser">
+                                            <input hidden asp-for="@Model.UserId" />
+                                            <button type="submit" class="btn btn-danger btn-sm" name="RoleId" value="@role.Id">
+                                                <span>
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12  text-right ">
+        <a class="btn btn-link " asp-action="List">Return to Users </a>
+    </div>
+</div>
+
+
+
+
+
+
+

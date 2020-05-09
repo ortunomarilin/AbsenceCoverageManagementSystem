@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AbsenceCoverageMS.Areas.Admin.Controllers
+namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = "Power-User")]
+    [Area("PowerUser")]
     public class HomeController : Controller
     {
         public IActionResult Index()

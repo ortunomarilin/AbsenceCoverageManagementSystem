@@ -41,17 +41,19 @@ namespace AbsenceCoverageMS.Controllers
                 if (result.Succeeded)
                 {
                     var user = await signInManager.UserManager.FindByNameAsync(model.Username);
-                    
+
                     //Check to see which role the user is in to redirect to correct Home Page.  
                     bool isAdmin = await signInManager.UserManager.IsInRoleAsync(user, "admin");
+                    bool isPowerUser = await signInManager.UserManager.IsInRoleAsync(user, "power-user");
+
 
                     if (isAdmin)
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
-                    else
+                    else if(isPowerUser)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Home", new { Area = "PowerUser" });
                     }
                 }
             }

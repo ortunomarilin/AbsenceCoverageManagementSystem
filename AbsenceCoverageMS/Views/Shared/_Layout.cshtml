@@ -153,7 +153,7 @@
         }
 
 
-        @if (User.IsInRole("Manager"))
+        @if (User.IsInRole("Power-User"))
         {
             <li class="sidebarMenu-subHeader">
                 <span>
@@ -162,15 +162,15 @@
             </li>
 
             <li>
-                <a asp-controller="Absence" asp-action="List" asp-area="">
+                <a asp-controller="Absence" asp-action="List" asp-area="PowerUser">
                     <span class="icon">
                         <i class="far fa-calendar-check"></i>
                     </span>
-                    Manage Absence Requests
+                    Manage Absences
                 </a>
             </li>
             <li>
-                <a asp-controller="Absence" asp-action="List" asp-area="">
+                <a asp-controller="" asp-action="" asp-area="PowerUser">
                     <span class="icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </span>
@@ -178,7 +178,7 @@
                 </a>
             </li>
             <li>
-                <a asp-controller="Absence" asp-action="List" asp-area="">
+                <a asp-controller="" asp-action="" asp-area="PowerUser">
                     <span class="icon">
                         <i class="fas fa-building"></i>
                     </span>
@@ -215,27 +215,6 @@
                     Roles
                 </a>
             </li>
-
-            @*<li>
-                <a href="#downAdminTools" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <span class="icon">
-                        <i class="fas fa-tools"></i>
-                    </span>
-                    Admin
-                </a>
-                <ul class="collapse sidebarMenu-dropdown" id="downAdminTools">
-                    <li>
-                        <a asp-controller="User" asp-action="List" asp-area="Admin">
-                            Manage Users
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-controller="Role" asp-action="List" asp-area="Admin">
-                            Manage Roles
-                        </a>
-                    </li>
-                </ul>
-            </li>*@
         }
 
 
