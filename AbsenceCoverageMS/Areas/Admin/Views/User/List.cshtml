@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<User>
+@model UserListViewModel
 
 
 @{
@@ -10,7 +10,7 @@
 
 
 
-<div class="view-header">
+<div class="view-header mb-2 ">
     <h3>Users</h3>
 </div>
 
@@ -45,31 +45,53 @@
 }
 
 
-<div class="content-container shadow-sm">
 
-    <div class="form-row  ml-3">
-        <div class="form-group col-md-3  ">
-            <label class="form-label small ">Full Name</label>
-        </div>
-        <div class="form-group col-md-4">
-            <input class="form-control form-control-sm " placeholder="First Name" />
-            <span class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-4">
-            <input class="form-control form-control-sm " placeholder="Last Name" />
-            <span class="text-danger"></span>
-        </div>
+<div class="row justify-content-end  ">
+    <div class="col-md-2 text-right mr-3">
+        <a class="btn btn-info  btn-sm " asp-action="Add">
+            <span>
+                <i class="fas fa-plus-circle"></i>
+                New User
+            </span>
+        </a>
     </div>
+</div>
 
-    <div class="form-row  ml-3">
-        <div class="form-group col-md-3">
-            <label class="form-label small ">Position Title</label>
+<div class="content-container shadow-sm  mt-2">
+
+    <form asp-action="Search" method="post">
+
+        <div class="form-row ">
+            <div class="form-group col-md-5 ">
+                <label class="form-label small ">Search By Name or Username</label>
+                <input class="form-control  form-control-sm  bg-white" placeholder="Search by Name or Username"  name="SearchTerm" asp-for="@Model.Grid.Search"  />
+            </div>
+            <div class="col-md-2  pt-4 ">
+                <button type="submit" class="btn btn-sm btn-primary ">
+                    <span>
+                        <i class="fas fa-search"></i>
+                    </span>
+                    Search
+                </button>
+                <button class="btn btn-sm btn-danger "  type="submit"  name="clear" value="true"  >
+                    Clear
+                </button>
+            </div>
         </div>
-        <div class="form-group col-md-8">
-            <input class="form-control form-control-sm " />
-            <span class="text-danger"></span>
+
+        <div class="form-row ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Campus</label>
+                <select class="form-control form-control-sm"   name="Filters"  
+                        asp-items="@(new SelectList(Model.Campuses,
+                                        "CampusId", "Name", Model.Grid.Campus))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+
         </div>
-    </div>
+
+    </form>
 
 
 </div>
@@ -78,17 +100,13 @@
 
 
 
-<a class="btn btn-info btn-sm" asp-action="Add">
-    <span>
-        <i class="fas fa-plus-circle"></i>
-        New User
-    </span>
-</a>
-
 
 <div class="row justify-content-end">
-    <div class="col-md-2 text-right">
-        <label class="text-dark font-weight-bold ">Showing Page @*@Model.Route.PageNumber of @Model.TotalPages*@</label>
+    <div class="col-md-2 text-right mr-4">
+        <h6 class="form-label ">Showing Page @Model.Grid.PageNumber of @Model.TotalPages</h6>
+    </div>
+    <div>
+
     </div>
 </div>
 
@@ -99,7 +117,10 @@
             <tr>
                 <th>
                     Name
-                    <a>
+                    <a asp-action="List" 
+                       asp-route-sortby=@nameof(AbsenceCoverageMS.Models.DomainModels.User.FirstName)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceCoverageMS.Models.DomainModels.User.FirstName))
+                       class=" @(Model.Grid.SortBy == nameof(AbsenceCoverageMS.Models.DomainModels.User.FirstName) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -107,7 +128,10 @@
                 </th>
                 <th>
                     Username
-                    <a>
+                    <a asp-action="List"
+                       asp-route-sortby=@nameof(AbsenceCoverageMS.Models.DomainModels.User.UserName)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceCoverageMS.Models.DomainModels.User.UserName))
+                       class=" @(Model.Grid.SortBy == nameof(AbsenceCoverageMS.Models.DomainModels.User.UserName) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -115,32 +139,33 @@
                 </th>
                 <th>
                     Position Title
-                    <a>
-                        <span>
-                            <i class="fas fa-sort-down"></i>
-                        </span>
-                    </a>
                 </th>
-                <th>Email</th>
-                
                 <th>
-                    <a>
+                    Campus
+                    <a asp-action="List"
+                       asp-route-sortby=@nameof(AbsenceCoverageMS.Models.DomainModels.User.Campus.Name)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceCoverageMS.Models.DomainModels.User.Campus.Name))
+                       class=" @(Model.Grid.SortBy == nameof(AbsenceCoverageMS.Models.DomainModels.User.Campus.Name) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
                     </a>
                 </th>
-                <th colspan="4">Action</th>
+                
+
+                <th  class="  text-center" colspan="4">
+                    Action
+                </th>
             </tr>
         </thead>
         <tbody>
-            @foreach (User u in Model)
+            @foreach (User u in Model.Users)
             {
             <tr>
                 <td>@u.FullName</td>
                 <td>@u.UserName</td>
                 <td>@u.PositionTitle</td>
-                <td>@u.Email</td>
+                <td>@u.Campus.Name</td>
    
 
 
@@ -152,21 +177,21 @@
                     </a>
                 </td>
 
-                @*<td class="text-center">
+                <td class="text-center">
                     <a class="btn btn-success btn-sm" title="Edit" asp-action="Edit" asp-route-id="@u.Id">
                         <span>
                             <i class="fas fa-edit text-white"></i>
                         </span>
                     </a>
-                </td>*@
-                <td class="text-right">
+                </td>
+                <td class="text-center">
                     <a class="btn btn-sm btn-secondary " title="User Roles" asp-action="UserRoles" asp-route-id="@u.Id">
                         <span>
                             <i class="fas fa-users"></i>
                         </span>
                     </a>
                 </td>
-                <td class="text-left">
+                <td class="text-center">
                     <form method="post" title="Delete" asp-action="Delete" asp-route-id="@u.Id">
                         <button type="submit" class="btn btn-danger btn-sm">
                             <span>
@@ -182,27 +207,26 @@
         </tbody>
     </table>
 
-    @*@for (int i = 1; i <= Model.TotalPages; i++)
+    @for (int i = 1; i <= Model.TotalPages; i++)
         {
             <a asp-action="List"
-               asp-route-sortby="@Model.Route.SortBy"
-               asp-route-absencetype="@Model.Route.AbsenceType"
-               asp-route-duration="@Model.Route.Duration"
-               asp-route-status="@Model.Route.Status"
+               asp-route-sortby="@Model.Grid.SortBy"
+               asp-route-sortdirection="@Model.Grid.SortDirection"
+               asp-route-campus="@Model.Grid.Campus"
+               asp-route-search="@Model.Grid.Search"
                asp-route-pagenumber="@i"
-               asp-route-pagesize="@Model.Route.PageSize"
-               class="btn btn-link   @(i==Model.Route.PageNumber ? "active" : "" )">
-                @if (i == Model.Route.PageNumber)
+               asp-route-pagesize="@Model.Grid.PageSize"
+               class="btn btn-link   @(i == Model.Grid.PageNumber ? "active" : "" )">
+                @if (i == Model.Grid.PageNumber)
                 {
                     <u>@i</u>
-
                 }
                 else
                 {
                     @i
                 }
             </a>
-        }*@
+        }
 
 
 </div>

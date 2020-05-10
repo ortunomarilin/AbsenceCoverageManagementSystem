@@ -8,7 +8,7 @@
 <!--View used for Add, Edit, and Delete-->
 
 <div class="view-header">
-    <h6>@(action == "Edit" ? "Edit" : "") Absence Request   </h6>
+    <h5>@(action == "Edit" ? "Edit" : "") Absence Request   </h5>
 </div>
 
 
@@ -204,7 +204,7 @@
                 <div class="col-md-2 ">
                     @if (action == "Add")
                     {
-                        <button type="submit" class="btn btn-primary btn-block ">
+                        <button type="submit" class="btn btn-primary btn-block btn-sm">
                             <span>
                                 <i class="fas fa-check"></i>
                             </span>
@@ -213,7 +213,7 @@
                     }
                     else
                     {
-                        <button type="submit" class="btn btn-warning btn-block text-white ">
+                        <button type="submit" class="btn btn-warning btn-block text-white  btn-sm ">
                             <span>
                                 <i class="fas fa-edit text-white"></i>
                             </span>
@@ -223,7 +223,7 @@
 
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-secondary btn-block" asp-action="List">Cancel </a>
+                    <a class="btn btn-secondary btn-block  btn-sm " asp-action="List">Cancel </a>
                 </div>
             </div>
 

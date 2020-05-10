@@ -1,12 +1,13 @@
 ﻿ using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AbsenceCoverageMS.Areas.Admin.Models.ViewModels;
 using AbsenceCoverageMS.Models.DataLayer;
+using AbsenceCoverageMS.Models.DataLayer.QueryOptions;
 using AbsenceCoverageMS.Models.DataLayer.Repositories;
 using AbsenceCoverageMS.Models.DomainModels;
-using AbsenceCoverageMS.Models.ViewModels;
+using AbsenceCoverageMS.Models.DTO;
+using AbsenceCoverageMS.Models.Grid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -35,18 +36,53 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public IActionResult List()
+        public ViewResult List(UserGridDTO values)
         {
-            var users = userManager.Users.Include(u => u.Campus);
+            var gridBuilder = new UserGridBuilder(HttpContext.Session, values, nameof(AbsenceCoverageMS.Models.DomainModels.User.FirstName));
+
+            var options = new UserQueryOptions 
+            {
+                Include = "Campus",
+                OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
+            };
+            options.Search(gridBuilder);
+            options.Filter(gridBuilder);
+            options.Sort(gridBuilder);
 
 
+            var model = new UserListViewModel
+            {
+                Grid = gridBuilder.CurrentGrid,
+                Users = BuildQuery(options).ToList(),
+                Campuses = data.Campuses.List()
+            };
+            model.TotalPages = gridBuilder.GetTotalPages(model.Users.Count());
+            model.Users = model.Users.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
 
-            return View(users);
+            return View(model);
         }
 
 
+        public RedirectToActionResult Search(string[] filters, string searchTerm, bool clear = false)
+        {
+            //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
+            var gridBuilder = new UserGridBuilder(HttpContext.Session);
+            
+            if (clear)
+            {
+                gridBuilder.ClearSearchOptions();
+            }
+            else
+            {
+                //Set new grid values and serialize. 
+                gridBuilder.SetSearchOptions(filters, searchTerm);
+                gridBuilder.SerializeRoutes();
+            }
 
+            //Redirect to the List Action Method with updated grid.
+            return RedirectToAction("List", gridBuilder.CurrentGrid);
 
+        }
 
 
 
@@ -183,7 +219,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         }
 
 
-
+        [HttpGet]
         public async Task<ViewResult> UserRoles(string id)
         {
             User user = await userManager.FindByIdAsync(id);
@@ -301,6 +337,40 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
             }
             TempData["FailureMessage"] = "Unable to delete the user. Please try again.";
             return RedirectToAction("List");
+        }
+
+
+
+        private IQueryable<User> BuildQuery(QueryOptions<User> options)
+        {
+            var query = userManager.Users;
+
+            //Includes
+            if (options.HasInclude)
+            {
+                foreach (string include in options.GetIncludes())
+                {
+                    query = query.Include(include);
+                }
+            }
+            //Where
+            if (options.HasWhere)
+            {
+                foreach (var where in options.WhereExpressions)
+                {
+                    query = query.Where(where);
+                }
+            }
+            //OrderBy
+            if (options.HasOrderBy)
+            {
+                if (options.OrderByDirection == "desc")
+                    query = query.OrderByDescending(options.OrderBy);
+                else
+                    query = query.OrderBy(options.OrderBy);
+            }
+
+            return query;
         }
     }
 }

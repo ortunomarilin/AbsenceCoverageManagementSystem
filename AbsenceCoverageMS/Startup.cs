@@ -73,17 +73,15 @@ namespace AbsenceCoverageMS
             app.UseEndpoints(endpoints =>
             {
 
+
+
                 // route for Admin area
                 endpoints.MapAreaControllerRoute(
                     name: "admin",
                     areaName: "Admin",
                     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-                // route for Power-User area
-                endpoints.MapAreaControllerRoute(
-                    name: "poweruser",
-                    areaName: "PowerUser",
-                    pattern: "PowerUser/{controller=Home}/{action=Index}/{id?}");
+
 
 
 
@@ -93,10 +91,15 @@ namespace AbsenceCoverageMS
                     pattern: "{controller}/{action}/fromdate/{fromdate}/todate/{todate}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
 
 
+
                 // route for filtering and sorting 
                 endpoints.MapControllerRoute(
                     name: "",
                     pattern: "{controller}/{action}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
+
+
+
+
 
                 //Default Route
                 endpoints.MapControllerRoute(

@@ -203,15 +203,6 @@ tbody {
 
 
 
-
-
-/*.temp-data-message, .validation-summary-errors {
-    padding-left: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}*/
-
-
 .validation-summary-valid{
     display: none;
 }

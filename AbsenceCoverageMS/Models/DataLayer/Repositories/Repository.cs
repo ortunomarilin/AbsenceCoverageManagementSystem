@@ -99,7 +99,6 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
             //OrderBy
             if (options.OrderBy != null)
             {
-                //query = query.OrderBy(options.OrderBy);
 
                 if (options.OrderByDirection == "desc")
                     query = query.OrderByDescending(options.OrderBy);

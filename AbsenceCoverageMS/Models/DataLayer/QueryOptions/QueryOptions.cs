@@ -27,7 +27,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
             set
             {
                 //If the List that holds the where expressions is null initialize it so you can add the current Where Expression to the List.
-                if(WhereExpressions == null)
+                if (WhereExpressions == null)
                 {
                     WhereExpressions = new WhereExpressions<T>();
                 }
@@ -39,7 +39,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
         //Will hold all the includes in a string array. 
         private string[] includes;
-        
+
         //Will Take in a string representing the includes, and store them in the includes string array.  
         public string Include
         {
@@ -48,15 +48,29 @@ namespace AbsenceCoverageMS.Models.DataLayer
                 includes = value.Replace(" ", "").Split(",");
             }
         }
-      
+
         //Method to get the includes string array
         public string[] GetIncludes()
         {
             return includes;
         }
-    }
-}
 
-//For the pupose of workign with multiple Where clauses. 
-//This class will contain a list of where expressions. 
-public class WhereExpressions<T> : List<Expression<Func<T, bool>>> { }
+
+
+        //Set Flags 
+        public bool HasInclude => GetIncludes() != null;
+        public bool HasWhere => WhereExpressions != null;
+        public bool HasOrderBy => OrderBy != null;
+        public bool HasPaging => PageNumber > 0 && PageSize > 0;
+
+    }
+
+
+
+    //For the pupose of workign with multiple Where clauses. 
+    //This class will contain a list of where expressions. 
+    public class WhereExpressions<T> : List<Expression<Func<T, bool>>> { }
+
+
+
+}
