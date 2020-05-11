@@ -1,8 +1,8 @@
 # Absence & Coverage Management System
-A simple absence and coverage management system, build to help school district manage both employee absences, and class coverage if needed. 
+A simple absence and coverage management system, build to help school district manage both employee absences, and class coverage if needed at a campus level. 
 
 ## Introduction 
-This project was created to consolidate employee absence requests and coverage in one place. The idea for the project was inspired by my past experience workign at a school district and assisting with the management of both PTO requests and coverage. In addtion, implementing this project served as an opportunity to practice what I learned reading about .NET Core. 
+This project was created to consolidate employee absence requests and coverage in one place. The idea for the project was inspired by my past experience working at a school district and assisting with the management of both PTO requests and coverage. In addtion, implementing this project served as an opportunity to practice what I learned reading about .NET Core. 
 
 ## Utilized 
 This project was created utilizing the following technologies: 
