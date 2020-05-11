@@ -34,6 +34,11 @@ This project is expected to have the following functionalities for the following
 *	User – Absence Totals
 *	User – User Profile Settings 
 
+## Screen Shots
+
+User - Request An Absence 
+<img src="Images/UserRequestAnAbsence.png">
+
 ## Author 
 Marilin Ortuno
 
