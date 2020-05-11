@@ -45,20 +45,18 @@
     <form asp-action="SearchOptions" method="post">
 
         <div class="form-row ">
-            <div class="form-group col-md-9 ">
+            <div class="form-group col-md-4 ">
                 <label class="form-label small ">Search By Name</label>
-                <input class="form-control  form-control-sm  bg-white" placeholder="Search by Name" name="SearchTerm" asp-for="@Model.Grid.Search" />
-            </div>
-            <div class="col-md-2  pt-4 ">
-                <button type="submit" class="btn btn-sm btn-primary ">
-                    <span>
-                        <i class="fas fa-search"></i>
-                    </span>
-                    Search
-                </button>
-                <button class="btn btn-sm btn-danger " type="submit" name="clear" value="true">
-                    Clear
-                </button>
+                <div class="input-group mr-2">
+                    <div class="input-group">
+                        <input class="form-control  form-control-sm  bg-white" placeholder="Enter Last Name or First Name" name="SearchTerm" asp-for="@Model.Grid.Search" />
+                        <div class="input-group-append">
+                            <span class="input-group-text  form-icon">
+                                <i class="fas fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -128,9 +126,17 @@
                 </select>
             </div>
 
-            @*<div class=" ml-2 pt-4">
-                <button type="submit" class="btn btn-sm btn-primary">Apply Filter</button>
-            </div>*@
+            <div class=" ml-2 pt-4">
+                <button type="submit" class="btn btn-sm btn-primary  search-btn ">
+                    Search
+                </button>
+            </div>
+            <div class=" ml-2 pt-4">
+                <button class="btn btn-sm btn-outline-primary  search-btn " type="submit" name="clear" value="true">
+                    Clear
+                </button>
+            </div>
+
         </div>
 
     </form>
@@ -139,17 +145,17 @@
 
 
 
-<div class="row justify-content-end">
-    @*<div class="col-md-2 text-left ml-3 pb-2">
-        <a class="btn btn-dark  btn-sm " asp-action="Add">
+<div class="row justify-content-between">
+    <div class="col-md-2 text-left ml-3 pb-2">
+        <a class="btn btn-info  btn-sm " asp-action="Add">
             <span>
                 <i class="fas fa-plus"></i>
                 New User
             </span>
         </a>
-    </div>*@
+    </div>
     <div class="col-md-2 text-right mr-4  pt-2">
-        <h6 class="form-label font-weight-normal ">Showing Page @*@Model.Grid.PageNumber of @Model.TotalPages*@</h6>
+        <h6 class="form-label font-weight-normal ">Showing Page @Model.Grid.PageNumber of @Model.TotalPages</h6>
     </div>
 </div>
 
@@ -163,12 +169,13 @@
                     <a asp-action="List"
                        asp-route-sortby=@nameof(AbsenceCoverageMS.Models.DomainModels.User.LastName)
                        asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceCoverageMS.Models.DomainModels.User.LastName))
-                       asp-route-absencetype="@Model.Grid.AbsenceType"
-                       asp-route-duration="@Model.Grid.Duration"
-                       asp-route-status="@Model.Grid.Status"
                        asp-route-search="@Model.Grid.Search"
                        asp-route-fromdate="@Model.Grid.FromDate"
                        asp-route-todate="@Model.Grid.ToDate"
+                       asp-route-absencetype="@Model.Grid.AbsenceType"
+                       asp-route-duration="@Model.Grid.Duration"
+                       asp-route-needcoverage="@Model.Grid.NeedCoverage"
+                       asp-route-status="@Model.Grid.Status"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceCoverageMS.Models.DomainModels.User.LastName) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
@@ -183,19 +190,14 @@
                     <a asp-action="List"
                        asp-route-sortby=@nameof(AbsenceRequest.StartDate)
                        asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.StartDate))
+                       asp-route-search="@Model.Grid.Search"
+                       asp-route-fromdate="@Model.Grid.FromDate"
+                       asp-route-todate="@Model.Grid.ToDate"
                        asp-route-absencetype="@Model.Grid.AbsenceType"
                        asp-route-duration="@Model.Grid.Duration"
+                       asp-route-needcoverage="@Model.Grid.NeedCoverage"
                        asp-route-status="@Model.Grid.Status"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.StartDate) ? "text-primary" : "text-secondary")">
-                        @*<a asp-action="List"
-            asp-route-sortby="date"
-            asp-route-sortdirection="@(Model.Grid.SortDirection == "asc" ? "desc" : "asc")"
-            asp-route-absencetype="@Model.Grid.AbsenceType"
-            asp-route-duration="@Model.Grid.Duration"
-            asp-route-status="@Model.Grid.Status"
-            asp-route-pagenumber="@Model.Grid.PageNumber"
-            asp-route-pagesize="@Model.Grid.PageSize"
-            class=" @(Model.Grid.SortBy == "date" ? "text-primary" : "text-secondary")">*@
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -206,19 +208,14 @@
                     <a asp-action="List"
                        asp-route-sortby=@nameof(AbsenceRequest.AbsenceType)
                        asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.AbsenceType))
+                       asp-route-search="@Model.Grid.Search"
+                       asp-route-fromdate="@Model.Grid.FromDate"
+                       asp-route-todate="@Model.Grid.ToDate"
                        asp-route-absencetype="@Model.Grid.AbsenceType"
                        asp-route-duration="@Model.Grid.Duration"
+                       asp-route-needcoverage="@Model.Grid.NeedCoverage"
                        asp-route-status="@Model.Grid.Status"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.AbsenceType) ? "text-primary" : "text-secondary")">
-                        @*<a asp-action="List"
-            asp-route-sortby="absencetype"
-            asp-route-sortdirection="@(Model.Grid.SortDirection == "asc" ? "desc" : "asc")"
-            asp-route-absencetype="@Model.Grid.AbsenceType"
-            asp-route-duration="@Model.Grid.Duration"
-            asp-route-status="@Model.Grid.Status"
-            asp-route-pagenumber="@Model.Grid.PageNumber"
-            asp-route-pagesize="@Model.Grid.PageSize"
-            class=" @(Model.Grid.SortBy == "absencetype" ? "text-primary" : "text-secondary")">*@
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -229,19 +226,14 @@
                     <a asp-action="List"
                        asp-route-sortby=@nameof(AbsenceRequest.DurationType)
                        asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.DurationType))
+                       asp-route-search="@Model.Grid.Search"
+                       asp-route-fromdate="@Model.Grid.FromDate"
+                       asp-route-todate="@Model.Grid.ToDate"
                        asp-route-absencetype="@Model.Grid.AbsenceType"
                        asp-route-duration="@Model.Grid.Duration"
+                       asp-route-needcoverage="@Model.Grid.NeedCoverage"
                        asp-route-status="@Model.Grid.Status"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.DurationType) ? "text-primary" : "text-secondary")">
-                        @*<a asp-action="List"
-            asp-route-sortby="duration"
-            asp-route-sortdirection="@(Model.Grid.SortDirection == "asc" ? "desc" : "asc")"
-            asp-route-absencetype="@Model.Grid.AbsenceType"
-            asp-route-duration="@Model.Grid.Duration"
-            asp-route-status="@Model.Grid.Status"
-            asp-route-pagenumber="@Model.Grid.PageNumber"
-            asp-route-pagesize="@Model.Grid.PageSize"
-            class=" @(Model.Grid.SortBy == "duration" ? "text-primary" : "text-secondary")">*@
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -254,19 +246,14 @@
                     <a asp-action="List"
                        asp-route-sortby=@nameof(AbsenceRequest.StatusType)
                        asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.StatusType))
+                       asp-route-search="@Model.Grid.Search"
+                       asp-route-fromdate="@Model.Grid.FromDate"
+                       asp-route-todate="@Model.Grid.ToDate"
                        asp-route-absencetype="@Model.Grid.AbsenceType"
                        asp-route-duration="@Model.Grid.Duration"
+                       asp-route-needcoverage="@Model.Grid.NeedCoverage"
                        asp-route-status="@Model.Grid.Status"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.StatusType) ? "text-primary" : "text-secondary")">
-                        @*<a asp-action="List"
-            asp-route-sortby="status"
-            asp-route-sortdirection="@(Model.Grid.SortDirection == "asc" ? "desc" : "asc")"
-            asp-route-absencetype="@Model.Grid.AbsenceType"
-            asp-route-duration="@Model.Grid.Duration"
-            asp-route-status="@Model.Grid.Status"
-            asp-route-pagenumber="@Model.Grid.PageNumber"
-            asp-route-pagesize="@Model.Grid.PageSize"
-            class=" @(Model.Grid.SortBy == "status" ? "text-primary" : "text-secondary")">*@
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -309,7 +296,7 @@
                         <span>
                             <i class="fas fa-binoculars"></i>
                         </span>
-                        Details
+                        @*Details*@
                     </a>
                 </td>
 
@@ -342,8 +329,13 @@
     {
         <a asp-action="List"
            asp-route-sortby="@Model.Grid.SortBy"
+           asp-route-sortdirection="@Model.Grid.SortDirection"
+           asp-route-search="@Model.Grid.Search"
+           asp-route-fromdate="@Model.Grid.FromDate"
+           asp-route-todate="@Model.Grid.ToDate"
            asp-route-absencetype="@Model.Grid.AbsenceType"
            asp-route-duration="@Model.Grid.Duration"
+           asp-route-needcoverage="@Model.Grid.NeedCoverage"
            asp-route-status="@Model.Grid.Status"
            asp-route-pagenumber="@i"
            asp-route-pagesize="@Model.Grid.PageSize"

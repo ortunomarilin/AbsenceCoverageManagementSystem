@@ -51,10 +51,12 @@ namespace AbsenceCoverageMS.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "Admin" });
                     }
-                    else if(isPowerUser)
+                    if(isPowerUser)
                     {
                         return RedirectToAction("Index", "Home", new { Area = "PowerUser" });
                     }
+
+                    return RedirectToAction("Index", "Home");
                 }
             }
 

@@ -91,17 +91,17 @@ namespace AbsenceCoverageMS
 
 
 
-                // route for date range, filtering, and sorting 
-                endpoints.MapControllerRoute(
-                    name: "",
-                    pattern: "{controller}/{action}/fromdate/{fromdate}/todate/{todate}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
+                //// route for date range, filtering, and sorting 
+                //endpoints.MapControllerRoute(
+                //    name: "",
+                //    pattern: "{controller}/{action}/fromdate/{fromdate}/todate/{todate}/filterby/{absencetype}/{duration}/{status}/{needcoverage}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
 
 
 
-                // route for filtering and sorting 
-                endpoints.MapControllerRoute(
-                    name: "",
-                    pattern: "{controller}/{action}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
+                //// route for filtering and sorting 
+                //endpoints.MapControllerRoute(
+                //    name: "",
+                //    pattern: "{controller}/{action}/filterby/{absencetype}/{duration}/{status}/{needcoverage}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
 
 
 

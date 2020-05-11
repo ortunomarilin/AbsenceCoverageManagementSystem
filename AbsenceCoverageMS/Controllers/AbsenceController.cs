@@ -75,14 +75,21 @@ namespace AbsenceCoverageMS.Controllers
 
 
         [HttpPost]
-        public RedirectToActionResult Filter(string[] filters, string fromdate, string todate)
+        public RedirectToActionResult Filter(string[] filters, string fromdate, string todate, bool clear = false)
         {
             //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
 
-            //Set new filter value to current route and serialize. 
-            gridBuilder.SetSearchOptions(filters, fromdate, todate, "");
-            gridBuilder.SerializeRoutes();
+            if (clear)
+            {
+                gridBuilder.ClearSearchOptions();
+            }
+            else
+            {
+                //Set new filter value to current route and serialize. 
+                gridBuilder.SetSearchOptions(filters, fromdate, todate, null);
+                gridBuilder.SerializeRoutes();
+            }
 
             //Redirect to the List Action Method with updated routes 
             return RedirectToAction("List", gridBuilder.CurrentGrid);

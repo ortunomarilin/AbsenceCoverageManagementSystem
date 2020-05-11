@@ -197,6 +197,10 @@ tbody {
     border-radius: 20px;
 }
 
+.search-btn{
+    width: 100px;
+}
+
 
 
 .validation-summary-valid{

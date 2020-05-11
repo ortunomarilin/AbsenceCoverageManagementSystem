@@ -67,11 +67,7 @@ namespace AbsenceCoverageMS.Models.Grid
                 grid.FromDate = fromdate;
                 grid.ToDate = todate;
             }
-            else
-            {
-                grid.FromDate = null;
-                grid.ToDate = null;
-            }
+
 
             //After filtering set the current page to page-1 so you can start from beginning again. 
             grid.PageNumber = 1;
