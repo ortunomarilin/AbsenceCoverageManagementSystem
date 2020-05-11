@@ -37,7 +37,7 @@ This project is expected to have the following functionalities for the following
 ## Screen Shots
 
 User - Request An Absence 
-<img src="Images/UserRequestAnAbsence.png">
+<img src="Images/UserRequestAnAbsence.PNG">
 
 ## Author 
 Marilin Ortuno
