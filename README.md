@@ -39,6 +39,10 @@ This project is expected to have the following functionalities for the following
 User - Request An Absence 
 <img src="Images/UserRequestAnAbsence.PNG">
 
+User - Absence History 
+<img src="Images/UserAbsenceHistory.PNG">
+
+
 ## Author 
 Marilin Ortuno
 
