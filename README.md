@@ -24,9 +24,9 @@ This project is expected to have the following functionalities for the following
 * Admin - Manage Users 
 * Admin Manage Roles 
 *	Admin – Manage Absence Types 
-*	Manager – Manage Absence Requests 
-*	Manager – Manage Coverage 
-*	Manager – Manage Teacher Schedules 
+*	PowerUser – Manage Absence Requests 
+*	PowerUser – Manage Coverage 
+*	PowerUser – Manage Teacher Schedules 
 *	SubTeacher – Available Sub Jobs 
 *	SubTeacher – Sub Job History 
 *	User – Request an Absence 
