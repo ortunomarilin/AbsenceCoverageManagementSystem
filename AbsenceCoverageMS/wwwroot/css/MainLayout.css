@@ -16,7 +16,6 @@ body {
 }
 
 .sidebarMenu, .view-content {
-    /*top: 101px;*/
     top: 57px;
 }
 
@@ -36,17 +35,22 @@ body {
         font-size: 15px;
     }
 
-        .myNavbar .navbar-brand:hover, .myNavbar .nav-link:hover {
-            color: rgb(204, 226, 245);
-        }
+.myNavbar:hover, .navbar-brand:hover, .nav-link:hover {
+    /*color: rgb(204, 226, 245);*/
+    color: #c7e0f4;
+}
+
+
+
 
 
 
 .sidebarMenu {
-    padding-top: 10px;
-    width: 230px;
-    height: 100%;
+    padding-top: 5px;
+    width: 235px;
+    height: 94%;
     z-index: 1;
+    overflow: auto;
 }
 
 
@@ -58,10 +62,10 @@ body {
     .sidebarMenu ul a {
         text-decoration: none;
         display: block;
-        padding: 5px 5px 5px 15px;
-        color: #c7e0f4;
+        padding: 2px 5px 5px 15px;
+        color:white;
         transition: .4s;
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .sidebarMenu a:hover {
@@ -74,10 +78,9 @@ body {
     font-family: Arial;
     font-size: medium;
     text-shadow: 5px 5px 10px black;
-    padding: 10px 10px 5px 10px;
+    padding: 5px 10px 5px 10px;
     border-bottom: 1px solid rgba(179, 178, 178, 0.3);
 }
-
 
 
 .icon {
@@ -188,17 +191,19 @@ tbody {
 
 
 
-.search-container {
+/*.search-container {
     background-color: white;
     margin: 20px 15px 25px 15px;
     padding: 10px 20px 10px 20px;
-}
+    border-radius: 15px;
+}*/
 
 
 .content-container {
     background-color: white;
     margin: 20px 15px 25px 15px;
     padding: 10px 20px 10px 20px;
+    border-radius: 20px;
 }
 
 
@@ -217,3 +222,6 @@ tbody {
     border: solid 1px #dc3545; 
 }
 
+.drop {
+    background-color: #0f3d77;
+}

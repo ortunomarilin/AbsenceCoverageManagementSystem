@@ -81,6 +81,12 @@ namespace AbsenceCoverageMS
                     areaName: "Admin",
                     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
+                // route for Admin area
+                endpoints.MapAreaControllerRoute(
+                    name: "poweruser",
+                    areaName: "PowerUser",
+                    pattern: "PowerUser/{controller=Home}/{action=Index}/{id?}");
+
 
 
 

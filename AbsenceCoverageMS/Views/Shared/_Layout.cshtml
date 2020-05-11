@@ -70,7 +70,7 @@
         </nav>
     </header>
 
-<aside id="sidebar" class="sidebarMenu ">
+<aside id="sidebar" class="sidebarMenu  pt-3">
 
     <ul class="list-unstyled components">
 
@@ -91,7 +91,7 @@
         </li>
 
         <li>
-            <a asp-controller="Home" asp-action="Index" asp-area="" >
+            <a asp-controller="Home" asp-action="Index" asp-area="">
                 <span class="icon" style="font-size: 15px">
                     <i class="far fa-address-card"></i>
                 </span>
@@ -99,7 +99,7 @@
             </a>
         </li>
 
-        <li class="sidebarMenu-subHeader">
+        <li class="sidebarMenu-subHeader  pt-3 ">
             <span>
                 Absences
             </span>
@@ -110,7 +110,7 @@
                 <span class="icon">
                     <i class="fas fa-history"></i>
                 </span>
-                Absence History 
+                Absence History
             </a>
         </li>
 
@@ -123,46 +123,118 @@
             </a>
         </li>
 
-
-
-
-        @if (User.IsInRole("Sub-Teacher"))
+        @if (User.IsInRole("Admin"))
         {
-            <li class="sidebarMenu-subHeader">
+
+            <li class="sidebarMenu-subHeader  pt-3">
                 <span>
-                    Sub Jobs
+                    Admin
                 </span>
             </li>
 
+
             <li>
-                <a asp-controller="Absence" asp-action="List" asp-area="">
+                <a href="#Users" data-toggle="collapse" class="">
                     <span class="icon">
-                        <i class="fas fa-history"></i>
+                        <i class="fas fa-user"></i>
                     </span>
-                    Sub Job History
+                    Users
+                    <span class="float-right mr-3 ">
+                        <i class="fas fa-sort-down"></i>
+                    </span>
                 </a>
+                <ul class="collapse sidebarMenu-dropdown  drop " id="Users">
+                    <li>
+                        <a class="pl-5 " asp-controller="User" asp-action="List" asp-area="Admin">
+                            Manage Users
+                        </a>
+                    </li>
+                    <li>
+                        <a class="pl-5 " asp-controller="User" asp-action="Add" asp-area="Admin">
+                            <span class="icon ml-0 pl-0 ">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            New User
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#Roles" data-toggle="collapse" class="">
+                    <span class="icon">
+                        <i class="fas fa-users"></i>
+                    </span>
+                    Roles
+                    <span class="float-right mr-3 ">
+                        <i class="fas fa-sort-down"></i>
+                    </span>
+                </a>
+                <ul class="collapse sidebarMenu-dropdown  drop " id="Roles">
+                    <li>
+                        <a class="pl-5 " asp-controller="Role" asp-action="List" asp-area="Admin">
+                            Manage Roles
+                        </a>
+                    </li>
+                    <li>
+                        <a class="pl-5 " asp-controller="Role" asp-action="Add" asp-area="Admin">
+                            <span class="icon ml-0 pl-0 ">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            New Role
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li>
-                <a asp-controller="Absence" asp-action="List" asp-area="">
+                <a href="#AbsenceTypes" data-toggle="collapse" class="">
                     <span class="icon">
-                        <i class="fas fa-chalkboard"></i>
+                        <i class="far fa-calendar"></i>
                     </span>
-                    Available Sub Jobs
+                    Absence Types
+                    <span class="float-right mr-3 ">
+                        <i class="fas fa-sort-down"></i>
+                    </span>
+                </a>
+                <ul class="collapse sidebarMenu-dropdown  drop " id="AbsenceTypes">
+                    <li>
+                        <a class="pl-5 " asp-controller="" asp-action="" asp-area="Admin">
+                            Manage Absence Types
+                        </a>
+                    </li>
+                    <li>
+                        <a class="pl-5 " asp-controller="" asp-action="" asp-area="Admin">
+                            <span class="icon ml-0 pl-0 ">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            New Absence Type
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a asp-controller="" asp-action="" asp-area="Admin">
+                    <span class="icon">
+                        <i class="fas fa-building"></i>
+                    </span>
+                    Campus Info
                 </a>
             </li>
+
+
         }
 
-
-        @if (User.IsInRole("Power-User"))
+        @if (User.IsInRole("Power-User") || User.IsInRole("Admin"))
         {
-            <li class="sidebarMenu-subHeader">
+            <li class="sidebarMenu-subHeader  pt-3 ">
                 <span>
                     Operations
                 </span>
             </li>
 
             <li>
-                <a asp-controller="Absence" asp-action="List" asp-area="PowerUser">
+                <a asp-controller="" asp-action="" asp-area="PowerUser">
                     <span class="icon">
                         <i class="far fa-calendar-check"></i>
                     </span>
@@ -177,47 +249,34 @@
                     Manage Coverage
                 </a>
             </li>
-            <li>
-                <a asp-controller="" asp-action="" asp-area="PowerUser">
-                    <span class="icon">
-                        <i class="fas fa-building"></i>
-                    </span>
-                    Campus Info
-                </a>
-            </li>
         }
 
 
-
-
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole("Sub-Teacher") || User.IsInRole("Admin"))
         {
-
-            <li class="sidebarMenu-subHeader">
+            <li class="sidebarMenu-subHeader  pt-3 ">
                 <span>
-                    Admin
+                    Sub Jobs
                 </span>
             </li>
 
             <li>
-                <a asp-controller="User" asp-action="List" asp-area="Admin">
+                <a asp-controller="" asp-action="" asp-area="">
                     <span class="icon">
-                        <i class="fas fa-user-circle"></i>
+                        <i class="fas fa-history"></i>
                     </span>
-                    Users
+                    Sub Job History
                 </a>
             </li>
             <li>
-                <a asp-controller="Role" asp-action="List" asp-area="Admin">
+                <a asp-controller="" asp-action="" asp-area="">
                     <span class="icon">
-                        <i class="fas fa-users"></i>
+                        <i class="fas fa-chalkboard"></i>
                     </span>
-                    Roles
+                    Available Sub Jobs
                 </a>
             </li>
         }
-
-
 
 
     </ul>

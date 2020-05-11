@@ -7,85 +7,159 @@
 
 
 
-<h1 class="viewHeader">@Model.RoleName Role</h1>
-
-<br />
-
-<div class="container">
-    <br />
-    @if(TempData.Keys.Contains("ErrorMessage"))
-    {
-        <div class="border bg-danger">
-            <h6 class="text-left text-light">* Error : @TempData["ErrorMessage"]</h6>
-        </div>
-    }
-
-    <br />
-
-    <form method="post" asp-action="AddUserToRole" asp-route-id="@Model.Id"> 
-        <div class="form-row border-bottom">
-            <h5>Add Users to Role</h5>
-        </div>
-
-        <br />
-
-        <div class="form-row">
-            <div class="col-sm-8">
-                <label>Available Users</label>
-                <select class="form-control" asp-for="@Model.Id"
-                        asp-items="@(new SelectList(Model.AvailableUsers,
-                                            "Id", "FullName", Model.Id))">
-                    <option value="">Select a User</option>
-                </select>
-                <input type="hidden" asp-for="@Model.RoleId" />
-                <input type="hidden" asp-for="@Model.RoleName" />
-            </div>
-            <div class="col-sm-4 ">
-                <button type="submit" class="btn btn-primary">Add User To Role</button>
-            </div>
-        </div>
-     </form>
-
-
-    <br />
-    <br />
-    <div class="border-bottom">
-        <h5>Current Users in @Model.RoleName</h5>
-    </div>
-
-    <br />
-    <table class="table table-bordered table-sm">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (User user in Model.RoleUsers)
-                {
-                <tr>
-                    <td>@user.FullName</td>
-                    <td>@user.UserName</td>
-                    <td>@user.Email</td>
-                    <td>
-                        <form method="post" asp-action="RemoveUserFromRole" asp-route-id="@user.Id">
-                            <input type="hidden" asp-for="@Model.RoleId" />
-                            <input type="hidden"  asp-for="@Model.RoleName" />
-                            <button type="submit" class="btn btn-outline-danger btn-sm">
-                                <span>
-                                    <i class="fas fa-trash"></i>
-                                </span>Delete
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+<div class="view-header  ">
+    <h5>Role Users </h5>
 </div>
+
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
+    </div>
+}
+
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
+
+    </div>
+}
+
+
+
+<div class="row  justify-content-center ">
+    <div class="col-md-11  form-section  ">
+
+        <div class="form-row form-section-header ">
+            <div class=" col-md-12  ">
+                <h6>Roles Users </h6>
+            </div>
+        </div>
+
+
+        <div class="row  ml-5  mr-5">
+            <div class="col-md-12 view-header">
+                <h3>@Model.RoleName</h3>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <div class="form-row  ml-5  justify-content-center  ">
+            <div class="col-md-10   ">
+
+                <form method="post" asp-action="AddRoleToUser">
+
+                    <div class="form-row ">
+                        <div class=" col-md-5">
+                            <label class=" ">Available Users</label>
+                            <select class="form-control" asp-for="@Model.Id"
+                                    asp-items="@(new SelectList(Model.AvailableUsers,
+                                            "Id", "FullName", Model.Id))">
+                                <option value="">Select a User</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" asp-for="@Model.RoleId" />
+
+                        <div class=" col-md-2  mt-4">
+                            <button class="btn btn-primary  btn-sm ">Add User To Role</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+
+
+        <div class="form-row  mt-4  mb-5 ml-5  justify-content-center ">
+            <div class="col-md-10">
+
+                <div class="form-row">
+                    <div class="col-md-12  view-header">
+                        <h4>Role Users</h4>
+                    </div>
+                </div>
+
+                @if (Model.RoleUsers.Count() == 0)
+                {
+                    <p class=" m-0 ">None at the moment.</p>
+
+                }
+                else
+                {
+
+                    <table class="table   table-sm  shadow-sm  mb-0">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">Name</th>
+                                <th class="col-md-1">Username</th>
+                                <th class="col-md-1">Email</th>
+                                <th class="col-md-1">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var user in Model.RoleUsers)
+                            {
+                            <tr>
+                                <td >@user.FullName</td>
+                                <td >@user.UserName</td>
+                                <td >@user.Email</td>
+                                <td>
+                                    <form method="post" asp-action="DeleteRoleFromRole">
+                                        <input hidden asp-for="@Model.RoleId" />
+                                        <button type="submit" class="btn btn-danger btn-sm" name="UserId" value="@user.Id">
+                                            <span>
+                                                <i class="fas fa-trash-alt"></i>
+                                            </span>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12  text-right ">
+        <a class="btn btn-link " asp-action="List">Return to Users </a>
+    </div>
+</div>
+
+
+
+
+
+
+
 
 
 
