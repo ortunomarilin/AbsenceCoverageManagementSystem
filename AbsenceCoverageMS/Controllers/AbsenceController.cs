@@ -35,26 +35,26 @@ namespace AbsenceCoverageMS.Controllers
             User user = await userManager.GetUserAsync(User);
 
             //Create an instance of the AbsenceGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
-            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters);
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters, nameof(AbsenceRequest.StartDate));
 
 
             //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
-            var options = new AbsenceRequestQueryOptions
+            var options = new AbsenceQueryOptions
             {
                 Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
                 Where = ar => ar.UserId == user.Id,
-                OrderByDirection = gridBuilder.GetCurrentRoute.SortDirection,
+                OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
             options.FromDateRange(gridBuilder);
             options.Filter(gridBuilder);
-            options.sort(gridBuilder);
+            options.Sort(gridBuilder);
 
 
             //Create and initialize the View Model 
             var model = new AbsenceListViewModel
             {
                 //Set current route 
-                Route = gridBuilder.GetCurrentRoute,
+                Grid = gridBuilder.CurrentGrid,
 
                 //Absence Requests List with query options applied. 
                 AbsenceRequests = data.AbsenceRequests.List(options),
@@ -67,7 +67,7 @@ namespace AbsenceCoverageMS.Controllers
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
 
             //Finally Set the paging. 
-            model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.GetCurrentRoute.PageNumber - 1) * gridBuilder.GetCurrentRoute.PageSize).Take(gridBuilder.GetCurrentRoute.PageSize);
+            model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
 
             return View(model);
         }
@@ -81,11 +81,11 @@ namespace AbsenceCoverageMS.Controllers
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
 
             //Set new filter value to current route and serialize. 
-            gridBuilder.ReSetFilters(filters, fromdate, todate);
+            gridBuilder.SetSearchOptions(filters, fromdate, todate, "");
             gridBuilder.SerializeRoutes();
 
             //Redirect to the List Action Method with updated routes 
-            return RedirectToAction("List", gridBuilder.GetCurrentRoute);
+            return RedirectToAction("List", gridBuilder.CurrentGrid);
         }
 
 
@@ -148,7 +148,7 @@ namespace AbsenceCoverageMS.Controllers
                     //Save the changes to the database. 
                     data.Save();
 
-                    TempData["Message"] = "The Absence Request with ID# " + model.AbsenceRequest.AbsenceRequestId + ", was created successfully.";
+                    TempData["SucessMessage"] = "The Absence Request with ID# " + model.AbsenceRequest.AbsenceRequestId + ", was created successfully.";
 
                     return RedirectToAction("List");
                 }
@@ -223,7 +223,7 @@ namespace AbsenceCoverageMS.Controllers
                     //Save the changes to the database. 
                     data.Save();
 
-                    TempData["Message"] = "The Absence Request # " + model.AbsenceRequest.AbsenceRequestId + ", was successfully updated.";
+                    TempData["SucessMessage"] = "The Absence Request # " + model.AbsenceRequest.AbsenceRequestId + ", was successfully updated.";
                     return RedirectToAction("List");
                 }
             }
@@ -254,7 +254,7 @@ namespace AbsenceCoverageMS.Controllers
             AbsenceRequest absenceRequest = GetAbsenceRequest(id);
             if(absenceRequest.StatusType.Name != "Submitted")
             {
-                TempData["ErrorMessage"] = "Deletion Failed - Cannot delete absence request with a current status other than submitted. Please contact your manager.";
+                TempData["FailureMessage"] = "Deletion Failed - Cannot delete absence request with a current status other than submitted. Please contact your manager.";
                 return RedirectToAction("List");
             }
             data.AbsenceRequests.Delete(GetAbsenceRequest(id));

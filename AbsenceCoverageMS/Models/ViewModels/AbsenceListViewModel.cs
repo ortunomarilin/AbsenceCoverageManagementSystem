@@ -12,7 +12,7 @@ namespace AbsenceCoverageMS.Models.ViewModels
     {
 
         //For Current Route 
-        public AbsenceGridRouteDictionary Route { get; set; }
+        public GridDictionary Grid { get; set; }
 
         //For List of Absence Requests 
         public IEnumerable<AbsenceRequest> AbsenceRequests { get; set; }

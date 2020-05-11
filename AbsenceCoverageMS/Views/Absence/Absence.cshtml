@@ -13,7 +13,8 @@
 
 
 
-<div class="alert alert-danger"  asp-validation-summary="All">
+<div class="alert alert-danger  alert-dismissible " asp-validation-summary="All">
+    <button class="close" data-dismiss="alert">&times;</button>
     <h6>
         <span>
             <i class="fas fa-exclamation-triangle"></i>
@@ -213,7 +214,7 @@
                     }
                     else
                     {
-                        <button type="submit" class="btn btn-warning btn-block text-white  btn-sm ">
+                        <button type="submit" class="btn btn-success btn-block text-white  btn-sm ">
                             <span>
                                 <i class="fas fa-edit text-white"></i>
                             </span>

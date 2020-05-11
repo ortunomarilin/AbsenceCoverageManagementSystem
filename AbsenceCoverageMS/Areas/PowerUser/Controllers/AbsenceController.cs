@@ -38,32 +38,35 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             return View();
         }
 
-        public async Task<IActionResult> ListAsync(AbsenceGridDTO parameters)
+
+        [HttpGet]
+        public async Task<ViewResult> ListAsync(AbsenceGridDTO parameters)
         {
             //First get the current user logged in, to only show absence request from same campus. 
             User user = await userManager.GetUserAsync(User);
 
             //Create an instance of the AbsenceGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
-            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters);
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters, nameof(AbsenceRequest.StartDate));
 
 
             //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
-            var options = new AbsenceRequestQueryOptions
+            var options = new AbsenceQueryOptions
             {
                 Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
                 Where = ar => ar.User.CampusId == user.CampusId,
-                OrderByDirection = gridBuilder.GetCurrentRoute.SortDirection,
+                OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
+            options.Search(gridBuilder);
             options.FromDateRange(gridBuilder);
             options.Filter(gridBuilder);
-            options.sort(gridBuilder);
+            options.Sort(gridBuilder);
 
 
             //Create and initialize the View Model 
             var model = new AbsenceListViewModel
             {
                 //Set current route 
-                Route = gridBuilder.GetCurrentRoute,
+                Grid = gridBuilder.CurrentGrid,
 
                 //Absence Requests List with query options applied.
                 AbsenceRequests = data.AbsenceRequests.List(options),
@@ -73,20 +76,32 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 DurationTypes = data.DurationTypes.List(),
                 StatusTypes = data.StatusTypes.List(),
             };
-
-            //model.AbsenceRequests = data.AbsenceRequests.List(new QueryOptions<AbsenceRequest>
-            //{
-            //    Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
-            //    //Where = ar => ar.UserId == user.Id,
-            //    OrderByDirection = gridBuilder.GetCurrentRoute.SortDirection,
-            //});
-
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
-
-            //Finally Set the paging. 
-            model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.GetCurrentRoute.PageNumber - 1) * gridBuilder.GetCurrentRoute.PageSize).Take(gridBuilder.GetCurrentRoute.PageSize);
+            model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
 
             return View(model);
+        }
+
+        
+        [HttpPost]
+        public RedirectToActionResult SearchOptions(string[] filters, string fromdate, string todate,  string searchTerm, bool clear = false)
+        {
+            //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
+
+            if (clear)
+            {
+                gridBuilder.ClearSearchOptions();
+            }
+            else
+            {
+                //Set new filter value to current route and serialize. 
+                gridBuilder.SetSearchOptions(filters, fromdate, todate, searchTerm);
+                gridBuilder.SerializeRoutes();
+            }
+
+            //Redirect to the List Action Method with updated routes 
+            return RedirectToAction("List", gridBuilder.CurrentGrid);
         }
 
     }

@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DTO
 {
-    public class AbsenceGridDTO
-    {    
+    public class AbsenceGridDTO : GridDTO
+    {
+
+        public string Search { get; set; }
+
         public string FromDate { get; set; }
         public string ToDate { get; set; }
 
@@ -19,14 +22,6 @@ namespace AbsenceCoverageMS.Models.DTO
         public string NeedCoverage { get; set; } = "all";
 
 
-        //Sort Route parameters
-        public string SortBy { get; set; } = "date";             // Has Default Value
-        public string SortDirection { get; set; } = "asc";      // Has Default Value
-
-
-        //Paging 
-        public int PageNumber { get; set; } = 1;                // Has Default Value
-        public int PageSize { get; set; } = 5;                  // Has Default Value
 
     }
 }

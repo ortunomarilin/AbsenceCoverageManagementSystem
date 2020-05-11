@@ -47,18 +47,61 @@ namespace AbsenceCoverageMS.Models.Grid
         }
 
 
+        //Search parameter
+        public string Search
+        {
+            get => Get(nameof(UserGridDTO.Search));
+            set => this[nameof(UserGridDTO.Search)] = value;
+        }
 
-        //Filter parameters
+
+        //Date Search parameters
+        public string FromDate
+        {
+            get => Get(nameof(AbsenceGridDTO.FromDate))?.Replace("-", "/");
+            set => this[nameof(AbsenceGridDTO.FromDate)] = value?.Replace("/", "-");
+        }
+
+        public string ToDate
+        {
+            get => Get(nameof(AbsenceGridDTO.ToDate))?.Replace("-", "/");
+            set => this[nameof(AbsenceGridDTO.ToDate)] = value?.Replace("/", "-");
+        }
+
+
+
+        //Filter Parameters 
         public string Campus
         {
             get => Get(nameof(UserGridDTO.Campus));
             set => this[nameof(UserGridDTO.Campus)] = value;
         }
 
-        public string Search
+
+        public string AbsenceType
         {
-            get => Get(nameof(UserGridDTO.Search));
-            set => this[nameof(UserGridDTO.Search)] = value;
+            get => Get(nameof(AbsenceGridDTO.AbsenceType));
+            set => this[nameof(AbsenceGridDTO.AbsenceType)] = value;
+        }
+
+
+        public string Duration
+        {
+            get => Get(nameof(AbsenceGridDTO.Duration));
+            set => this[nameof(AbsenceGridDTO.Duration)] = value;
+        }
+
+        public string NeedCoverage
+        {
+            get => Get(nameof(AbsenceGridDTO.NeedCoverage));
+            set => this[nameof(AbsenceGridDTO.NeedCoverage)] = value;
+        }
+
+
+        public string Status
+        {
+            get => Get(nameof(AbsenceGridDTO.Status));
+            set => this[nameof(AbsenceGridDTO.Status)] = value;
         }
 
 

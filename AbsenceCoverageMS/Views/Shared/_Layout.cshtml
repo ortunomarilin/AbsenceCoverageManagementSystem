@@ -132,8 +132,25 @@
                 </span>
             </li>
 
-
             <li>
+                <a class="" asp-controller="User" asp-action="List" asp-area="Admin">
+                    <span class="icon">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    Users
+                </a>
+            </li>
+            <li>
+                <a class="" asp-controller="Role" asp-action="List" asp-area="Admin">
+                    <span class="icon">
+                        <i class="fas fa-users"></i>
+                    </span>
+                    Roles
+                </a>
+            </li>
+
+
+            @*<li>
                 <a href="#Users" data-toggle="collapse" class="">
                     <span class="icon">
                         <i class="fas fa-user"></i>
@@ -146,7 +163,7 @@
                 <ul class="collapse sidebarMenu-dropdown  drop " id="Users">
                     <li>
                         <a class="pl-5 " asp-controller="User" asp-action="List" asp-area="Admin">
-                            Manage Users
+                            All Users
                         </a>
                     </li>
                     <li>
@@ -158,9 +175,9 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>*@
 
-            <li>
+            @*<li>
                 <a href="#Roles" data-toggle="collapse" class="">
                     <span class="icon">
                         <i class="fas fa-users"></i>
@@ -173,7 +190,7 @@
                 <ul class="collapse sidebarMenu-dropdown  drop " id="Roles">
                     <li>
                         <a class="pl-5 " asp-controller="Role" asp-action="List" asp-area="Admin">
-                            Manage Roles
+                            All Roles
                         </a>
                     </li>
                     <li>
@@ -185,7 +202,8 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li>*@
+
             <li>
                 <a href="#AbsenceTypes" data-toggle="collapse" class="">
                     <span class="icon">
@@ -234,7 +252,7 @@
             </li>
 
             <li>
-                <a asp-controller="" asp-action="" asp-area="PowerUser">
+                <a asp-controller="Absence" asp-action="List" asp-area="PowerUser">
                     <span class="icon">
                         <i class="far fa-calendar-check"></i>
                     </span>

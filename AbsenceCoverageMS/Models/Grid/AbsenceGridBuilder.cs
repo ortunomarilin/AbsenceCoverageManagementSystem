@@ -11,128 +11,72 @@ using System.Globalization;
 
 namespace AbsenceCoverageMS.Models.Grid
 {
-    public class AbsenceGridBuilder
+    public class AbsenceGridBuilder : GridBuilder
     {
 
-        private const string Key = "routeDictionary";
-        private AbsenceGridRouteDictionary route { get; set; }
-        private ISession session { get; set; }
-
-
-
-        //Constructor to SET the new route data and clear previous route
-        public AbsenceGridBuilder(ISession s, AbsenceGridDTO parameters)
-        {
-            //Save session
-            session = s;
-
-            //Clear any previous route
-            route = new AbsenceGridRouteDictionary();
-
-            //Inilialize routes
-            route.AbsenceType = parameters.AbsenceType;
-            route.Duration = parameters.Duration;
-            route.NeedCoverage = parameters.NeedCoverage;
-            route.Status = parameters.Status;
-            route.SortBy = parameters.SortBy;
-            route.SortDirection = parameters.SortDirection;
-            route.PageNumber = parameters.PageNumber;
-            route.PageSize = parameters.PageSize;
-            route.FromDate = parameters.FromDate;
-            route.ToDate = parameters.ToDate;
-
-
-            //Serialize new route (save) 
-            SerializeRoutes();
-        }
-
-
-
         //Constructor to GET data from session
-        public AbsenceGridBuilder(ISession s)
+        public AbsenceGridBuilder(ISession s) : base(s)
         {
-            //Save session
-            session = s;
 
-            //Deserialize AbsenceGridRouteDictionary
-            DeserializeRoutes();
         }
 
-
-
-        //Public get only property used to get the private value for the routeDictionary 
-        public AbsenceGridRouteDictionary GetCurrentRoute => route;
-
-
-
-
-        //Method to serialize routeDictionary when done updating, to pass between sessions. 
-        public void SerializeRoutes()
+        public AbsenceGridBuilder(ISession s, AbsenceGridDTO values, string defaultSort) : base(s, values, defaultSort)
         {
-            var dictionaryJson = JsonConvert.SerializeObject(route);
-            session.SetString(Key, dictionaryJson);
-        }
-
-
-
-        //Method to deserialize routeDictionary, and gain access to route values. 
-        public void DeserializeRoutes()
-        {
-            var dictionaryJson = session.GetString(Key);
-            route = JsonConvert.DeserializeObject<AbsenceGridRouteDictionary>(dictionaryJson);
+            //Inilialize routes
+            grid.AbsenceType = values.AbsenceType;
+            grid.Duration = values.Duration;
+            grid.NeedCoverage = values.NeedCoverage;
+            grid.Status = values.Status;
+            grid.FromDate = values.FromDate;
+            grid.ToDate = values.ToDate;
+            grid.Search = values.Search;
         }
 
 
 
         //Method to set the Filter values for the Grid
-        public void ReSetFilters(string[] filters, string fromdate, string todate)
+        public void SetSearchOptions(string[] filters, string fromdate, string todate, string searchTerm)
         {
-            route.AbsenceType = filters[0];
-            route.Duration = filters[1];
-            route.NeedCoverage = filters[2];
-            route.Status = filters[3];
+            grid.AbsenceType = filters[0];
+            grid.Duration = filters[1];
+            grid.NeedCoverage = filters[2];
+            grid.Status = filters[3];
+
+            //The search property has no defual value, since it's optional. So, only save and change to lower if the search term has a value. 
+            if (searchTerm != null)
+            {
+                grid.Search = searchTerm.ToLower();
+            }
 
 
             //If only start date input is given, and is valid. 
-            if(IsValidDate(fromdate) && todate == null)
+            if (IsValidDate(fromdate) && todate == null)
             {
-                route.FromDate = fromdate;
-                route.ToDate = fromdate;
+                grid.FromDate = fromdate;
+                grid.ToDate = fromdate;
             }
             //If only end date input is given, and is valid. 
             else if (IsValidDate(todate) && fromdate == null)
             {
-                route.FromDate = todate;
-                route.ToDate = todate;
+                grid.FromDate = todate;
+                grid.ToDate = todate;
             }
             //If both start date and end date is given, and valid.
             else if (IsValidDate(fromdate) && IsValidDate(todate))
             {
-                route.FromDate = fromdate;
-                route.ToDate = todate;
+                grid.FromDate = fromdate;
+                grid.ToDate = todate;
             }
             else
             {
-                route.FromDate = null;
-                route.ToDate = null;
+                grid.FromDate = null;
+                grid.ToDate = null;
             }
 
             //After filtering set the current page to page-1 so you can start from beginning again. 
-            route.PageNumber = 1;
+            grid.PageNumber = 1;
         }
 
-
-
-        //Method to Get total pages for the grid. 
-        public double GetTotalPages(int count)
-        {
-            int pageSize = route.PageSize;
-
-            double total = (count + pageSize - 1) / pageSize;
-            total = Math.Ceiling(total);
-
-            return total;
-        }
 
 
 
@@ -160,6 +104,18 @@ namespace AbsenceCoverageMS.Models.Grid
 
             DateTime.TryParseExact(stringDate, validformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeDate);
             return DateTimeDate;
+        }
+
+
+        public void ClearSearchOptions()
+        {
+            grid.AbsenceType = "all";
+            grid.Duration = "all";
+            grid.NeedCoverage = "all";
+            grid.Status = "all";
+            grid.FromDate = "";
+            grid.ToDate = "";
+            grid.Search = "";
         }
 
 

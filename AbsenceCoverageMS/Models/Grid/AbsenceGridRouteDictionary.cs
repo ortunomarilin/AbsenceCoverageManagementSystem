@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.Grid
 {
-    public class AbsenceGridRouteDictionary : Dictionary<string, string>
+    public class AbsenceGridDictionary : Dictionary<string, string>
     {
 
         //Filter Route Keys 
