@@ -1,13 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
 using AbsenceCoverageMS.Models.DTO;
-using Microsoft.AspNetCore.Routing;
 using System.Globalization;
+
 
 namespace AbsenceCoverageMS.Models.Grid
 {
@@ -17,7 +12,7 @@ namespace AbsenceCoverageMS.Models.Grid
         //Constructor to GET data from session
         public AbsenceGridBuilder(ISession s) : base(s)
         {
-
+            
         }
 
         public AbsenceGridBuilder(ISession s, AbsenceGridDTO values, string defaultSort) : base(s, values, defaultSort)
@@ -30,6 +25,8 @@ namespace AbsenceCoverageMS.Models.Grid
             grid.FromDate = values.FromDate;
             grid.ToDate = values.ToDate;
             grid.Search = values.Search;
+
+            SerializeRoutes();
         }
 
 

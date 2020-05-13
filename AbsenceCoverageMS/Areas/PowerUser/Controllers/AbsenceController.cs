@@ -12,6 +12,7 @@ using AbsenceCoverageMS.Models.Grid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 
 namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 {
@@ -33,14 +34,10 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
 
         [HttpGet]
-        public async Task<ViewResult> ListAsync(AbsenceGridDTO parameters)
+        public async Task<ViewResult> List(AbsenceGridDTO parameters)
         {
             //First get the current user logged in, to only show absence request from same campus. 
             User user = await userManager.GetUserAsync(User);
@@ -83,6 +80,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
         }
 
         
+
         [HttpPost]
         public RedirectToActionResult SearchOptions(string[] filters, string fromdate, string todate,  string searchTerm, bool clear = false)
         {
@@ -103,6 +101,81 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             //Redirect to the List Action Method with updated routes 
             return RedirectToAction("List", gridBuilder.CurrentGrid);
         }
+
+
+
+
+
+        [HttpGet]
+        public ViewResult ProcessAbsence(string id)
+        {
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
+
+            var model = new AbsenceProcessAbsenceViewModel
+            {
+                Grid = gridBuilder.CurrentGrid,
+                AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
+                {
+                    Where = ar => ar.AbsenceRequestId == id,
+                    Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods"
+                })
+            };
+            return View(model);
+        }
+
+
+
+        [HttpPost]
+        public RedirectToActionResult ProcessAbsence(AbsenceProcessAbsenceViewModel model, bool approve = false, bool deny = false)
+        {
+            //Get the current Absence Request 
+            AbsenceRequest absenceRequest = data.AbsenceRequests.Get(
+                new QueryOptions<AbsenceRequest>
+                {
+                    Where = ar => ar.AbsenceRequestId == model.AbsenceRequest.AbsenceRequestId,
+                    Include = "StatusType, User"
+                });
+
+
+            if (approve)
+            {
+                //Change the status type to "Approved". 
+                absenceRequest.StatusType = data.StatusTypes.Get(
+                    new QueryOptions<StatusType>
+                    {
+                        Where = st => st.Name == "Approved"
+                    });
+            }
+
+            else if(deny)
+            {
+                //Change the status type to "Deny". 
+                absenceRequest.StatusType = data.StatusTypes.Get(
+                    new QueryOptions<StatusType>
+                    {
+                        Where = st => st.Name == "Denied"
+                    });
+            }
+
+            absenceRequest.DateProcessed = DateTime.Now;
+            absenceRequest.StatusRemarks = model.AbsenceRequest.StatusRemarks;
+
+            //Update and save. 
+            data.AbsenceRequests.Update(absenceRequest);
+            data.Save();
+
+
+            TempData["SucessMessage"] = "The Absence Request for " + absenceRequest.User.FullName + " was processed sucessfully.";
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
+            return RedirectToAction("List", gridBuilder.CurrentGrid);
+        }
+
+
+
+
+
+
+
 
     }
 }

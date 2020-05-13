@@ -109,6 +109,7 @@ body {
     color: #005a9e;
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 10px;
     border-bottom: 1px solid #71afe5;
 }
 
@@ -200,6 +201,16 @@ tbody {
 .search-btn{
     width: 100px;
 }
+
+.take-action-btn {
+    background-color: #0288d1;
+    color: white;
+}
+
+    .take-action-btn:hover {
+        background-color: #0277bd;
+        color: white;
+    }
 
 
 

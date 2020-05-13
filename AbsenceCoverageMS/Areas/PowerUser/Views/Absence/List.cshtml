@@ -46,7 +46,6 @@
 
         <div class="form-row ">
             <div class="form-group col-md-4 ">
-                <label class="form-label small ">Search By Name</label>
                 <div class="input-group mr-2">
                     <div class="input-group">
                         <input class="form-control  form-control-sm  bg-white" placeholder="Enter Last Name or First Name" name="SearchTerm" asp-for="@Model.Grid.Search" />
@@ -145,15 +144,7 @@
 
 
 
-<div class="row justify-content-between">
-    <div class="col-md-2 text-left ml-3 pb-2">
-        <a class="btn btn-info  btn-sm " asp-action="Add">
-            <span>
-                <i class="fas fa-plus"></i>
-                New User
-            </span>
-        </a>
-    </div>
+<div class="row justify-content-end">
     <div class="col-md-2 text-right mr-4  pt-2">
         <h6 class="form-label font-weight-normal ">Showing Page @Model.Grid.PageNumber of @Model.TotalPages</h6>
     </div>
@@ -164,6 +155,7 @@
     <table class="table table-sm shadow-sm  mb-0">
         <thead>
             <tr>
+
                 <th>
                     Name
                     <a asp-action="List"
@@ -259,7 +251,7 @@
                         </span>
                     </a>
                 </th>
-                <th colspan="3"></th>
+                <th class="text-center" >Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -291,33 +283,10 @@
 
 
 
-                <td class="text-left">
-                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@ar.AbsenceRequestId">
-                        <span>
-                            <i class="fas fa-binoculars"></i>
-                        </span>
-                        @*Details*@
-                    </a>
+                <td class="text-center">
+                    <a class="btn take-action-btn btn-sm"  asp-action="ProcessAbsence" asp-route-id="@ar.AbsenceRequestId" >Take Action</a>
                 </td>
 
-                <td class="text-right">
-                    <a class="btn btn-success btn-sm" asp-action="Approve" asp-route-id="@ar.AbsenceRequestId">
-                        <span>
-                            <i class="fas fa-check"></i>
-                        </span>
-                        Approve
-                    </a>
-                </td>
-                <td class="text-left">
-                    <form method="post" asp-action="Deny" asp-route-id="@ar.AbsenceRequestId">
-                        <button type="submit" class="btn btn-danger btn-sm">
-                            <span>
-                                <i class="fas fa-times"></i>
-                            </span>
-                            Deny
-                        </button>
-                    </form>
-                </td>
             </tr>
             }
 
@@ -325,32 +294,36 @@
     </table>
 </div>
 
-    @for (int i = 1; i <= Model.TotalPages; i++)
-    {
-        <a asp-action="List"
-           asp-route-sortby="@Model.Grid.SortBy"
-           asp-route-sortdirection="@Model.Grid.SortDirection"
-           asp-route-search="@Model.Grid.Search"
-           asp-route-fromdate="@Model.Grid.FromDate"
-           asp-route-todate="@Model.Grid.ToDate"
-           asp-route-absencetype="@Model.Grid.AbsenceType"
-           asp-route-duration="@Model.Grid.Duration"
-           asp-route-needcoverage="@Model.Grid.NeedCoverage"
-           asp-route-status="@Model.Grid.Status"
-           asp-route-pagenumber="@i"
-           asp-route-pagesize="@Model.Grid.PageSize"
-           class="btn btn-link   @(i==Model.Grid.PageNumber ? "active" : "" )">
-            @if (i == Model.Grid.PageNumber)
-            {
-                <u>@i</u>
+<div class="row">
+    <div class="col-md-12  ml-2">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="List"
+               asp-route-sortby="@Model.Grid.SortBy"
+               asp-route-sortdirection="@Model.Grid.SortDirection"
+               asp-route-search="@Model.Grid.Search"
+               asp-route-fromdate="@Model.Grid.FromDate"
+               asp-route-todate="@Model.Grid.ToDate"
+               asp-route-absencetype="@Model.Grid.AbsenceType"
+               asp-route-duration="@Model.Grid.Duration"
+               asp-route-needcoverage="@Model.Grid.NeedCoverage"
+               asp-route-status="@Model.Grid.Status"
+               asp-route-pagenumber="@i"
+               asp-route-pagesize="@Model.Grid.PageSize"
+               class="btn btn-link   @(i==Model.Grid.PageNumber ? "active" : "" )">
+                @if (i == Model.Grid.PageNumber)
+                {
+                    <u>@i</u>
 
-            }
-            else
-            {
-                @i
-            }
-        </a>
-    }
+                }
+                else
+                {
+                    @i
+                }
+            </a>
+        }
+    </div>
+</div>
 
 
 

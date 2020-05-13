@@ -12,13 +12,13 @@ namespace AbsenceCoverageMS.Models.Grid
     {
 
         //To key to use for serializing/desirializing route dictionary
-        private const string GridKey = "GridDictionary";
+        protected const string GridKey = "GridDictionary";
 
         //Protected so that derived clases can access this property only. 
         protected GridDictionary grid { get; set; }
 
         //To store current session.
-        private ISession session { get; set; }
+        protected ISession session { get; set; }
 
 
 
@@ -29,7 +29,7 @@ namespace AbsenceCoverageMS.Models.Grid
             //Save session
             session = s;
 
-            //Deserialize AbsenceGridRouteDictionary
+            //Deserialize AbsenceGridDictionary
             DeserializeRoutes();
         }
 
