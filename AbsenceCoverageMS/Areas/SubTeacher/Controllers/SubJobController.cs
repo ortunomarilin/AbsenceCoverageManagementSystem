@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AbsenceCoverageMS.Areas.SubTeacher.Controllers
 {
 
-    //[Authorize(Roles = "Sub-Teacher")]
+    [Authorize(Roles = "Sub-Teacher")]
     [Area("SubTeacher")]
     public class SubJobController : Controller
     {

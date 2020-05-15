@@ -157,6 +157,8 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             //Save all changes
             data.Save();
 
+            TempData["SucessMessage"] = "The Absence Request with ID#, " + absenceRequest.AbsenceRequestId + ", was approved sucessfully.";
+
             //To retain grid state, send the current grid values to the List View. 
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
             return RedirectToAction("List", gridBuilder.CurrentGrid);
@@ -181,7 +183,6 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             if (model.StatusRemarks == null)
             {
                 TempData["FailureMessage"] = "Unable to Deny the Absence Request for " + absenceRequest.User.FullName + ". If absence is denied, need to provide a reason in status remarks.";
-                //return RedirectToAction("List", gridBuilder.CurrentGrid);
                 return RedirectToAction("List", gridBuilder.CurrentGrid);
             }
             else
@@ -195,6 +196,8 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
                 //Save all changes
                 data.Save();
+
+                TempData["SucessMessage"] = "The Absence Request with ID#, " + absenceRequest.AbsenceRequestId + ", was denied sucessfully.";
                 return RedirectToAction("List", gridBuilder.CurrentGrid);
 
             }
@@ -246,6 +249,8 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
             //Save all changes
             data.Save();
+
+            TempData["SucessMessage"] = "The Absence Request with ID#, " + absenceRequest.AbsenceRequestId + ", was canceled sucessfully.";
 
             //To retain grid state, send the current grid values to the List View. 
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
