@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AbsenceCoverageMS.Areas.Admin.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class UserController : Controller
     {
@@ -36,7 +36,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public ViewResult List(UserGridDTO values)
+        public ViewResult List(FilterGridDTO values)
         {
             var gridBuilder = new UserGridBuilder(HttpContext.Session, values, nameof(AbsenceCoverageMS.Models.DomainModels.User.FirstName));
 

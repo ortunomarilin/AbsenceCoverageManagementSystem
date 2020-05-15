@@ -19,21 +19,13 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public AbsenceRequest AbsenceRequest { get; set; }
 
 
-        //Date of SubJob
-        [Required(ErrorMessage = "The Date is required. ")]
-        public DateTime Date { get; set; }
+        //SubJob Status (Filled / Unfilled) 
+        public string StatusTypeId { get; set; }
+        public StatusType StatusType { get; set; }
 
 
-        //Sub Job For Courese 
-        public string CourseId { get; set; }
-        public Course Course { get; set; }
-
-
-        //Assigned To / Accepted By 
-        public string UserId { get; set; }
-        public User User { get; set; }
-
-
+        //Hs coverage assignments
+        public ICollection<CoverageAssignment> CoverageAssignments { get; set; }
 
 
 

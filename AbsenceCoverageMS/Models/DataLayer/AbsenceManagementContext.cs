@@ -23,11 +23,10 @@ namespace AbsenceCoverageMS.Models.DataLayer
         public DbSet<DurationType> DurationTypes { get; set; }
         public DbSet<StatusType> StatusTypes { get; set; }
         public DbSet<Campus> Campuses { get; set; }
-        public DbSet<Course> Courses { get; set; }
         public DbSet<CoveragePeriod> CoveragePeriods { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<SubJob> SubJobs { get; set; }
-
+        public DbSet<CoverageAssignment> CoverageAssignments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,11 +44,19 @@ namespace AbsenceCoverageMS.Models.DataLayer
                 .WithMany(ar => ar.AbsenceRequestPeriods)
                 .HasForeignKey(arp => arp.AbsenceRequestId);
 
-            //One ot Many relationship between Period and AbsenceRequestPeriod
+            //One to Many relationship between Period and AbsenceRequestPeriod
             modelBuilder.Entity<AbsenceRequestPeriod>()
                 .HasOne(arp => arp.Period)
                 .WithMany(p => p.AbsenceRequestPeriods)
                 .HasForeignKey(arp => arp.PeriodId);
+
+
+            //One to One relationship between AbsenceRequest and SubJob
+            modelBuilder.Entity<AbsenceRequest>()
+                .HasOne(ar => ar.SubJob)
+                .WithOne(sj => sj.AbsenceRequest)
+                .HasForeignKey<SubJob>(sj => sj.AbsenceRequestId);
+
 
 
 
@@ -57,24 +64,15 @@ namespace AbsenceCoverageMS.Models.DataLayer
             modelBuilder.Entity<AbsenceRequest>()
                 .HasKey(k => new { k.AbsenceRequestId});
 
-            //Primary key for Course
-            modelBuilder.Entity<Course>()
-                .HasKey(k => new { k.CourseId });
 
             //Primary key for SubJob
-            modelBuilder.Entity<SubJob>()
-                .HasKey(k => new { k.SubJobId });
+            modelBuilder.Entity<CoverageAssignment>()
+                .HasKey(k => new { k.CoverageAssignmentId });
 
             //Primary key for CoveragePeriod
             modelBuilder.Entity<CoveragePeriod>()
                 .HasKey(k => new { k.CoveragePeriodId });
 
-
-            ////Don't delete dependent rows. 
-            //modelBuilder.Entity<User>()
-            //    .HasOne(u => u.Approver)
-            //    .WithMany(a => a.Employees)
-            //    .OnDelete(DeleteBehavior.Restrict); 
 
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());

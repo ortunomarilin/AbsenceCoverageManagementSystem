@@ -1,8 +1,13 @@
-﻿using AbsenceCoverageMS.Models.DTO;
+﻿/// <summary>
+/// This class is responsible for storing all grid values for paging, sorting, and filtering. 
+/// This class will be stored whithin a session state. 
+/// </summary>
+/// 
+
+using AbsenceCoverageMS.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.Grid
 {
@@ -50,22 +55,22 @@ namespace AbsenceCoverageMS.Models.Grid
         //Search parameter
         public string Search
         {
-            get => Get(nameof(UserGridDTO.Search));
-            set => this[nameof(UserGridDTO.Search)] = value;
+            get => Get(nameof(FilterGridDTO.Search));
+            set => this[nameof(FilterGridDTO.Search)] = value;
         }
 
 
         //Date Search parameters
         public string FromDate
         {
-            get => Get(nameof(AbsenceGridDTO.FromDate))?.Replace("-", "/");
-            set => this[nameof(AbsenceGridDTO.FromDate)] = value?.Replace("/", "-");
+            get => Get(nameof(FilterGridDTO.FromDate))?.Replace("-", "/");
+            set => this[nameof(FilterGridDTO.FromDate)] = value?.Replace("/", "-");
         }
 
         public string ToDate
         {
-            get => Get(nameof(AbsenceGridDTO.ToDate))?.Replace("-", "/");
-            set => this[nameof(AbsenceGridDTO.ToDate)] = value?.Replace("/", "-");
+            get => Get(nameof(FilterGridDTO.ToDate))?.Replace("-", "/");
+            set => this[nameof(FilterGridDTO.ToDate)] = value?.Replace("/", "-");
         }
 
 
@@ -73,35 +78,35 @@ namespace AbsenceCoverageMS.Models.Grid
         //Filter Parameters 
         public string Campus
         {
-            get => Get(nameof(UserGridDTO.Campus));
-            set => this[nameof(UserGridDTO.Campus)] = value;
+            get => Get(nameof(FilterGridDTO.Campus));
+            set => this[nameof(FilterGridDTO.Campus)] = value;
         }
 
 
         public string AbsenceType
         {
-            get => Get(nameof(AbsenceGridDTO.AbsenceType));
-            set => this[nameof(AbsenceGridDTO.AbsenceType)] = value;
+            get => Get(nameof(FilterGridDTO.AbsenceType));
+            set => this[nameof(FilterGridDTO.AbsenceType)] = value;
         }
 
 
         public string Duration
         {
-            get => Get(nameof(AbsenceGridDTO.Duration));
-            set => this[nameof(AbsenceGridDTO.Duration)] = value;
+            get => Get(nameof(FilterGridDTO.Duration));
+            set => this[nameof(FilterGridDTO.Duration)] = value;
         }
 
         public string NeedCoverage
         {
-            get => Get(nameof(AbsenceGridDTO.NeedCoverage));
-            set => this[nameof(AbsenceGridDTO.NeedCoverage)] = value;
+            get => Get(nameof(FilterGridDTO.NeedCoverage));
+            set => this[nameof(FilterGridDTO.NeedCoverage)] = value;
         }
 
 
         public string Status
         {
-            get => Get(nameof(AbsenceGridDTO.Status));
-            set => this[nameof(AbsenceGridDTO.Status)] = value;
+            get => Get(nameof(FilterGridDTO.Status));
+            set => this[nameof(FilterGridDTO.Status)] = value;
         }
 
 

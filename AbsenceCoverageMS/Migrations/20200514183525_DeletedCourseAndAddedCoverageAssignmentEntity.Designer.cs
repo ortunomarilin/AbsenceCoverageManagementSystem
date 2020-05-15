@@ -4,14 +4,16 @@ using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbsenceCoverageMS.Migrations
 {
     [DbContext(typeof(AbsenceManagementContext))]
-    partial class AbsenceManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20200514183525_DeletedCourseAndAddedCoverageAssignmentEntity")]
+    partial class DeletedCourseAndAddedCoverageAssignmentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -456,9 +458,7 @@ namespace AbsenceCoverageMS.Migrations
 
                     b.HasKey("SubJobId");
 
-                    b.HasIndex("AbsenceRequestId")
-                        .IsUnique()
-                        .HasFilter("[AbsenceRequestId] IS NOT NULL");
+                    b.HasIndex("AbsenceRequestId");
 
                     b.HasIndex("StatusTypeId");
 
@@ -756,8 +756,8 @@ namespace AbsenceCoverageMS.Migrations
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJob", b =>
                 {
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceRequest", "AbsenceRequest")
-                        .WithOne("SubJob")
-                        .HasForeignKey("AbsenceCoverageMS.Models.DomainModels.SubJob", "AbsenceRequestId");
+                        .WithMany("SubJobs")
+                        .HasForeignKey("AbsenceRequestId");
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.StatusType", "StatusType")
                         .WithMany("SubJobs")

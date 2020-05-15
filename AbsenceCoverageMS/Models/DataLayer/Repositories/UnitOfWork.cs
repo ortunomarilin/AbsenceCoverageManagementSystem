@@ -107,19 +107,6 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<Course> courseRepo;
-        public Repository<Course> Courses
-        {
-            get
-            {
-                if (courseRepo == null)
-                {
-                    courseRepo = new Repository<Course>(context);
-                }
-                return courseRepo;
-            }
-        }
-
 
         private Repository<CoveragePeriod> coveragePeriodRepo;
         public Repository<CoveragePeriod> CoveragePeriods
@@ -161,6 +148,45 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
                 return subJobRepo;
             }
         }
+
+
+        private Repository<CoverageAssignment> CoverageAssignmentRepo;
+        public Repository<CoverageAssignment> CoverageAssignments
+        {
+            get
+            {
+                if (CoverageAssignmentRepo == null)
+                {
+                    CoverageAssignmentRepo = new Repository<CoverageAssignment>(context);
+                }
+                return CoverageAssignmentRepo;
+            }
+        }
+
+
+        public void AddNewCoverageAssignments(SubJob subJob)
+        {
+            foreach(AbsenceRequestPeriod arp in subJob.AbsenceRequest.AbsenceRequestPeriods)
+            {
+                CoverageAssignment coverageAssgnment = new CoverageAssignment
+                {
+                    SubJob = subJob,
+                    Period = arp.Period,
+                    StatusType = StatusTypes.List().Where(st => st.Name == "Unfilled").FirstOrDefault(),
+                };
+                CoverageAssignments.Insert(coverageAssgnment);
+
+            }
+        }
+
+        public void DeleteCoverageAssignments(SubJob subJob)
+        {
+            foreach(CoverageAssignment coverageAssignment in subJob.CoverageAssignments)
+            {
+                CoverageAssignments.Delete(coverageAssignment);
+            }
+        }
+
 
 
         public void AddNewAbsenceRequestPeriods(AbsenceRequest absenceRequest, List<SelectablePeriodViewModel> selectablePeriods)

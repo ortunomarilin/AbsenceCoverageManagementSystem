@@ -45,6 +45,7 @@ namespace AbsenceCoverageMS.Controllers
                     //Check to see which role the user is in to redirect to correct Home Page.  
                     bool isAdmin = await signInManager.UserManager.IsInRoleAsync(user, "admin");
                     bool isPowerUser = await signInManager.UserManager.IsInRoleAsync(user, "power-user");
+                    bool isSubTeacher = await signInManager.UserManager.IsInRoleAsync(user, "sub-teacher");
 
 
                     if (isAdmin)
@@ -55,6 +56,11 @@ namespace AbsenceCoverageMS.Controllers
                     {
                         return RedirectToAction("Index", "Home", new { Area = "PowerUser" });
                     }
+                    if (isSubTeacher)
+                    {
+                        return RedirectToAction("Index", "Home", new { Area = "Sub-Teacher" });
+                    }
+
 
                     return RedirectToAction("Index", "Home");
                 }

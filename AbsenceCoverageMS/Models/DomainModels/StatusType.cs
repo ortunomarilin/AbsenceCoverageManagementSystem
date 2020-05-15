@@ -15,5 +15,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
+        public ICollection<SubJob> SubJobs { get; set; }
     }
 }

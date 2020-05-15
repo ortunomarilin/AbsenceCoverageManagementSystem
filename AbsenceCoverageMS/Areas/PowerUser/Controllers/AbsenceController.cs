@@ -37,16 +37,16 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
 
         [HttpGet]
-        public async Task<ViewResult> List(AbsenceGridDTO parameters)
+        public async Task<ViewResult> List(FilterGridDTO values)
         {
             //First get the current user logged in, to only show absence request from same campus. 
             User user = await userManager.GetUserAsync(User);
 
-            //Create an instance of the AbsenceGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
-            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters, nameof(AbsenceRequest.StartDate));
+            //Create an instance of the AbsenceGridBuilder to save the grid values for Sorting/Paging/Filtering into a session. 
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, values, nameof(AbsenceRequest.StartDate));
 
 
-            //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
+            //Set all of the Query options based on grid values. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
             var options = new AbsenceQueryOptions
             {
                 Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
@@ -59,7 +59,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             options.Sort(gridBuilder);
 
 
-            //Create and initialize the View Model 
+            //Declare and initialize the View Model 
             var model = new AbsenceListViewModel
             {
                 //Set current route 
@@ -71,7 +71,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 //DropDown Lists 
                 AbsenceTypes = data.AbsenceTypes.List(),
                 DurationTypes = data.DurationTypes.List(),
-                StatusTypes = data.StatusTypes.List(),
+                StatusTypes = data.StatusTypes.List(new QueryOptions<StatusType> { Where = st => st.Name != "Filled" && st.Name != "Unfilled"})
             };
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
             model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
@@ -84,7 +84,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
         [HttpPost]
         public RedirectToActionResult SearchOptions(string[] filters, string fromdate, string todate,  string searchTerm, bool clear = false)
         {
-            //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
+            //Initialize with the GET constructor (Desirializes Grid dictionary)
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
 
             if (clear)
@@ -93,25 +93,23 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             }
             else
             {
-                //Set new filter value to current route and serialize. 
+                //Set new filter value to current grid and serialize. 
                 gridBuilder.SetSearchOptions(filters, fromdate, todate, searchTerm);
                 gridBuilder.SerializeRoutes();
             }
 
-            //Redirect to the List Action Method with updated routes 
+            //Redirect to the List Action Method with updated grid dictionary 
             return RedirectToAction("List", gridBuilder.CurrentGrid);
         }
 
 
-
-
-
         [HttpGet]
-        public ViewResult ProcessAbsence(string id)
+        public ViewResult Details(string id)
         {
+            //Desirialize grid values to save values in View Model for model binding.
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
 
-            var model = new AbsenceProcessAbsenceViewModel
+            var model = new AbsenceDetailsViewModel
             {
                 Grid = gridBuilder.CurrentGrid,
                 AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
@@ -120,62 +118,139 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                     Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods"
                 })
             };
+
             return View(model);
         }
 
 
-
         [HttpPost]
-        public RedirectToActionResult ProcessAbsence(AbsenceProcessAbsenceViewModel model, bool approve = false, bool deny = false)
+        public RedirectToActionResult Approve(AbsenceRequest model)
         {
-            //Get the current Absence Request 
+            //First get the current Absence Request 
             AbsenceRequest absenceRequest = data.AbsenceRequests.Get(
                 new QueryOptions<AbsenceRequest>
                 {
-                    Where = ar => ar.AbsenceRequestId == model.AbsenceRequest.AbsenceRequestId,
-                    Include = "StatusType, User"
+                    Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
+                    Include = "StatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
                 });
 
 
-            if (approve)
-            {
-                //Change the status type to "Approved". 
-                absenceRequest.StatusType = data.StatusTypes.Get(
-                    new QueryOptions<StatusType>
-                    {
-                        Where = st => st.Name == "Approved"
-                    });
-            }
-
-            else if(deny)
-            {
-                //Change the status type to "Deny". 
-                absenceRequest.StatusType = data.StatusTypes.Get(
-                    new QueryOptions<StatusType>
-                    {
-                        Where = st => st.Name == "Denied"
-                    });
-            }
-
+            //Update absence with new changes. 
+            absenceRequest.StatusType = data.StatusTypes.List().Where(st => st.Name == "Approved").FirstOrDefault();
             absenceRequest.DateProcessed = DateTime.Now;
-            absenceRequest.StatusRemarks = model.AbsenceRequest.StatusRemarks;
-
-            //Update and save. 
+            absenceRequest.StatusRemarks = model.StatusRemarks;
             data.AbsenceRequests.Update(absenceRequest);
+
+
+            //If the Absence Request requires Coverage, create a sub job & coverage assignments with status of Unfilled. 
+            if (absenceRequest.NeedCoverage)
+            {
+                var subJob = new SubJob
+                {
+                    AbsenceRequest = absenceRequest,
+                    StatusType = data.StatusTypes.List().Where(st => st.Name == "Unfilled").FirstOrDefault()
+                };
+                data.AddNewCoverageAssignments(subJob);
+                data.SubJobs.Insert(subJob);
+            }
+
+            //Save all changes
             data.Save();
 
-
-            TempData["SucessMessage"] = "The Absence Request for " + absenceRequest.User.FullName + " was processed sucessfully.";
+            //To retain grid state, send the current grid values to the List View. 
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
             return RedirectToAction("List", gridBuilder.CurrentGrid);
         }
 
 
 
+        [HttpPost]
+        public IActionResult Deny(AbsenceRequest model)
+        {
+            //To retain grid state, send the current grid values to the List View. 
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
+
+            //First get the current Absence Request 
+            AbsenceRequest absenceRequest = data.AbsenceRequests.Get(
+                new QueryOptions<AbsenceRequest>
+                {
+                    Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
+                    Include = "StatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
+                });
+
+            if (model.StatusRemarks == null)
+            {
+                TempData["FailureMessage"] = "Unable to Deny the Absence Request for " + absenceRequest.User.FullName + ". If absence is denied, need to provide a reason in status remarks.";
+                //return RedirectToAction("List", gridBuilder.CurrentGrid);
+                return RedirectToAction("List", gridBuilder.CurrentGrid);
+            }
+            else
+            {
+
+                //Update absence with new changes. 
+                absenceRequest.StatusType = data.StatusTypes.List().Where(st => st.Name == "Denied").FirstOrDefault();
+                absenceRequest.DateProcessed = DateTime.Now;
+                absenceRequest.StatusRemarks = model.StatusRemarks;
+                data.AbsenceRequests.Update(absenceRequest);
+
+                //Save all changes
+                data.Save();
+                return RedirectToAction("List", gridBuilder.CurrentGrid);
+
+            }
+
+
+        }
 
 
 
 
+        [HttpPost]
+        public RedirectToActionResult Cancel(AbsenceRequest model)
+        {
+            //First get the current Absence Request 
+            AbsenceRequest absenceRequest = data.AbsenceRequests.Get(
+                new QueryOptions<AbsenceRequest>
+                {
+                    Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
+                    Include = "StatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob, SubJob.StatusType, SubJob.CoverageAssignments"
+                });
+
+
+            if(absenceRequest.SubJob != null)
+            {
+                //If the absence request has a sub job that has been filled change the staus to "Canceled"
+                if (absenceRequest.SubJob.StatusType.Name == "Filled")
+                {
+                    absenceRequest.StatusType = data.StatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                    absenceRequest.SubJob.StatusType = data.StatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+
+                    foreach (CoverageAssignment coverageAssignment in absenceRequest.SubJob.CoverageAssignments)
+                    {
+                        coverageAssignment.StatusType = data.StatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                    }
+                }
+                //Else delete, since the absence has not been filled by a sub. 
+                else
+                {
+                    data.AbsenceRequests.Delete(absenceRequest);
+                    data.SubJobs.Delete(absenceRequest.SubJob);
+                    data.DeleteCoverageAssignments(absenceRequest.SubJob);
+                }
+            }
+            //Else no coverage was requested, so can go ahead and delete.  
+            else
+            {
+                data.AbsenceRequests.Delete(absenceRequest);
+            }
+
+            //Save all changes
+            data.Save();
+
+            //To retain grid state, send the current grid values to the List View. 
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
+            return RedirectToAction("List", gridBuilder.CurrentGrid);
+        }
 
     }
 }

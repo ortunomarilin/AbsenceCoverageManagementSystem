@@ -1,11 +1,16 @@
-﻿using System;
+﻿/// <summary>
+/// This class is responsible for binding the Filter values to Action Method parameters for Grid creation.
+/// This class also inherits values from the GridDTO class to bind Paging and Sorting values to Action Method parameters for Grid creation.
+/// </summary>
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DTO
 {
-    public class AbsenceGridDTO : GridDTO
+    public class FilterGridDTO : GridDTO
     {
 
         public string Search { get; set; }
@@ -20,8 +25,7 @@ namespace AbsenceCoverageMS.Models.DTO
         public string Duration { get; set; } = "all";           // Has Default Value
         public string Status { get; set; } = "all";             // Has Default Value
         public string NeedCoverage { get; set; } = "all";
-
-
+        public string Campus { get; set; } = "all";
 
     }
 }

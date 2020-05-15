@@ -15,9 +15,9 @@ namespace AbsenceCoverageMS.Models.Grid
             
         }
 
-        public AbsenceGridBuilder(ISession s, AbsenceGridDTO values, string defaultSort) : base(s, values, defaultSort)
+        public AbsenceGridBuilder(ISession s, FilterGridDTO values, string defaultSort) : base(s, values, defaultSort)
         {
-            //Inilialize routes
+            //Inilialize values
             grid.AbsenceType = values.AbsenceType;
             grid.Duration = values.Duration;
             grid.NeedCoverage = values.NeedCoverage;

@@ -18,12 +18,11 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public string Name { get; set; }
 
 
-        public ICollection<Course> Courses { get; set; }
         public ICollection<CoveragePeriod> CoveragePeriods { get; set; }
 
-
         public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
-        public ICollection<SubJob> SubJobs { get; set; }
+
+        public ICollection<CoverageAssignment> CoverageAssignments { get; set; }
 
     }
 }

@@ -16,7 +16,9 @@ namespace AbsenceCoverageMS.Models.DataLayer.SeedData
                 new StatusType { StatusTypeId = "1", Name = "Submitted" },
                 new StatusType { StatusTypeId = "2", Name = "Approved" },
                 new StatusType { StatusTypeId = "3", Name = "Denied" },
-                new StatusType { StatusTypeId = "4", Name = "Canceled" }
+                new StatusType { StatusTypeId = "4", Name = "Canceled" },
+                new StatusType { StatusTypeId = "5", Name = "Filled" },
+                new StatusType { StatusTypeId = "6", Name = "Unfilled" }
             );
         }
     }

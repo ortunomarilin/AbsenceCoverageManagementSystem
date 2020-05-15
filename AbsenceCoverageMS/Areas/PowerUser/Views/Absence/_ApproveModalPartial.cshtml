@@ -1,0 +1,55 @@
+﻿@model AbsenceRequest
+
+
+    <div class="text-right">
+        <button class="btn btn-success  btn-sm  btn-block " data-toggle="modal" data-target="#modal@(Model.AbsenceRequestId)">
+            <span>
+                <i class="fas fa-thumbs-up"></i>
+            </span>
+            Approve
+        </button>
+    </div>
+
+
+<form method="post" asp-action="Approve">
+
+    <input  type="hidden"  asp-for="@Model.AbsenceRequestId"  />
+
+    <div class="modal  " tabindex="-1" role="dialog" id="modal@(Model.AbsenceRequestId)">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header  form-section-header ">
+
+                    <h5 class="modal-title  p-2">Approve Absence Request</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-label  ">New Status </label>
+                            <label class="form-control  bg-light ">Approved </label>
+                        </div>
+                    </div>
+
+                    <div class="row  mt-3 ">
+                        <div class="col-md-12">
+                            <label class="form-label ">Status Remarks (optional) </label>
+                            <input class="form-control" asp-for="@Model.StatusRemarks" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">
+                        <span>
+                            <i class="fas fa-thumbs-up"></i>
+                        </span>
+                        Approve
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

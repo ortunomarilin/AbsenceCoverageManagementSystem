@@ -29,13 +29,13 @@ namespace AbsenceCoverageMS.Controllers
         }
 
 
-        public async Task<ViewResult> List(AbsenceGridDTO parameters)
+        public async Task<ViewResult> List(FilterGridDTO values)
         {
             //First, find the current user signed in to only show their records. 
             User user = await userManager.GetUserAsync(User);
 
             //Create an instance of the AbsenceGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
-            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters, nameof(AbsenceRequest.StartDate));
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, values, nameof(AbsenceRequest.StartDate));
 
 
             //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 

@@ -155,6 +155,7 @@
     <table class="table table-sm shadow-sm  mb-0">
         <thead>
             <tr>
+                <th class="text-center">Details</th>
 
                 <th>
                     Name
@@ -251,7 +252,7 @@
                         </span>
                     </a>
                 </th>
-                <th class="text-center" >Actions</th>
+                <th class="text-center"  colspan="2" >Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -259,12 +260,17 @@
             @foreach (AbsenceRequest ar in Model.AbsenceRequests)
             {
             <tr>
+                <td class="text-center">
+                    <a class="btn btn-outline-primary  btn-sm" asp-action="Details" asp-route-id="@ar.AbsenceRequestId">
+                        <span>
+                            <i class="fas fa-binoculars"></i>
+                        </span>
+                    </a>
+                </td>
 
                 <td>
                     @ar.User.LastName, @ar.User.FirstName
                 </td>
-
-
 
                 @if (ar.StartDate == ar.EndDate)
                 {
@@ -281,12 +287,26 @@
                 <td>@(ar.NeedCoverage == true ? "Yes" : "No")</td>
                 <td>@ar.StatusType.Name</td>
 
+                @if (ar.StatusType.Name == "Canceled")
+                {
+                    <td></td>
+                    <td></td>
+                }
+                else if (ar.StatusType.Name == "Submitted")
+                {
+                    <td>
+                        <partial name="_ApproveModalPartial" model="@ar" />
+                    </td>
 
-
-                <td class="text-center">
-                    <a class="btn take-action-btn btn-sm"  asp-action="ProcessAbsence" asp-route-id="@ar.AbsenceRequestId" >Take Action</a>
-                </td>
-
+                    <td>
+                        <partial name="_DenyModalPartial" model="@ar" />
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                    <td><partial name="_CancelModalPartial" model="@ar" /> </td>
+                }
             </tr>
             }
 

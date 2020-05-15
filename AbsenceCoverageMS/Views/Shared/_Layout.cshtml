@@ -149,61 +149,6 @@
                 </a>
             </li>
 
-
-            @*<li>
-                <a href="#Users" data-toggle="collapse" class="">
-                    <span class="icon">
-                        <i class="fas fa-user"></i>
-                    </span>
-                    Users
-                    <span class="float-right mr-3 ">
-                        <i class="fas fa-sort-down"></i>
-                    </span>
-                </a>
-                <ul class="collapse sidebarMenu-dropdown  drop " id="Users">
-                    <li>
-                        <a class="pl-5 " asp-controller="User" asp-action="List" asp-area="Admin">
-                            All Users
-                        </a>
-                    </li>
-                    <li>
-                        <a class="pl-5 " asp-controller="User" asp-action="Add" asp-area="Admin">
-                            <span class="icon ml-0 pl-0 ">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            New User
-                        </a>
-                    </li>
-                </ul>
-            </li>*@
-
-            @*<li>
-                <a href="#Roles" data-toggle="collapse" class="">
-                    <span class="icon">
-                        <i class="fas fa-users"></i>
-                    </span>
-                    Roles
-                    <span class="float-right mr-3 ">
-                        <i class="fas fa-sort-down"></i>
-                    </span>
-                </a>
-                <ul class="collapse sidebarMenu-dropdown  drop " id="Roles">
-                    <li>
-                        <a class="pl-5 " asp-controller="Role" asp-action="List" asp-area="Admin">
-                            All Roles
-                        </a>
-                    </li>
-                    <li>
-                        <a class="pl-5 " asp-controller="Role" asp-action="Add" asp-area="Admin">
-                            <span class="icon ml-0 pl-0 ">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            New Role
-                        </a>
-                    </li>
-                </ul>
-            </li>*@
-
             <li>
                 <a href="#AbsenceTypes" data-toggle="collapse" class="">
                     <span class="icon">
@@ -260,7 +205,7 @@
                 </a>
             </li>
             <li>
-                <a asp-controller="" asp-action="" asp-area="PowerUser">
+                <a asp-controller="Coverage" asp-action="List" asp-area="PowerUser">
                     <span class="icon">
                         <i class="fas fa-chalkboard-teacher"></i>
                     </span>
@@ -279,7 +224,7 @@
             </li>
 
             <li>
-                <a asp-controller="" asp-action="" asp-area="">
+                <a asp-controller="SubJob" asp-action="List" asp-area="SubTeacher">
                     <span class="icon">
                         <i class="fas fa-history"></i>
                     </span>
@@ -287,7 +232,7 @@
                 </a>
             </li>
             <li>
-                <a asp-controller="" asp-action="" asp-area="">
+                <a asp-controller="SubJob" asp-action="AvailableJobs" asp-area="SubTeacher">
                     <span class="icon">
                         <i class="fas fa-chalkboard"></i>
                     </span>

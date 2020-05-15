@@ -1,0 +1,229 @@
+﻿
+@model SubJobsAvailableViewModel
+
+
+@{
+    ViewData["Title"] = "Available Sub Jobs";
+}
+
+<div class="view-header mb-2 ">
+    <h3>Available Sub Jobs</h3>
+</div>
+
+
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
+    </div>
+}
+
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
+
+    </div>
+}
+
+
+
+<div class="content-container shadow-sm  mt-2">
+
+    <form asp-action="Filter" method="post">
+
+
+        <div class="form-row ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Campus</label>
+                <select class="form-control form-control-sm" name="Filters"
+                        asp-items="@(new SelectList(Model.Campuses,
+                                        "CampusId", "Name", Model.Grid.Campus))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Duration</label>
+                <select class="form-control form-control-sm" name="Filters"
+                        asp-items="@(new SelectList(Model.DurationTypes,
+                                        "DurationTypeId", "Name", Model.Grid.Duration))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+
+            <div class=" ml-2 pt-4">
+                <button type="submit" class="btn btn-sm btn-primary  search-btn ">
+                    Search
+                </button>
+            </div>
+            <div class=" ml-2 pt-4">
+                <button class="btn btn-sm btn-outline-primary  search-btn " type="submit" name="clear" value="true">
+                    Clear
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+<div class="row justify-content-end">
+    <div class="col-md-2 text-right mr-4  pt-2">
+        <h6 class="form-label font-weight-normal ">Showing Page @Model.Grid.PageNumber of @Model.TotalPages</h6>
+    </div>
+</div>
+
+
+<div class="overflow-auto table-container">
+    <table class="table table-sm shadow-sm  mb-0">
+        <thead>
+            <tr>
+
+                <th>
+                    Job Date
+                    <a asp-action="AvailableJobs"
+                       asp-route-sortby=@nameof(AbsenceRequest.StartDate)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.StartDate))
+                       asp-route-campus="@Model.Grid.Campus"
+                       asp-route-duration="@Model.Grid.Duration"
+                       class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.StartDate) ? "text-primary" : "text-secondary")">
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+
+                <th>
+                    Duration
+                    <a asp-action="AvailableJobs"
+                       asp-route-sortby=@nameof(AbsenceRequest.DurationType.Name)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.DurationType.Name))
+                       asp-route-campus="@Model.Grid.Campus"
+                       asp-route-duration="@Model.Grid.Duration"
+                       class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.DurationType.Name) ? "text-primary" : "text-secondary")">
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+
+                <th>Time</th>
+                <th>For Teacher</th>
+                <th>Position Title</th>
+                <th>
+                    Campus
+                    <a asp-action="AvailableJobs"
+                       asp-route-sortby=@nameof(Campus.Name)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(Campus.Name))
+                       asp-route-campus="@Model.Grid.Campus"
+                       asp-route-duration="@Model.Grid.Duration"
+                       class=" @(Model.Grid.SortBy == nameof(Campus.Name) ? "text-primary" : "text-secondary")">
+                        <span>
+                            <i class="fas fa-sort-down"></i>
+                        </span>
+                    </a>
+                </th>
+                <th>Status</th>
+
+
+
+                <th class="text-center">Address</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (SubJob job in Model.AvailableSubJobs)
+            {
+            <tr>
+
+
+                @if (job.AbsenceRequest.StartDate == job.AbsenceRequest.EndDate)
+                {
+                    <td>@job.AbsenceRequest.StartDate.Value.ToShortDateString()</td>
+                }
+                else
+                {
+                    <td>@job.AbsenceRequest.StartDate.Value.ToShortDateString() - @job.AbsenceRequest.EndDate.Value.ToShortDateString()</td>
+                }
+
+                <td>@job.AbsenceRequest.DurationType.Name</td>
+                <td>@job.AbsenceRequest.StartTime.Value.ToShortTimeString() - @job.AbsenceRequest.EndTime.Value.ToShortTimeString()</td>
+                <td>@job.AbsenceRequest.User.FullName</td>
+                <td>@job.AbsenceRequest.User.PositionTitle</td>
+                <td>@job.AbsenceRequest.User.Campus.Name</td>
+                <td>@job.StatusType.Name</td>
+
+
+                <td class="text-center">
+                    <a class="btn btn-outline-warning btn-sm">
+                        <span>
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                    </a>
+                </td>
+
+                <td class="text-center">
+                    <a class="btn btn-success btn-sm" asp-action="Accept" asp-route-id="@job.SubJobId">
+                        <span>
+                            <i class="fas fa-check"></i>
+                        </span>
+                        Accept Job
+                    </a>
+                </td>
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12  ml-2">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-action="AvailableJobs"
+               asp-route-sortby=@Model.Grid.SortBy
+               asp-route-sortdirection=@Model.Grid.SortDirection
+               asp-route-campus="@Model.Grid.Campus"
+               asp-route-duration="@Model.Grid.Duration"
+               asp-route-pagenumber="@i"
+               asp-route-pagesize="@Model.Grid.PageSize"
+               class="btn btn-link   @(i==Model.Grid.PageNumber ? "active" : "" )">
+                @if (i == Model.Grid.PageNumber)
+                {
+                    <u>@i</u>
+
+                }
+                else
+                {
+                    @i
+                }
+            </a>
+        }
+    </div>
+</div>
+
+
+
+
+
+

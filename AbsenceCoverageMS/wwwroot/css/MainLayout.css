@@ -213,6 +213,15 @@ tbody {
     }
 
 
+.modal {
+    top: 60px;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-backdrop {
+    display: none;
+}
+
 
 .validation-summary-valid{
     display: none;
@@ -228,6 +237,4 @@ tbody {
     border: solid 1px #dc3545; 
 }
 
-.drop {
-    background-color: #0f3d77;
-}
+

@@ -4,14 +4,16 @@ using AbsenceCoverageMS.Models.DataLayer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AbsenceCoverageMS.Migrations
 {
     [DbContext(typeof(AbsenceManagementContext))]
-    partial class AbsenceManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20200513213112_CorrectedSubJobModel")]
+    partial class CorrectedSubJobModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,38 +234,35 @@ namespace AbsenceCoverageMS.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.CoverageAssignment", b =>
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Course", b =>
                 {
-                    b.Property<string>("CoverageAssignmentId")
+                    b.Property<string>("CourseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PeriodId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("StatusTypeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SubJobId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TeacherInstructions")
+                    b.Property<string>("Room")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CoverageAssignmentId");
+                    b.HasKey("CourseId");
 
                     b.HasIndex("PeriodId");
 
-                    b.HasIndex("StatusTypeId");
-
-                    b.HasIndex("SubJobId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("CoverageAssignments");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", b =>
@@ -451,16 +450,24 @@ namespace AbsenceCoverageMS.Migrations
                     b.Property<string>("AbsenceRequestId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("PeriodId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("StatusTypeId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("SubJobId");
 
-                    b.HasIndex("AbsenceRequestId")
-                        .IsUnique()
-                        .HasFilter("[AbsenceRequestId] IS NOT NULL");
+                    b.HasIndex("AbsenceRequestId");
+
+                    b.HasIndex("PeriodId");
 
                     b.HasIndex("StatusTypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("SubJobs");
                 });
@@ -719,23 +726,19 @@ namespace AbsenceCoverageMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.CoverageAssignment", b =>
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Course", b =>
                 {
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.Period", "Period")
-                        .WithMany("CoverageAssignments")
-                        .HasForeignKey("PeriodId");
-
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.StatusType", "StatusType")
-                        .WithMany()
-                        .HasForeignKey("StatusTypeId");
-
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.SubJob", "SubJob")
-                        .WithMany("CoverageAssignments")
-                        .HasForeignKey("SubJobId");
+                        .WithMany("Courses")
+                        .HasForeignKey("PeriodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
-                        .WithMany("CoverageAssignments")
-                        .HasForeignKey("UserId");
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", b =>
@@ -756,12 +759,20 @@ namespace AbsenceCoverageMS.Migrations
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJob", b =>
                 {
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceRequest", "AbsenceRequest")
-                        .WithOne("SubJob")
-                        .HasForeignKey("AbsenceCoverageMS.Models.DomainModels.SubJob", "AbsenceRequestId");
+                        .WithMany("SubJobs")
+                        .HasForeignKey("AbsenceRequestId");
+
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.Period", null)
+                        .WithMany("SubJobs")
+                        .HasForeignKey("PeriodId");
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.StatusType", "StatusType")
                         .WithMany("SubJobs")
                         .HasForeignKey("StatusTypeId");
+
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
+                        .WithMany("SubJobs")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.User", b =>

@@ -66,8 +66,10 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required(ErrorMessage = "Please select a duration.")]
         public string DurationTypeId { get; set; }
         public DurationType DurationType { get; set; }
-        
 
+
+
+        public SubJob SubJob { get; set; }  //Nav
 
 
         [Required(ErrorMessage = "Please select if coverage is needed.")]
@@ -76,7 +78,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
 
         //Produces SubJobs
-        public ICollection<SubJob> SubJobs { get; set; }  //Nav
+
 
 
 

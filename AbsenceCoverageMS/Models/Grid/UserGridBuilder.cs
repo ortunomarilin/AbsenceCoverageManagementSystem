@@ -16,7 +16,7 @@ namespace AbsenceCoverageMS.Models.Grid
 
         }
 
-        public UserGridBuilder(ISession s, UserGridDTO values, string defaultSort) : base(s, values, defaultSort)
+        public UserGridBuilder(ISession s, FilterGridDTO values, string defaultSort) : base(s, values, defaultSort)
         {
             //Inilialize routes
             grid.Campus = values.Campus;

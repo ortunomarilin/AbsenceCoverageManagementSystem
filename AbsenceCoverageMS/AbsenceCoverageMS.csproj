@@ -7,16 +7,12 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Manager\**" />
-    <Compile Remove="Areas\SubTeacher\**" />
     <Compile Remove="Areas\Teacher\**" />
     <Content Remove="Areas\Manager\**" />
-    <Content Remove="Areas\SubTeacher\**" />
     <Content Remove="Areas\Teacher\**" />
     <EmbeddedResource Remove="Areas\Manager\**" />
-    <EmbeddedResource Remove="Areas\SubTeacher\**" />
     <EmbeddedResource Remove="Areas\Teacher\**" />
     <None Remove="Areas\Manager\**" />
-    <None Remove="Areas\SubTeacher\**" />
     <None Remove="Areas\Teacher\**" />
   </ItemGroup>
 
@@ -115,6 +111,12 @@
     <Compile Remove="Migrations\20200507070205_UpdatedUserEntityWithApproverProperty.Designer.cs" />
     <Compile Remove="Migrations\20200507071416_UpdatedUserEntityWithApproverProperty.cs" />
     <Compile Remove="Migrations\20200507071416_UpdatedUserEntityWithApproverProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200513210611_AddedStatusTypeAndPeriodPropertiesToSubJobModel.cs" />
+    <Compile Remove="Migrations\20200513210611_AddedStatusTypeAndPeriodPropertiesToSubJobModel.Designer.cs" />
+    <Compile Remove="Migrations\20200513210841_AddedStatusTypeAndToSubJobEntity.cs" />
+    <Compile Remove="Migrations\20200513210841_AddedStatusTypeAndToSubJobEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200514201916_CorrectedAbsenceRequestAndSubJobRelationship.cs" />
+    <Compile Remove="Migrations\20200514201916_CorrectedAbsenceRequestAndSubJobRelationship.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -127,6 +129,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\PowerUser\Views\Shared\" />
+    <Folder Include="Areas\SubTeacher\Views\Home\" />
   </ItemGroup>
 
 </Project>
