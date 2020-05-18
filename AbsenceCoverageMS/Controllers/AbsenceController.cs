@@ -41,7 +41,7 @@ namespace AbsenceCoverageMS.Controllers
             //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
             var options = new AbsenceQueryOptions
             {
-                Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods",
                 Where = ar => ar.UserId == user.Id,
                 OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
@@ -62,7 +62,7 @@ namespace AbsenceCoverageMS.Controllers
                 //DropDown Lists 
                 AbsenceTypes = data.AbsenceTypes.List(),
                 DurationTypes = data.DurationTypes.List(),
-                StatusTypes = data.StatusTypes.List(),
+                StatusTypes = data.AbsenceStatusTypes.List(),
             };
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
 
@@ -109,7 +109,7 @@ namespace AbsenceCoverageMS.Controllers
                     {
                         UserId = user.Id,
                         DateSubmitted = DateTime.Now,
-                        StatusTypeId = data.StatusTypes.List().Where(s => s.Name == "Submitted").FirstOrDefault().StatusTypeId
+                        AbsenceStatusTypeId = data.AbsenceStatusTypes.List().Where(s => s.Name == "Submitted").FirstOrDefault().AbsenceStatusTypeId
                     },
                     AbsenceTypes = data.AbsenceTypes.List(),
                     DurationTypes = data.DurationTypes.List(),
@@ -258,12 +258,6 @@ namespace AbsenceCoverageMS.Controllers
         [HttpPost]
         public RedirectToActionResult Delete(string id)
         {
-            AbsenceRequest absenceRequest = GetAbsenceRequest(id);
-            if(absenceRequest.StatusType.Name != "Submitted")
-            {
-                TempData["FailureMessage"] = "Deletion Failed - Cannot delete absence request with a current status other than submitted. Please contact your manager.";
-                return RedirectToAction("List");
-            }
             data.AbsenceRequests.Delete(GetAbsenceRequest(id));
             data.AbsenceRequests.Save();
             return RedirectToAction("List");
@@ -272,14 +266,12 @@ namespace AbsenceCoverageMS.Controllers
 
 
 
-
-
         private AbsenceRequest GetAbsenceRequest(string id)
         {
             AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
             {
                 Where = ar => ar.AbsenceRequestId == id,
-                Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods",
             });
             return absenceRequest;
         }

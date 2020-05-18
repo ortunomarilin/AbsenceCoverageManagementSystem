@@ -115,8 +115,28 @@
     <Compile Remove="Migrations\20200513210611_AddedStatusTypeAndPeriodPropertiesToSubJobModel.Designer.cs" />
     <Compile Remove="Migrations\20200513210841_AddedStatusTypeAndToSubJobEntity.cs" />
     <Compile Remove="Migrations\20200513210841_AddedStatusTypeAndToSubJobEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200513213112_CorrectedSubJobModel.cs" />
+    <Compile Remove="Migrations\20200513213112_CorrectedSubJobModel.Designer.cs" />
+    <Compile Remove="Migrations\20200514183525_DeletedCourseAndAddedCoverageAssignmentEntity.cs" />
+    <Compile Remove="Migrations\20200514183525_DeletedCourseAndAddedCoverageAssignmentEntity.Designer.cs" />
     <Compile Remove="Migrations\20200514201916_CorrectedAbsenceRequestAndSubJobRelationship.cs" />
     <Compile Remove="Migrations\20200514201916_CorrectedAbsenceRequestAndSubJobRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200515064235_ConfigureWithAPIRelationshipAbsenceRequestAndSubJob.cs" />
+    <Compile Remove="Migrations\20200515064235_ConfigureWithAPIRelationshipAbsenceRequestAndSubJob.Designer.cs" />
+    <Compile Remove="Migrations\20200515231508_RedesingEntityModelsForAbsenceAndCoverage.cs" />
+    <Compile Remove="Migrations\20200515231508_RedesingEntityModelsForAbsenceAndCoverage.Designer.cs" />
+    <Compile Remove="Migrations\20200515232231_RedesingERDForDatabase.cs" />
+    <Compile Remove="Migrations\20200515232231_RedesingERDForDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20200516095808_NewERD.cs" />
+    <Compile Remove="Migrations\20200516095808_NewERD.Designer.cs" />
+    <Compile Remove="Migrations\20200517015816_SeedCoverageTypes.cs" />
+    <Compile Remove="Migrations\20200517015816_SeedCoverageTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200517084131_SeedCoverageStatusTypes.cs" />
+    <Compile Remove="Migrations\20200517084131_SeedCoverageStatusTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200517090006_SeedCoverageStatusTypes.cs" />
+    <Compile Remove="Migrations\20200517090006_SeedCoverageStatusTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.cs" />
+    <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

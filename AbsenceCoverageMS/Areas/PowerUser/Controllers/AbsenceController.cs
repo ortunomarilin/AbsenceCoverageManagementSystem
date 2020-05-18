@@ -49,7 +49,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             //Set all of the Query options based on grid values. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
             var options = new AbsenceQueryOptions
             {
-                Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods",
                 Where = ar => ar.User.CampusId == user.CampusId,
                 OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
@@ -71,7 +71,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 //DropDown Lists 
                 AbsenceTypes = data.AbsenceTypes.List(),
                 DurationTypes = data.DurationTypes.List(),
-                StatusTypes = data.StatusTypes.List(new QueryOptions<StatusType> { Where = st => st.Name != "Filled" && st.Name != "Unfilled"})
+                AbsenceStatusTypes = data.AbsenceStatusTypes.List()
             };
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
             model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
@@ -115,7 +115,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == id,
-                    Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods"
+                    Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods"
                 })
             };
 
@@ -131,28 +131,16 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "StatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
+                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
                 });
 
 
             //Update absence with new changes. 
-            absenceRequest.StatusType = data.StatusTypes.List().Where(st => st.Name == "Approved").FirstOrDefault();
+            absenceRequest.AbsenceStatusType = data.AbsenceStatusTypes.List().Where(st => st.Name == "Approved").FirstOrDefault();
             absenceRequest.DateProcessed = DateTime.Now;
             absenceRequest.StatusRemarks = model.StatusRemarks;
             data.AbsenceRequests.Update(absenceRequest);
 
-
-            //If the Absence Request requires Coverage, create a sub job & coverage assignments with status of Unfilled. 
-            if (absenceRequest.NeedCoverage)
-            {
-                var subJob = new SubJob
-                {
-                    AbsenceRequest = absenceRequest,
-                    StatusType = data.StatusTypes.List().Where(st => st.Name == "Unfilled").FirstOrDefault()
-                };
-                data.AddNewCoverageAssignments(subJob);
-                data.SubJobs.Insert(subJob);
-            }
 
             //Save all changes
             data.Save();
@@ -177,7 +165,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "StatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
+                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
                 });
 
             if (model.StatusRemarks == null)
@@ -188,8 +176,8 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             else
             {
 
-                //Update absence with new changes. 
-                absenceRequest.StatusType = data.StatusTypes.List().Where(st => st.Name == "Denied").FirstOrDefault();
+                //Update absence with new status of "Denied"
+                absenceRequest.AbsenceStatusType = data.AbsenceStatusTypes.List().Where(st => st.Name == "Denied").FirstOrDefault();
                 absenceRequest.DateProcessed = DateTime.Now;
                 absenceRequest.StatusRemarks = model.StatusRemarks;
                 data.AbsenceRequests.Update(absenceRequest);
@@ -216,35 +204,41 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "StatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob, SubJob.StatusType, SubJob.CoverageAssignments"
+                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob, CoverageJobs"
                 });
 
-
-            if(absenceRequest.SubJob != null)
+            
+            if(absenceRequest.NeedCoverage == false)
             {
-                //If the absence request has a sub job that has been filled change the staus to "Canceled"
-                if (absenceRequest.SubJob.StatusType.Name == "Filled")
+                data.AbsenceRequests.Delete(absenceRequest);
+            }
+            else
+            {
+                //IF the absence request has a coverage request and has already been filled by sub, only change the status to "Cancel" for all. 
+                if (absenceRequest.SubJob != null || absenceRequest.CoverageJobs.Count != 0)
                 {
-                    absenceRequest.StatusType = data.StatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
-                    absenceRequest.SubJob.StatusType = data.StatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                    absenceRequest.AbsenceStatusType = data.AbsenceStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                    absenceRequest.SubJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
 
-                    foreach (CoverageAssignment coverageAssignment in absenceRequest.SubJob.CoverageAssignments)
+                    if (absenceRequest.SubJob != null)
                     {
-                        coverageAssignment.StatusType = data.StatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                            absenceRequest.SubJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                    }
+                    if (absenceRequest.CoverageJobs != null)
+                    {
+                        foreach (CoverageJob coverageJob in absenceRequest.CoverageJobs)
+                        {
+                            coverageJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
+                        }
                     }
                 }
-                //Else delete, since the absence has not been filled by a sub. 
                 else
                 {
                     data.AbsenceRequests.Delete(absenceRequest);
                     data.SubJobs.Delete(absenceRequest.SubJob);
-                    data.DeleteCoverageAssignments(absenceRequest.SubJob);
+                    //data.CoverageJobs.Delete(----);
                 }
-            }
-            //Else no coverage was requested, so can go ahead and delete.  
-            else
-            {
-                data.AbsenceRequests.Delete(absenceRequest);
+
             }
 
             //Save all changes

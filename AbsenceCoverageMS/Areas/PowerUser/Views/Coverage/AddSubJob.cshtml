@@ -1,0 +1,200 @@
+﻿@model CoverageAddSubJobViewModel
+
+
+@{
+    ViewData["Title"] = "AddSubJob";
+}
+
+
+
+    <div class="view-header">
+        <h5>Add Sub Job  </h5>
+    </div>
+
+
+<div class="alert alert-danger  alert-dismissible " asp-validation-summary="All">
+    <button class="close" data-dismiss="alert">&times;</button>
+    <h6>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        Please correct the following.
+    </h6>
+</div>
+
+
+<form method="post" asp-action="AddSubJob"  >
+
+    <input type="hidden" asp-for="@Model.AbsenceRequestId" />
+
+
+    <div class="row justify-content-center  ">
+        <div class="col-md-11  form-section  shadow ">
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>Sub Job </h6>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5">
+                <div class="form-group col-md-3  ">
+                    <label class="form-label small">Start Date</label>
+                    <div class="input-group">
+                        <div class="input-group">
+                            <input id="SD" class="form-control  form-control-sm  bg-white " placeholder="mm/dd/yyyy" readonly onkeydown="event.preventDefault()" type="text" asp-for="@Model.SubJob.StartDate" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-3 ">
+                    <label class="form-label small">End Date</label>
+                    <div class="input-group ">
+                        <div class="input-group ">
+                            <input id="ED" class="form-control form-control-sm bg-white" placeholder="mm/dd/yyyy" readonly onkeydown="event.preventDefault()" type="text" asp-for="@Model.SubJob.EndDate" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="col-md-3">
+                    <span class="text-danger" asp-validation-for="@Model.SubJob.StartDate"></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="text-danger" asp-validation-for="@Model.SubJob.EndDate"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-row  ml-5">
+                <div class="form-group col-md-4">
+                    <label class="form-label small">Duration</label>
+                    <select class="form-control form-control-sm" asp-for="@Model.SubJob.DurationTypeId" 
+                            asp-items="@(new SelectList(Model.DurationTypes,
+                                                "DurationTypeId", "Name", Model.SubJob.DurationTypeId))">
+                        <option value="">Select One</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row ml-5">
+                <div class="col-md-4 ">
+                    <span class="text-danger " asp-validation-for="@Model.SubJob.DurationTypeId"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row ml-5">
+                <div class="form-group col-md-3 ">
+                    <label class="form-label small">Start Time</label>
+                    <div class="input-group">
+                        <div class="input-group">
+                            <input id="ST" class="form-control form-control-sm" type="text" asp-for="@Model.SubJob.StartTime" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-3 ">
+                    <label class="form-label small">End Time</label>
+                    <div class="input-group ">
+                        <div class="input-group ">
+                            <input id="ET" class="form-control form-control-sm" type="text" asp-for="@Model.SubJob.EndTime" />
+                            <div class="input-group-append">
+                                <span class="input-group-text form-icon">
+                                    <i class="fas fa-clock"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row  ml-5">
+                <div class="col-md-3">
+                    <span class="text-danger" asp-validation-for="@Model.SubJob.StartTime"></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="text-danger" asp-validation-for="@Model.SubJob.EndTime"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-row justify-content-end form-section-footer pr-2">
+                <div class="col-md-2 ">
+                    <button type="submit" class="btn btn-primary btn-block btn-sm">
+                        <span>
+                            <i class="fas fa-check"></i>
+                        </span>
+                        Submit
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-secondary btn-block  btn-sm " asp-action="Details"  asp-route-id="@Model.AbsenceRequestId"  >Cancel </a>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</form>
+
+
+<script>
+
+    $(function () {
+        $("#SD").datepicker({
+            beforeShowDay: $.datepicker.noWeekends,
+            minDate: 0,
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#ED").datepicker("option", "minDate", dt);
+            }
+        });
+    });
+
+    $(function () {
+        $("#ED").datepicker({
+            beforeShowDay: $.datepicker.noWeekends,
+            minDate: 0,
+            onSelect: function (selected) {
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#SD").datepicker("option", "maxDate", dt);
+            }
+        });
+    });
+
+
+    $(function () {
+        $('#ST').timepicker({
+            'minTime': '7:00am',
+            'maxTime': '6:00pm',
+            'step': 15
+        });
+    });
+    $(function () {
+        $('#ET').timepicker({
+            'minTime': '7:00am',
+            'maxTime': '6:00pm',
+            'step': 15
+        });
+    });
+
+
+</script>

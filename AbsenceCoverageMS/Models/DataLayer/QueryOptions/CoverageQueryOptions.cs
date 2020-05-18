@@ -1,17 +1,17 @@
-﻿using AbsenceCoverageMS.Models.DataLayer;
-using AbsenceCoverageMS.Models.DomainModels;
+﻿using AbsenceCoverageMS.Models.DomainModels;
+using AbsenceCoverageMS.Models.DTO;
 using AbsenceCoverageMS.Models.Grid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AbsenceCoverageMS.Models
+namespace AbsenceCoverageMS.Models.DataLayer.QueryOptions
 {
-    public class AbsenceQueryOptions : QueryOptions<AbsenceRequest>
+    public class CoverageQueryOptions : QueryOptions<AbsenceRequest>
     {
 
-        public void Search(AbsenceGridBuilder gridBuilder)
+        public void Search(CoverageGridBuilder gridBuilder)
         {
             if (gridBuilder.CurrentGrid.Search != null)
             {
@@ -20,7 +20,7 @@ namespace AbsenceCoverageMS.Models
             }
         }
 
-        public void FromDateRange(AbsenceGridBuilder gridBuilder)
+        public void FromDateRange(CoverageGridBuilder gridBuilder)
         {
 
             if (gridBuilder.CurrentGrid.FromDate != null && gridBuilder.CurrentGrid.ToDate != null)
@@ -34,14 +34,8 @@ namespace AbsenceCoverageMS.Models
         }
 
 
-        public void Filter(AbsenceGridBuilder gridBuilder)
+        public void Filter(CoverageGridBuilder gridBuilder)
         {
-
-            if (gridBuilder.CurrentGrid.AbsenceType != "all")
-            {
-                Where = ar => ar.AbsenceTypeId == gridBuilder.CurrentGrid.AbsenceType;
-            }
-
 
             if (gridBuilder.CurrentGrid.Duration != "all")
             {
@@ -49,32 +43,20 @@ namespace AbsenceCoverageMS.Models
             }
 
 
-            if (gridBuilder.CurrentGrid.NeedCoverage != "all")
-            {
-                bool boolValue;
-                if(Boolean.TryParse(gridBuilder.CurrentGrid.NeedCoverage, out boolValue))
-                {
-                    Where = ar => ar.NeedCoverage == boolValue;
-                }   
-            }
-
-
-            if (gridBuilder.CurrentGrid.AbsenceStatus != "all")
-            {
-                Where = ar => ar.AbsenceStatusTypeId == gridBuilder.CurrentGrid.AbsenceStatus;
-            }
-
-
-            if (gridBuilder.CurrentGrid.SubJobStatus != "all")
+            if (gridBuilder.CurrentGrid.SubJobStatus != "all" && gridBuilder.CurrentGrid.SubJobStatus != "none" )
             {
                 Where = ar => ar.SubJob.CoverageStatusTypeId == gridBuilder.CurrentGrid.SubJobStatus;
             }
 
-
+            if (gridBuilder.CurrentGrid.SubJobStatus == "none")
+            {
+                Where = ar => ar.SubJob.CoverageStatusTypeId == null;
+            }
 
         }
 
-        public void Sort(AbsenceGridBuilder gridBuilder)
+
+        public void Sort(CoverageGridBuilder gridBuilder)
         {
             //SortBy
             switch (gridBuilder.CurrentGrid.SortBy)
@@ -85,14 +67,11 @@ namespace AbsenceCoverageMS.Models
                 case nameof(AbsenceRequest.User.LastName):
                     OrderBy = ar => ar.User.LastName;
                     break;
-                case nameof(AbsenceRequest.AbsenceType):
-                    OrderBy = ar => ar.AbsenceType.Name;
-                    break;
                 case nameof(AbsenceRequest.DurationType):
                     OrderBy = ar => ar.DurationType.Name;
                     break;
-                case nameof(AbsenceRequest.AbsenceStatusType):
-                    OrderBy = ar => ar.AbsenceStatusType.Name;
+                case nameof(FilterGridDTO.SubJobStatus):
+                    OrderBy = ar => ar.SubJob.CoverageStatusType;
                     break;
                 default:
                     OrderBy = ar => ar.StartDate;
@@ -100,5 +79,6 @@ namespace AbsenceCoverageMS.Models
             }
 
         }
+
     }
 }

@@ -103,12 +103,24 @@ namespace AbsenceCoverageMS.Models.Grid
         }
 
 
-        public string Status
+        public string AbsenceStatus
         {
-            get => Get(nameof(FilterGridDTO.Status));
-            set => this[nameof(FilterGridDTO.Status)] = value;
+            get => Get(nameof(FilterGridDTO.AbsenceStatus));
+            set => this[nameof(FilterGridDTO.AbsenceStatus)] = value;
         }
 
+        public string CoverageJobStatus
+        {
+            get => Get(nameof(FilterGridDTO.CoverageJobStatus));
+            set => this[nameof(FilterGridDTO.CoverageJobStatus)] = value;
+        }
+
+
+        public string SubJobStatus
+        {
+            get => Get(nameof(FilterGridDTO.SubJobStatus));
+            set => this[nameof(FilterGridDTO.SubJobStatus)] = value;
+        }
 
 
         //All getters will call this method to check if there is a value in the key with name given, and reutrn the value if any. 

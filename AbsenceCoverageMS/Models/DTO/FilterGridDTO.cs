@@ -21,11 +21,14 @@ namespace AbsenceCoverageMS.Models.DTO
 
 
         //Filter Route parameters 
-        public string AbsenceType { get; set; } = "all";         // Has Default Value
-        public string Duration { get; set; } = "all";           // Has Default Value
-        public string Status { get; set; } = "all";             // Has Default Value
+        public string AbsenceType { get; set; } = "all";         
+        public string Duration { get; set; } = "all";          
+        public string AbsenceStatus { get; set; } = "all";             
         public string NeedCoverage { get; set; } = "all";
         public string Campus { get; set; } = "all";
+
+        public string SubJobStatus { get; set; } = "all";
+        public string CoverageJobStatus { get; set; } = "all";
 
     }
 }

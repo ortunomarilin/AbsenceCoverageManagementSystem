@@ -15,8 +15,11 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         Repository<CoveragePeriod> CoveragePeriods { get; }
         Repository<Period> Periods { get; }
         Repository<SubJob> SubJobs { get; }
+        Repository<CoverageJob> CoverageJobs { get; }
+        Repository<AbsenceStatusType> AbsenceStatusTypes { get; }
+        Repository<CoverageStatusType> CoverageStatusTypes { get; }
 
-        Repository<CoverageAssignment> CoverageAssignments { get; }
+
 
         void Save();
     }

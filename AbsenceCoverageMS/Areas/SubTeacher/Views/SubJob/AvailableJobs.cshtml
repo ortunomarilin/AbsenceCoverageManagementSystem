@@ -1,5 +1,5 @@
 ﻿
-@model SubJobsAvailableViewModel
+@*@model SubJobsAvailableViewModel
 
 
 @{
@@ -155,20 +155,20 @@
             <tr>
 
 
-                @if (job.AbsenceRequest.StartDate == job.AbsenceRequest.EndDate)
+                @if (job.StartDate == job.EndDate)
                 {
-                    <td>@job.AbsenceRequest.StartDate.Value.ToShortDateString()</td>
+                    <td>@job.StartDate.Value.ToShortDateString()</td>
                 }
                 else
                 {
-                    <td>@job.AbsenceRequest.StartDate.Value.ToShortDateString() - @job.AbsenceRequest.EndDate.Value.ToShortDateString()</td>
+                    <td>@job.StartDate.Value.ToShortDateString() - @job.EndDate.Value.ToShortDateString()</td>
                 }
 
-                <td>@job.AbsenceRequest.DurationType.Name</td>
-                <td>@job.AbsenceRequest.StartTime.Value.ToShortTimeString() - @job.AbsenceRequest.EndTime.Value.ToShortTimeString()</td>
-                <td>@job.AbsenceRequest.User.FullName</td>
-                <td>@job.AbsenceRequest.User.PositionTitle</td>
-                <td>@job.AbsenceRequest.User.Campus.Name</td>
+                <td>@job.DurationType.Name</td>
+                <td>@job.StartTime.Value.ToShortTimeString() - @job.EndTime.Value.ToShortTimeString()</td>
+                <td>@job.CoverageRequest.AbsenceRequest.User.FullName</td>
+                <td>@job.CoverageRequest.AbsenceRequest.User.PositionTitle</td>
+                <td>@job.CoverageRequest.AbsenceRequest.User.Campus.Name</td>
                 <td>@job.StatusType.Name</td>
 
 
@@ -220,7 +220,7 @@
             </a>
         }
     </div>
-</div>
+</div>*@
 
 
 

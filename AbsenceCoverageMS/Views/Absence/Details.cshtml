@@ -151,7 +151,7 @@
                     <label class="form-label">Status</label>
                 </div>
                 <div class=" col-md-3">
-                    <label>@Model.AbsenceRequest.StatusType.Name</label>
+                    <label>@Model.AbsenceRequest.AbsenceStatusType.Name</label>
                 </div>
             </div>
 
@@ -170,7 +170,7 @@
                     <label class="form-label">Approver Remarks</label>
                 </div>
                 <div class=" col-md-10">
-                    <textarea class="form-control" rows="1"  readonly ></textarea>
+                    <label>@Model.AbsenceRequest.StatusRemarks</label>
                 </div>
             </div>
 
@@ -183,23 +183,28 @@
         <div class="col-md-11   ">
 
             <div class="form-row ">
-                <div class="col-md-2 ">
-                    <a class="btn btn-warning btn-block text-white  btn-sm" asp-action="Edit" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
-                        <span>
-                            <i class="fas fa-edit text-white"></i>
-                        </span>
-                        Edit
-                    </a>
-                </div>
-                <div class="col-md-2  ">
-                    <button type="submit" class="btn btn-danger btn-block btn-sm ">
-                        <span>
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
-                        Delete
-                    </button>
-                </div>
-                <div class="col-md-8  text-right " >
+
+                @if (Model.AbsenceRequest.AbsenceStatusType.Name == "Submitted")
+                {
+                    <div class="col-md-2 ">
+                        <a class="btn btn-success btn-block text-white  btn-sm" asp-action="Edit" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
+                            <span>
+                                <i class="fas fa-edit text-white"></i>
+                            </span>
+                            Edit
+                        </a>
+                    </div>
+                    <div class="col-md-2  ">
+                        <button type="submit" class="btn btn-danger btn-block btn-sm ">
+                            <span>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                            Delete
+                        </button>
+                    </div>
+                }
+
+                <div class="col  text-right ">
                     <a class="btn btn-link " asp-action="List">Return to Absent History </a>
                 </div>
             </div>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -91,6 +92,32 @@ namespace AbsenceCoverageMS.Models.Grid
             return total;
         }
 
+
+        //Method to help validate the string date. 
+        public bool IsValidDate(string stringDate)
+        {
+            string validformat = "MM/dd/yyyy";
+            DateTime DateTimeDate;
+
+            if (DateTime.TryParseExact(stringDate, validformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeDate))
+            {
+                return true;
+            }
+            else
+            {
+                //Invalid Date input. 
+                return false;
+            }
+        }
+
+        public DateTime ConvertToDateTime(string stringDate)
+        {
+            string validformat = "MM/dd/yyyy";
+            DateTime DateTimeDate;
+
+            DateTime.TryParseExact(stringDate, validformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeDate);
+            return DateTimeDate;
+        }
 
 
 

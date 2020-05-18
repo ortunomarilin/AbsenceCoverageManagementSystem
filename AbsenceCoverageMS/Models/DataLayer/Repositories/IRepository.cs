@@ -14,6 +14,8 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
 
         //T Get(QueryOptions<T> options);
         T Get(string id);
+        T Get(QueryOptions<T> options);
+
 
         void Insert(T entity);
 

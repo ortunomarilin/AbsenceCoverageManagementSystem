@@ -1,49 +1,48 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AbsenceCoverageMS.Models.DTO;
+using Microsoft.AspNetCore.Http;
 using System;
-using AbsenceCoverageMS.Models.DTO;
+using System.Collections.Generic;
 using System.Globalization;
-
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.Grid
 {
-    public class AbsenceGridBuilder : GridBuilder
+    public class CoverageGridBuilder : GridBuilder
     {
-
-        //Constructor to GET data from session
-        public AbsenceGridBuilder(ISession s) : base(s)
+        public CoverageGridBuilder(ISession s) : base(s)
         {
-            
+
         }
 
-        public AbsenceGridBuilder(ISession s, FilterGridDTO values, string defaultSort) : base(s, values, defaultSort)
+        public CoverageGridBuilder(ISession s, FilterGridDTO values, string defaultSort) : base(s, values, defaultSort)
         {
             //Inilialize values
-            grid.AbsenceType = values.AbsenceType;
-            grid.Duration = values.Duration;
-            grid.NeedCoverage = values.NeedCoverage;
-            grid.AbsenceStatus = values.AbsenceStatus;
+            grid.Search = values.Search;
             grid.FromDate = values.FromDate;
             grid.ToDate = values.ToDate;
-            grid.Search = values.Search;
+            grid.Duration = values.Duration;
+            grid.SubJobStatus = values.SubJobStatus;
+            grid.CoverageJobStatus = values.CoverageJobStatus;
+
 
             SerializeRoutes();
+
         }
-
-
 
         //Method to set the Filter values for the Grid
         public void SetSearchOptions(string[] filters, string fromdate, string todate, string searchTerm)
         {
-            grid.AbsenceType = filters[0];
-            grid.Duration = filters[1];
-            grid.NeedCoverage = filters[2];
-            grid.AbsenceStatus = filters[3];
+            grid.Duration = filters[0];
+            grid.SubJobStatus = filters[1];
+            grid.CoverageJobStatus = filters[2];
 
-            //The search property has no defual value, since it's optional. So, only save and change to lower if the search term has a value. 
+
             if (searchTerm != null)
             {
                 grid.Search = searchTerm.ToLower();
             }
+
 
 
             //If only start date input is given, and is valid. 
@@ -71,20 +70,15 @@ namespace AbsenceCoverageMS.Models.Grid
         }
 
 
-
         public void ClearSearchOptions()
         {
-            grid.AbsenceType = "all";
             grid.Duration = "all";
-            grid.NeedCoverage = "all";
-            grid.AbsenceStatus = "all";
+            grid.SubJobStatus = "all";
+            grid.CoverageJobStatus = "all";
             grid.FromDate = "";
             grid.ToDate = "";
             grid.Search = "";
         }
-
-
-
 
     }
 }

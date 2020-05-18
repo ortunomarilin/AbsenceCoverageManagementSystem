@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DomainModels
 {
-    public class StatusType
+    public class CoverageStatusType
     {
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string StatusTypeId { get; set; }
+        public string CoverageStatusTypeId { get; set; }
 
         public string Name { get; set; }
 
-
-        public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
-        public ICollection<SubJob> SubJobs { get; set; }
+        public ICollection<SubJob> SubJobs{ get; set; }
     }
 }

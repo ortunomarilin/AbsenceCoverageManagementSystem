@@ -79,16 +79,16 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<StatusType> statusTypeRepo;
-        public Repository<StatusType> StatusTypes
+        private Repository<AbsenceStatusType> AbsenceStatusTypeRepo;
+        public Repository<AbsenceStatusType> AbsenceStatusTypes
         {
             get
             {
-                if (statusTypeRepo == null)
+                if (AbsenceStatusTypeRepo == null)
                 {
-                    statusTypeRepo = new Repository<StatusType>(context);
+                    AbsenceStatusTypeRepo = new Repository<AbsenceStatusType>(context);
                 }
-                return statusTypeRepo;
+                return AbsenceStatusTypeRepo;
             }
         }
 
@@ -136,6 +136,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
+
         private Repository<SubJob> subJobRepo;
         public Repository<SubJob> SubJobs
         {
@@ -150,42 +151,36 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<CoverageAssignment> CoverageAssignmentRepo;
-        public Repository<CoverageAssignment> CoverageAssignments
+        private Repository<CoverageJob> coverageJobRepo;
+        public Repository<CoverageJob> CoverageJobs
         {
             get
             {
-                if (CoverageAssignmentRepo == null)
+                if (coverageJobRepo == null)
                 {
-                    CoverageAssignmentRepo = new Repository<CoverageAssignment>(context);
+                    coverageJobRepo = new Repository<CoverageJob>(context);
                 }
-                return CoverageAssignmentRepo;
+                return coverageJobRepo;
             }
         }
 
 
-        public void AddNewCoverageAssignments(SubJob subJob)
+        private Repository<CoverageStatusType> coverageStatusTypeRepo;
+        public Repository<CoverageStatusType> CoverageStatusTypes
         {
-            foreach(AbsenceRequestPeriod arp in subJob.AbsenceRequest.AbsenceRequestPeriods)
+            get
             {
-                CoverageAssignment coverageAssgnment = new CoverageAssignment
+                if (coverageStatusTypeRepo == null)
                 {
-                    SubJob = subJob,
-                    Period = arp.Period,
-                    StatusType = StatusTypes.List().Where(st => st.Name == "Unfilled").FirstOrDefault(),
-                };
-                CoverageAssignments.Insert(coverageAssgnment);
-
+                    coverageStatusTypeRepo = new Repository<CoverageStatusType>(context);
+                }
+                return coverageStatusTypeRepo;
             }
         }
 
-        public void DeleteCoverageAssignments(SubJob subJob)
-        {
-            foreach(CoverageAssignment coverageAssignment in subJob.CoverageAssignments)
-            {
-                CoverageAssignments.Delete(coverageAssignment);
-            }
-        }
+
+
+
 
 
 

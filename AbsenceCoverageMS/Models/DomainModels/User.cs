@@ -41,8 +41,15 @@ namespace AbsenceCoverageMS.Models.DomainModels
         //Submitted Absence Requests
         public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
 
-        //Assigned CoverageAssignments
-        public ICollection<CoverageAssignment> CoverageAssignments { get; set; }
+
+
+        //Assigned SubJob
+        public ICollection<SubJob> SubJobs { get; set; }
+        public ICollection<CoverageJob> CoverageJobs { get; set; }
+
+
+        //Is send notifications 
+        public ICollection<NotificationUser> NotificationUsers { get; set; }
 
 
 
