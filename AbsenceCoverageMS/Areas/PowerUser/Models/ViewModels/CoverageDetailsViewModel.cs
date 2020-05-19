@@ -2,6 +2,7 @@
 using AbsenceCoverageMS.Models.Grid;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,23 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Models.ViewModels
         public AbsenceRequest AbsenceRequest { get; set; }
 
         public GridDictionary Grid { get; set; }
+
+
+
+        
+        //To add coverage jobs
+
+        [Required]
+        public string PeriodId { get; set; }
+
+        [Required]
+        public string UserId { get; set; }
+
+
+        [Required]
+        public DateTime? Date { get; set; }
+
+        public List<string> Dates { get; set; }
 
 
       

@@ -100,6 +100,12 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public ICollection<CoverageJob> CoverageJobs { get; set; }
 
 
+
+        //public string DateRange => $"{StartDate.Value.ToShortDateString()} - {EndDate.Value.ToShortDateString()}";
+        //public string TimeRange => $"{StartTime.Value.ToShortTimeString()} - {EndTime.Value.ToShortTimeString()}";
+
+
+
     }
 }
 

@@ -65,12 +65,6 @@ namespace AbsenceCoverageMS.Models
             }
 
 
-            if (gridBuilder.CurrentGrid.SubJobStatus != "all")
-            {
-                Where = ar => ar.SubJob.CoverageStatusTypeId == gridBuilder.CurrentGrid.SubJobStatus;
-            }
-
-
 
         }
 

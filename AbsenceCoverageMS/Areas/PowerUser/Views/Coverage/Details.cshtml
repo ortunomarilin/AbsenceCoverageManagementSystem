@@ -23,27 +23,34 @@
 
 
 <div class="row justify-content-center">
-    <div class="col-md-11  form-section  shadow-sm ">
+    <div class="col-md-11  form-section  shadow-sm   pb-5 ">
 
         <div class="form-row form-section-header ">
             <div class=" col-md-12  ">
-                <h6>Absence Details </h6>
+                <h6>Coverage Details </h6>
             </div>
         </div>
 
+        <div class="form-row  ml-5  mr-5  mt-4  border-bottom ">
+            <div class="col-md-12">
+                <h5 class="form-label font-weight-normal ">Absence Details</h5>
+            </div>
 
-        <div class="form-row  ml-5  mr-5   ">
-            <div class=" col-md-2  text-md-right ">
-                <label class="form-label ">Absence Request ID # : </label>
+        </div>
+
+        <div class="form-row  ml-5  mr-5  border-bottom  ">
+            <div class=" col-md-2   ">
+                <label class=" font-weight-bold ">Absence Request ID # : </label>
             </div>
             <div class=" col-md-6  ">
                 <label>@Model.AbsenceRequest.AbsenceRequestId</label>
             </div>
         </div>
 
-        <div class="form-row  ml-5  mr-5   ">
-            <div class=" col-md-2  text-md-right ">
-                <label class="form-label ">Teacher</label>
+
+        <div class="form-row  ml-5  mr-5   border-bottom ">
+            <div class=" col-md-2   ">
+                <label class="font-weight-bold ">Teacher</label>
             </div>
             <div class=" col-md-6  ">
                 <label>@Model.AbsenceRequest.User.FullName</label>
@@ -51,9 +58,9 @@
         </div>
 
 
-        <div class="form-row ml-5  mr-5   ">
-            <div class=" col-md-2  text-md-right  ">
-                <label class="form-label ">Title</label>
+        <div class="form-row ml-5  mr-5  border-bottom ">
+            <div class=" col-md-2    ">
+                <label class="font-weight-bold ">Title</label>
             </div>
             <div class=" col-md-3  ">
                 <label>@Model.AbsenceRequest.User.PositionTitle</label>
@@ -61,19 +68,29 @@
         </div>
 
 
-        <div class="form-row  ml-5  mr-5   ">
-            <div class=" col-md-2   text-md-right ">
-                <label class="form-label">Date</label>
+        <div class="form-row  ml-5  mr-5  border-bottom ">
+            <div class=" col-md-2    ">
+                <label class="font-weight-bold">Date</label>
             </div>
             <div class=" col-md-3 ">
-                <label>@Model.AbsenceRequest.StartDate.Value.ToShortDateString() - @Model.AbsenceRequest.EndDate.Value.ToShortDateString() </label>
+                @*<label>@(Model.AbsenceRequest.StartDate != Model.AbsenceRequest.EndDate ? Model.AbsenceRequest.DateRange : Model.AbsenceRequest.StartDate.Value.ToShortDateString())</label>*@
             </div>
         </div>
 
 
-        <div class="form-row  ml-5  mr-5   ">
-            <div class="col-md-2   text-md-right ">
-                <label class="form-label">Duration</label>
+        <div class="form-row  ml-5  mr-5  border-bottom ">
+            <div class=" col-md-2    ">
+                <label class="font-weight-bold">Time</label>
+            </div>
+            <div class=" col-md-3  ">
+                @*<label>@Model.AbsenceRequest.TimeRange</label>*@
+            </div>
+        </div>
+
+
+        <div class="form-row  ml-5  mr-5  border-bottom  ">
+            <div class="col-md-2    ">
+                <label class="font-weight-bold">Duration</label>
             </div>
             <div class=" col-md-3">
                 <label>@Model.AbsenceRequest.DurationType.Name</label>
@@ -81,27 +98,18 @@
         </div>
 
 
-        <div class="form-row  ml-5  mr-5   ">
-            <div class=" col-md-2   text-md-right ">
-                <label class="form-label">Time</label>
-            </div>
-            <div class=" col-md-3  ">
-                <label>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString() - @Model.AbsenceRequest.EndTime.Value.ToShortTimeString()  </label>
-            </div>
-        </div>
-
-        <div class="form-row  ml-5  mr-5   ">
-            <div class=" col-md-2   text-md-right ">
-                <label class="form-label">Need Coverage</label>
+        <div class="form-row  ml-5  mr-5  border-bottom ">
+            <div class=" col-md-2   ">
+                <label class="font-weight-bold">Need Coverage</label>
             </div>
             <div class=" col-md-3  ">
                 <label>@(Model.AbsenceRequest.NeedCoverage == true ? "Yes" : "No")  </label>
             </div>
         </div>
 
-        <div class="form-row  ml-5  mr-5   ">
-            <div class="col-md-2  text-md-right  ">
-                <label class="form-label">Periods</label>
+        <div class="form-row  ml-5  mr-5  mb-5  border-bottom ">
+            <div class="col-md-2    ">
+                <label class="  font-weight-bold">Periods</label>
             </div>
             <div class=" col-md-3">
                 <label>@Model.GetPeriodsNeedCoverage()</label>
@@ -114,39 +122,41 @@
 
 
 
-        <div class="form-row  ml-5  mt-4">
+        <div class="form-row  ml-5  mr-5 mt-4  ">
             <div class="col-md-12">
-                <h5 class="form-label  border-bottom  font-weight-normal ">Sub Job</h5>
+                <h5 class="form-label  border-bottom   font-weight-normal ">Sub Job Details</h5>
             </div>
-
         </div>
 
 
         @if (Model.AbsenceRequest.SubJob == null)
         {
 
-            <div class="form-row">
+            <div class="form-row mt-1  justify-content-between   mb-5">
+
+                <div class="col-md-4">
+                    <h6 class=" font-weight-normal  ml-5 ">None at the moment</h6>
+                </div>
+
                 <div class="col-md-2  ml-5 ">
-                    <a class="btn btn-success btn-sm" asp-action="AddSubJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
-                        <span class="mr-2">
-                            <i class="fas fa-chalkboard"></i>
-                        </span>
-                        Add Sub Job
-                    </a>
+                    <form asp-action="AddSubJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
+                        <button class="btn btn-primary btn-sm" type="submit">
+                            <span class="mr-2">
+                                <i class="fas fa-chalkboard"></i>
+                            </span>
+                            Add Sub Job
+                        </button>
+                    </form>
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="col-md-12">
-                    <h6 class=" font-weight-normal  ml-5   mt-3">None at the moment</h6>
-                </div>
-            </div>
+
         }
         else
         {
-            <div class="table-container ml-5  mr-5  mb-5  mt-4 ">
-                <table class="table table-bordered table-sm  ">
-                    <thead class="">
+            <div class="table-container ml-5  mr-5  mb-5  mt-3 ">
+                <table class="table  table-sm  ml-2  mr-2  ">
+                    <thead class=" ">
                         <tr>
                             <th>Date</th>
                             <th>Time</th>
@@ -159,8 +169,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>@Model.AbsenceRequest.StartDate.Value.ToShortDateString() - @Model.AbsenceRequest.EndDate.Value.ToShortDateString() </td>
-                            <td>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString() - @Model.AbsenceRequest.EndTime.Value.ToShortTimeString() </td>
+                            @*<td>@(Model.AbsenceRequest.StartDate != Model.AbsenceRequest.EndDate ? Model.AbsenceRequest.DateRange : Model.AbsenceRequest.StartDate.Value.ToShortDateString())</td>*@
+                            @*<td>@Model.AbsenceRequest.TimeRange</td>*@
                             <td>@Model.AbsenceRequest.DurationType.Name</td>
                             <td>@Model.GetPeriodsNeedCoverage()</td>
                             <td>@Model.AbsenceRequest.SubJob.User?.FullName</td>
@@ -185,74 +195,136 @@
 
 
 
-
-
-        <div class="form-row  ml-5  mt-4">
+        <div class="form-row  ml-5  mt-4  ">
             <div class="col-md-12">
-                <h5 class="form-label  border-bottom  font-weight-normal ">Coverage Jobs</h5>
-            </div>
-
-        </div>
-
-        <div class="form-row">
-            <div class="col-md-3  ml-5 ">
-                <a class="btn btn-success btn-sm" asp-action="AddCoverageJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
-                    <span class="mr-2">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </span>
-                    Add Coverage Job
-                </a>
+                <h5 class="form-label  border-bottom  font-weight-normal ">Coverage Job Details</h5>
             </div>
         </div>
 
 
-        @if (Model.AbsenceRequest.CoverageJobs.Count == 0)
-        {
-            <h6 class=" font-weight-normal  ml-5   mt-3">None at the moment</h6>
-        }
-        else
-        {
-            <div class="table-container ml-5  mr-5  mb-5  mt-4 ">
-                <table class="table table-bordered table-sm  ">
-                    <thead class="">
+        <div class="alert alert-danger  alert-dismissible " asp-validation-summary="All">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <h6>
+                <span>
+                    <i class="fas fa-exclamation-triangle"></i>
+                </span>
+                Please correct the following.
+            </h6>
+        </div>
+
+
+        <form method="post" asp-action="AddCoverageJob" >
+            <div class="form-row    justify-content-end  mr-4  mt-4 ">
+
+                <input type="hidden" asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
+
+                <div class="col-md-2">
+                    <select class="form-control form-control-sm  mr-3" asp-for="@Model.Date"
+                            asp-items="@(new SelectList(Model.Dates,
+                                                Model.Date))">
+                        <option value="">Select A Date</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select id="PeriodId" class="form-control form-control-sm  mr-3" asp-for="@Model.PeriodId"
+                            asp-items="@(new SelectList(Model.AbsenceRequest.AbsenceRequestPeriods,
+                                                "PeriodId", "PeriodId", Model.PeriodId))">
+                        <option value="">Select A Period</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <select id="TeacherId" class="form-control form-control-sm  mr-3" asp-for="@Model.UserId"
+                            asp-items="@(new SelectList(string.Empty, "Id", "FullName", Model.UserId))">
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary  btn-sm  ">
+                        <span class="mr-2">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </span>
+                        Add Coverage Job
+                    </button>
+                </div>
+
+            </div>
+        </form>
+
+
+        <div class="col-md-4   ">
+            <h6 class=" font-weight-normal  ml-5 ">None at the moment</h6>
+        </div>
+
+
+
+        @*<div class="table-container ml-5  mr-5  mb-5  mt-4 ">
+            <table class="table table-bordered table-sm  ">
+                <thead class="">
+                    <tr>
+                        <th>Date</th>
+                        <th>Period</th>
+                        <th>Coverage Teacher</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (CoverageJob job in Model.AbsenceRequest.CoverageJobs)
+                    {
                         <tr>
-                            <th>Date</th>
-                            <th>Period</th>
-                            <th>Coverage Teacher</th>
-                            <th>Status</th>
-                            <th>Action</th>
+
+                            <td>@job.Date</td>
+                            <td>@job.PeriodId</td>
+                            <td>@job.User.FullName</td>
+                            <td>@job.CoverageStatusType.Name</td>
+                            <td>
+                                <form method="post" asp-action="DeleteCoverageJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
+                                    <button class="btn btn-danger btn-sm" type="submit">
+                                        <span>
+                                            <i class="fas fa-trash-alt"></i>
+                                        </span>
+                                    </button>
+                                </form>
+
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (CoverageJob job in Model.AbsenceRequest.CoverageJobs)
-                        {
-                            <tr>
-
-                                <td>@job.Date</td>
-                                <td>@job.PeriodId</td>
-                                <td>@job.User.FullName</td>
-                                <td>@job.CoverageStatusType.Name</td>
-                                <td>
-                                    <form method="post" asp-action="DeleteCoverageJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
-                                        <button class="btn btn-danger btn-sm" type="submit">
-                                            <span>
-                                                <i class="fas fa-trash-alt"></i>
-                                            </span>
-                                        </button>
-                                    </form>
-
-                                </td>
-                            </tr>
-                         }
-                    </tbody>
-                </table>
-            </div>
-        }
-
+                    }
+                </tbody>
+            </table>
+        </div>*@
 
     </div>
 </div>
 
+
+
+<script>
+
+    $(function () {
+        $("#PeriodId").change(function () {
+
+            var url = '@Url.Content("~/PowerUser/")' + "Coverage/GetCoverageTeachers";
+
+            $.getJSON(url, { PeriodId: $("#PeriodId").val() }, function (data)
+            {
+                var items = "";
+                $("#TeacherId").empty();
+
+                //console.log(data);
+                $.each(data, function (i, row) {
+
+                    //console.log(row);
+                    items += "<option value='" + row.value +"'>"  + row.text + "</option>";
+                });
+                $("#TeacherId").html(items);
+            })
+        });
+    });
+    
+
+</script>
 
 
 

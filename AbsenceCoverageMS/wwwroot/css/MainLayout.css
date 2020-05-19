@@ -191,6 +191,13 @@ tbody {
 
 
 
+/*.form-table-head {
+    background-color: #71afe5;
+    color: black;
+}*/
+
+
+
 .content-container {
     background-color: white;
     margin: 20px 15px 25px 15px;
@@ -222,6 +229,8 @@ tbody {
 .modal-backdrop {
     display: none;
 }
+
+
 
 
 .validation-summary-valid{

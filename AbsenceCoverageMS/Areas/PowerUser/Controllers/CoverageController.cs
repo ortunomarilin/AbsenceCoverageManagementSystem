@@ -13,6 +13,7 @@ using AbsenceCoverageMS.Models.Grid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 {
@@ -93,25 +94,33 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
         public IActionResult Details(string id)
         {
-
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
 
-            CoverageDetailsViewModel model = new CoverageDetailsViewModel 
+            CoverageDetailsViewModel model = new CoverageDetailsViewModel
             {
                 Grid = gridBuilder.CurrentGrid,
 
-                AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest> 
-                    {
+                AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
+                {
                     Include = "DurationType, AbsenceRequestPeriods, User, SubJob, CoverageJobs, SubJob.User, SubJob.CoverageStatusType, CoverageJobs.CoverageStatusType",
                     Where = ar => ar.AbsenceRequestId == id,
-                    }),
+                }),
+
+                Dates = new List<string>()
             };
+
+            for (DateTime date = model.AbsenceRequest.StartDate.Value; date <= model.AbsenceRequest.EndDate.Value; date = date.AddDays(1))
+            {
+                model.Dates.Add(date.ToShortDateString());
+            }
 
             return View(model);
         }
 
 
-        [HttpGet]
+
+
+        [HttpPost]
         public IActionResult AddSubJob(string id)
         {
             //First get the Absence Request 
@@ -122,43 +131,52 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             });
 
             //Then copy the absence values to the new sub job.
-            SubJob subJob = new SubJob 
+            SubJob subJob = new SubJob
             {
                 StartDate = absenceRequest.StartDate,
                 EndDate = absenceRequest.EndDate,
                 StartTime = absenceRequest.StartTime,
                 EndTime = absenceRequest.EndTime,
                 DurationTypeId = absenceRequest.DurationTypeId,
+                CoverageStatusType = data.CoverageStatusTypes.List().Where(ct => ct.Name == "Unfilled").FirstOrDefault(),
+                AbsenceRequest = absenceRequest 
             };
+            data.SubJobs.Insert(subJob);
+            data.Save();
 
-
-            var model = new CoverageAddSubJobViewModel
-            {
-                AbsenceRequestId = absenceRequest.AbsenceRequestId,
-                SubJob = subJob,
-                DurationTypes = data.DurationTypes.List()
-            };
-
-            return View(model);
+            return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
         }
 
 
         [HttpPost]
-        public IActionResult AddSubJob(CoverageAddSubJobViewModel model)
+        public IActionResult AddCoverageJob(CoverageDetailsViewModel model)
         {
-            if(ModelState.IsValid)
+            //First get the Absence Request 
+            AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
             {
-                model.SubJob.AbsenceRequestId = model.AbsenceRequestId;
-                model.SubJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(ct => ct.Name == "Unfilled").FirstOrDefault();
-                data.SubJobs.Insert(model.SubJob);
-                data.Save();
+                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, CoverageJobs, SubJob.User, SubJob.CoverageStatusType, CoverageJobs.CoverageStatusType",
+                Where = ar => ar.AbsenceRequestId == model.AbsenceRequest.AbsenceRequestId,
+            });
 
-                return RedirectToAction("Details", new { ID = model.AbsenceRequestId });
-            }
-
-            model.DurationTypes = data.DurationTypes.List();
-            return View(model);
+            return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
         }
+
+
+
+        [HttpGet]
+        public JsonResult GetCoverageTeachers(string PeriodId)
+        {
+
+            var teachers = (from user in userManager.Users.ToList()
+                           select new { value = user.Id, text = user.FullName }).ToList();
+
+            teachers.Insert(0, new { value = "0", text = "Select A Teacher" });
+
+            return Json(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(teachers, "value", "text"));
+        }
+
+
+
 
 
 

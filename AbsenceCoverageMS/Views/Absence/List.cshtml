@@ -243,22 +243,12 @@
                     </a>
                 </td>
 
-                @if (ar.StartDate == ar.EndDate)
-                {
-                    <td>@ar.StartDate.Value.ToShortDateString()</td>
-                }
-                else
-                {
-                    <td>@ar.StartDate.Value.ToShortDateString() - @ar.EndDate.Value.ToShortDateString()</td>
-                }
-
+                @*<td>@(ar.StartDate != ar.EndDate ? ar.DateRange : ar.StartDate.Value.ToShortDateString())</td>*@
                 <td>@ar.AbsenceType.Name</td>
                 <td>@ar.DurationType.Name</td>
-                <td>@ar.StartTime.Value.ToShortTimeString() - @ar.EndTime.Value.ToShortTimeString()</td>
+                @*<td>@ar.TimeRange</td>*@
                 <td>@(ar.NeedCoverage == true ? "Yes" : "No")</td>
                 <td>@ar.AbsenceStatusType.Name</td>
-
-
 
 
                 @if (ar.AbsenceStatusType.Name == "Submitted")
