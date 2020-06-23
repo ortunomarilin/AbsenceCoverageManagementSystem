@@ -23,7 +23,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Models.ViewModels
 
         //For DropDown Filter Select Lists 
         public IEnumerable<DurationType> DurationTypes { get; set; }
-        public IEnumerable<CoverageStatusType> CoverageStatusTypes { get; set; }
+        public IEnumerable<SubJobStatus> SubJobStatuses { get; set; }
 
 
 

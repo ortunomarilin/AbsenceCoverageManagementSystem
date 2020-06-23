@@ -12,7 +12,7 @@ using AbsenceCoverageMS.Models.Grid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.IIS.Core;
+
 
 namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 {
@@ -195,7 +195,6 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
 
 
-
         [HttpPost]
         public RedirectToActionResult Cancel(AbsenceRequest model)
         {
@@ -204,7 +203,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob, CoverageJobs"
+                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob"
                 });
 
             
@@ -214,31 +213,15 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             }
             else
             {
-                //IF the absence request has a coverage request and has already been filled by sub, only change the status to "Cancel" for all. 
-                if (absenceRequest.SubJob != null || absenceRequest.CoverageJobs.Count != 0)
+                if (absenceRequest.SubJob == null )
                 {
-                    absenceRequest.AbsenceStatusType = data.AbsenceStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
-                    absenceRequest.SubJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
-
-                    if (absenceRequest.SubJob != null)
-                    {
-                            absenceRequest.SubJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
-                    }
-                    if (absenceRequest.CoverageJobs != null)
-                    {
-                        foreach (CoverageJob coverageJob in absenceRequest.CoverageJobs)
-                        {
-                            coverageJob.CoverageStatusType = data.CoverageStatusTypes.List().Where(st => st.Name == "Canceled").FirstOrDefault();
-                        }
-                    }
+                    data.AbsenceRequests.Delete(absenceRequest); 
                 }
                 else
                 {
-                    data.AbsenceRequests.Delete(absenceRequest);
                     data.SubJobs.Delete(absenceRequest.SubJob);
-                    //data.CoverageJobs.Delete(----);
+                    data.AbsenceRequests.Delete(absenceRequest);
                 }
-
             }
 
             //Save all changes

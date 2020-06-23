@@ -35,7 +35,6 @@ namespace AbsenceCoverageMS.Models.Grid
         {
             grid.Duration = filters[0];
             grid.SubJobStatus = filters[1];
-            grid.CoverageJobStatus = filters[2];
 
 
             if (searchTerm != null)

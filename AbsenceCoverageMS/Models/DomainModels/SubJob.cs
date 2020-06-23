@@ -59,8 +59,8 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
         //Filled or Unfilled
-        public string CoverageStatusTypeId { get; set; }
-        public CoverageStatusType CoverageStatusType { get; set; }
+        public string SubJobStatusId { get; set; }
+        public SubJobStatus SubJobStatus { get; set; }
 
 
 

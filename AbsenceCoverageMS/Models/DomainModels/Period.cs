@@ -21,9 +21,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
 
-
-        public ICollection<CoveragePeriod> CoveragePeriods { get; set; }
-
         public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
 
     }

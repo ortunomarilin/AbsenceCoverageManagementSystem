@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AbsenceCoverageMS.Areas.PowerUser.Models.ViewModels;
-using AbsenceCoverageMS.Models;
 using AbsenceCoverageMS.Models.DataLayer;
 using AbsenceCoverageMS.Models.DataLayer.QueryOptions;
 using AbsenceCoverageMS.Models.DataLayer.Repositories;
@@ -13,7 +12,6 @@ using AbsenceCoverageMS.Models.Grid;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 {
@@ -45,8 +43,8 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
             var options = new CoverageQueryOptions
             {
-                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, SubJob.CoverageStatusType",
-                Where = ar => ar.User.CampusId == user.CampusId  && ar.AbsenceStatusType.Name == "Approved" && ar.NeedCoverage == true ,
+                Include = "DurationType, AbsenceRequestPeriods, AbsenceStatusType, User, SubJob, SubJob.SubJobStatus",
+                Where = ar => ar.User.CampusId == user.CampusId  && ar.AbsenceStatusType.Name == "Approved" && ar.NeedCoverage == true,
                 OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
             options.Search(gridBuilder);
@@ -60,7 +58,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 Grid = gridBuilder.CurrentGrid,
                 AbsenceRequests = data.AbsenceRequests.List(options),
                 DurationTypes = data.DurationTypes.List(),
-                CoverageStatusTypes = data.CoverageStatusTypes.List()
+                SubJobStatuses = data.SubJobStatuses.List()
             };
 
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
@@ -102,7 +100,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
                 AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
                 {
-                    Include = "DurationType, AbsenceRequestPeriods, User, SubJob, CoverageJobs, SubJob.User, SubJob.CoverageStatusType, CoverageJobs.CoverageStatusType",
+                    Include = "DurationType, AbsenceRequestPeriods, User, SubJob, SubJob.User, SubJob.SubJobStatus",
                     Where = ar => ar.AbsenceRequestId == id,
                 }),
 
@@ -121,12 +119,12 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
 
         [HttpPost]
-        public IActionResult AddSubJob(string id)
+        public IActionResult AddSubJob(string id, bool list = false)
         {
             //First get the Absence Request 
             AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
             {
-                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, CoverageJobs, SubJob.User, SubJob.CoverageStatusType, CoverageJobs.CoverageStatusType",
+                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, SubJob.User, SubJob.SubJobStatus",
                 Where = ar => ar.AbsenceRequestId == id,
             });
 
@@ -138,67 +136,52 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 StartTime = absenceRequest.StartTime,
                 EndTime = absenceRequest.EndTime,
                 DurationTypeId = absenceRequest.DurationTypeId,
-                CoverageStatusType = data.CoverageStatusTypes.List().Where(ct => ct.Name == "Unfilled").FirstOrDefault(),
+                SubJobStatus = data.SubJobStatuses.List().Where(ct => ct.Name == "Unfilled").FirstOrDefault(),
                 AbsenceRequest = absenceRequest 
             };
             data.SubJobs.Insert(subJob);
             data.Save();
 
-            return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
+
+            if(list)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
+            }
+
+            
         }
 
 
-        [HttpPost]
-        public IActionResult AddCoverageJob(CoverageDetailsViewModel model)
+
+        public IActionResult DeleteSubJob(string id, bool list = false)
         {
             //First get the Absence Request 
             AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
             {
-                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, CoverageJobs, SubJob.User, SubJob.CoverageStatusType, CoverageJobs.CoverageStatusType",
-                Where = ar => ar.AbsenceRequestId == model.AbsenceRequest.AbsenceRequestId,
-            });
-
-            return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
-        }
-
-
-
-        [HttpGet]
-        public JsonResult GetCoverageTeachers(string PeriodId)
-        {
-
-            var teachers = (from user in userManager.Users.ToList()
-                           select new { value = user.Id, text = user.FullName }).ToList();
-
-            teachers.Insert(0, new { value = "0", text = "Select A Teacher" });
-
-            return Json(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(teachers, "value", "text"));
-        }
-
-
-
-
-
-
-        public IActionResult DeleteSubJob(string id)
-        {
-            //First get the Absence Request 
-            AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
-            {
-                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, CoverageJobs, SubJob.User, SubJob.CoverageStatusType, CoverageJobs.CoverageStatusType",
+                Include = "DurationType, AbsenceRequestPeriods, User, SubJob, SubJob.User, SubJob.SubJobStatus",
                 Where = ar => ar.AbsenceRequestId == id,
             });
 
-            if(absenceRequest.SubJob.CoverageStatusType.Name == "Filled")
-            {
-                // 1) Create a notification to the Sub-Teacher that the record will be deleted. 
-                // 2) Redirect to the Details View. 
-
-            }
 
             data.SubJobs.Delete(absenceRequest.SubJob);
             data.Save();
-            return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
+
+
+            if (list)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Details", new { ID = absenceRequest.AbsenceRequestId });
+            }
+
+
+
 
         }
 

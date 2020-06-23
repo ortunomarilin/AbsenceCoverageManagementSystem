@@ -43,15 +43,11 @@ namespace AbsenceCoverageMS.Models.DataLayer.QueryOptions
             }
 
 
-            if (gridBuilder.CurrentGrid.SubJobStatus != "all" && gridBuilder.CurrentGrid.SubJobStatus != "none" )
+            if (gridBuilder.CurrentGrid.SubJobStatus != "all" && gridBuilder.CurrentGrid.SubJobStatus != "none")
             {
-                Where = ar => ar.SubJob.CoverageStatusTypeId == gridBuilder.CurrentGrid.SubJobStatus;
+                Where = ar => ar.SubJob.SubJobStatusId == gridBuilder.CurrentGrid.SubJobStatus;
             }
 
-            if (gridBuilder.CurrentGrid.SubJobStatus == "none")
-            {
-                Where = ar => ar.SubJob.CoverageStatusTypeId == null;
-            }
 
         }
 
@@ -71,7 +67,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.QueryOptions
                     OrderBy = ar => ar.DurationType.Name;
                     break;
                 case nameof(FilterGridDTO.SubJobStatus):
-                    OrderBy = ar => ar.SubJob.CoverageStatusType;
+                    OrderBy = ar => ar.SubJob.SubJobStatus;
                     break;
                 default:
                     OrderBy = ar => ar.StartDate;

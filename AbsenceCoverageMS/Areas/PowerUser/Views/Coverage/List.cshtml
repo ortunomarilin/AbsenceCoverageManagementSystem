@@ -7,7 +7,7 @@
 }
 
 <div class="view-header mb-2 ">
-    <h3>Manage Coverage Request</h3>
+    <h3>Manage Coverage Requests</h3>
 </div>
 
 
@@ -104,19 +104,10 @@
             <div class="form-group col-md-2">
                 <label class="form-label small ">Sub Job Status</label>
                 <select class="form-control form-control-sm" name="filters" asp-for="@Model.Grid.SubJobStatus"
-                        asp-items="@(new SelectList(Model.CoverageStatusTypes,
-                                        "CoverageStatusTypeId", "Name", Model.Grid.SubJobStatus))">
+                        asp-items="@(new SelectList(Model.SubJobStatuses,
+                                        "SubJobStatusId", "Name", Model.Grid.SubJobStatus))">
                     <option value="all">All </option>
                     <option value="none">N/A </option>
-                </select>
-            </div>
-
-            <div class="form-group col-md-2">
-                <label class="form-label small ">Coverage Job Status</label>
-                <select class="form-control form-control-sm" name="filters" asp-for="@Model.Grid.CoverageJobStatus"
-                        asp-items="@(new SelectList(Model.CoverageStatusTypes,
-                                        "CoverageStatusTypeId", "Name", Model.Grid.CoverageJobStatus))">
-                    <option value="all">All </option>
                 </select>
             </div>
 
@@ -152,6 +143,8 @@
     <table class="table table-sm shadow-sm  mb-0">
         <thead>
             <tr>
+                <th class="text-center">Details</th>
+
                 <th>
                     Teacher
                     <a asp-action="List"
@@ -208,7 +201,6 @@
 
                 <th>Periods</th>
                 <th> Sub Job </th>
-                <th> Coverage Job </th>
                 <th class="text-center " colspan="1">Actions</th>
             </tr>
         </thead>
@@ -218,6 +210,15 @@
             @foreach (AbsenceRequest ar in Model.AbsenceRequests)
             {
             <tr>
+
+                <td class="text-center">
+                    <a class="btn btn-outline-primary btn-sm" title="Details" asp-action="Details" asp-route-id="@ar.AbsenceRequestId">
+                        <span>
+                            <i class="fas fa-binoculars"></i>
+                        </span>
+                    </a>
+                </td>
+
                 <td>@ar.User.LastName, @ar.User.FirstName</td>
 
                 @if (ar.StartDate == ar.EndDate)
@@ -234,22 +235,29 @@
                 <td>@ar.DurationType.Name</td>
                 <td>@Model.GetPeriodsNeedCoverage(ar)</td>
 
-                <td>@(ar.SubJob?.CoverageStatusType.Name ?? "N/A") </td>
-
-                @if(ar.CoverageJobs == null)
-                {
-                    <td>N/A</td>
-                }
-                else
-                {
-                    <td>Filled</td>
-                }
-
+                <td>@(ar.SubJob?.SubJobStatus.Name ?? "N/A") </td>
 
                 <td class="text-center  ">
-                    <a class="btn btn-success btn-sm" asp-action="Details" asp-route-id="@ar.AbsenceRequestId">
-                        Take Action
-                    </a>
+                    @if (ar.SubJob == null)
+                    {
+                        <form asp-action="AddSubJob" asp-route-id="@ar.AbsenceRequestId">
+                            <button class="btn btn-success btn-sm" type="submit" name="list" value="true">
+                                <span class="mr-2">
+                                    <i class="fas fa-chalkboard"></i>
+                                </span>
+                                Add Sub Job
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-action="DeleteSubJob" asp-route-id="@ar.AbsenceRequestId">
+                            <button class="btn btn-outline-warning text-danger  btn-sm btn-block" type="submit" name="list" value="true">
+                                Cancel Sub Job
+                            </button>
+                        </form>
+                    }
+
 
                 </td>
 

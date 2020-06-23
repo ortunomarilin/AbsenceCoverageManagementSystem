@@ -137,6 +137,8 @@
     <Compile Remove="Migrations\20200517090006_SeedCoverageStatusTypes.Designer.cs" />
     <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.cs" />
     <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200518040030_NewDatabaseERD.cs" />
+    <Compile Remove="Migrations\20200518040030_NewDatabaseERD.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

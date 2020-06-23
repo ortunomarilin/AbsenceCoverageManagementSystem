@@ -108,19 +108,6 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
 
 
 
-        private Repository<CoveragePeriod> coveragePeriodRepo;
-        public Repository<CoveragePeriod> CoveragePeriods
-        {
-            get
-            {
-                if (coveragePeriodRepo == null)
-                {
-                    coveragePeriodRepo = new Repository<CoveragePeriod>(context);
-                }
-                return coveragePeriodRepo;
-            }
-        }
-
 
         private Repository<Period> periodRepo;
         public Repository<Period> Periods
@@ -151,30 +138,17 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<CoverageJob> coverageJobRepo;
-        public Repository<CoverageJob> CoverageJobs
+
+        private Repository<SubJobStatus> subJobStatusRepo;
+        public Repository<SubJobStatus> SubJobStatuses
         {
             get
             {
-                if (coverageJobRepo == null)
+                if (subJobStatusRepo == null)
                 {
-                    coverageJobRepo = new Repository<CoverageJob>(context);
+                    subJobStatusRepo = new Repository<SubJobStatus>(context);
                 }
-                return coverageJobRepo;
-            }
-        }
-
-
-        private Repository<CoverageStatusType> coverageStatusTypeRepo;
-        public Repository<CoverageStatusType> CoverageStatusTypes
-        {
-            get
-            {
-                if (coverageStatusTypeRepo == null)
-                {
-                    coverageStatusTypeRepo = new Repository<CoverageStatusType>(context);
-                }
-                return coverageStatusTypeRepo;
+                return subJobStatusRepo;
             }
         }
 

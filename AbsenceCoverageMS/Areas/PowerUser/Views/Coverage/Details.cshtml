@@ -73,7 +73,14 @@
                 <label class="font-weight-bold">Date</label>
             </div>
             <div class=" col-md-3 ">
-                @*<label>@(Model.AbsenceRequest.StartDate != Model.AbsenceRequest.EndDate ? Model.AbsenceRequest.DateRange : Model.AbsenceRequest.StartDate.Value.ToShortDateString())</label>*@
+                @if (Model.AbsenceRequest.StartDate != Model.AbsenceRequest.EndDate)
+                {
+                    <label>@Model.AbsenceRequest.StartDate.Value.ToShortDateString() - @Model.AbsenceRequest.EndDate.Value.ToShortDateString()</label>
+                }
+                else
+                {
+                    <label>@Model.AbsenceRequest.StartDate.Value.ToShortDateString()</label>
+                }
             </div>
         </div>
 
@@ -83,7 +90,7 @@
                 <label class="font-weight-bold">Time</label>
             </div>
             <div class=" col-md-3  ">
-                @*<label>@Model.AbsenceRequest.TimeRange</label>*@
+                <label>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString() - @Model.AbsenceRequest.EndTime.Value.ToShortTimeString()</label>
             </div>
         </div>
 
@@ -169,12 +176,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            @*<td>@(Model.AbsenceRequest.StartDate != Model.AbsenceRequest.EndDate ? Model.AbsenceRequest.DateRange : Model.AbsenceRequest.StartDate.Value.ToShortDateString())</td>*@
-                            @*<td>@Model.AbsenceRequest.TimeRange</td>*@
+                           
+                            @if (Model.AbsenceRequest.StartDate != Model.AbsenceRequest.EndDate)
+                            {
+                                <td>@Model.AbsenceRequest.StartDate.Value.ToShortDateString() - @Model.AbsenceRequest.EndDate.Value.ToShortDateString()</td>
+                            }
+                            else
+                            {
+                                <td>@Model.AbsenceRequest.StartDate.Value.ToShortDateString()</td>
+                            }
+
+
+                            <td>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString() - @Model.AbsenceRequest.EndTime.Value.ToShortTimeString()</td>
                             <td>@Model.AbsenceRequest.DurationType.Name</td>
                             <td>@Model.GetPeriodsNeedCoverage()</td>
                             <td>@Model.AbsenceRequest.SubJob.User?.FullName</td>
-                            <td>@Model.AbsenceRequest.SubJob.CoverageStatusType.Name</td>
+                            <td>@Model.AbsenceRequest.SubJob.SubJobStatus.Name</td>
                             <td>
                                 <form method="post" asp-action="DeleteSubJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
                                     <button class="btn btn-danger btn-sm" type="submit">
@@ -190,147 +207,5 @@
                 </table>
             </div>
         }
-
-
-
-
-
-        <div class="form-row  ml-5  mt-4  ">
-            <div class="col-md-12">
-                <h5 class="form-label  border-bottom  font-weight-normal ">Coverage Job Details</h5>
-            </div>
-        </div>
-
-
-        <div class="alert alert-danger  alert-dismissible " asp-validation-summary="All">
-            <button class="close" data-dismiss="alert">&times;</button>
-            <h6>
-                <span>
-                    <i class="fas fa-exclamation-triangle"></i>
-                </span>
-                Please correct the following.
-            </h6>
-        </div>
-
-
-        <form method="post" asp-action="AddCoverageJob" >
-            <div class="form-row    justify-content-end  mr-4  mt-4 ">
-
-                <input type="hidden" asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
-
-                <div class="col-md-2">
-                    <select class="form-control form-control-sm  mr-3" asp-for="@Model.Date"
-                            asp-items="@(new SelectList(Model.Dates,
-                                                Model.Date))">
-                        <option value="">Select A Date</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <select id="PeriodId" class="form-control form-control-sm  mr-3" asp-for="@Model.PeriodId"
-                            asp-items="@(new SelectList(Model.AbsenceRequest.AbsenceRequestPeriods,
-                                                "PeriodId", "PeriodId", Model.PeriodId))">
-                        <option value="">Select A Period</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <select id="TeacherId" class="form-control form-control-sm  mr-3" asp-for="@Model.UserId"
-                            asp-items="@(new SelectList(string.Empty, "Id", "FullName", Model.UserId))">
-                    </select>
-                </div>
-
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary  btn-sm  ">
-                        <span class="mr-2">
-                            <i class="fas fa-chalkboard-teacher"></i>
-                        </span>
-                        Add Coverage Job
-                    </button>
-                </div>
-
-            </div>
-        </form>
-
-
-        <div class="col-md-4   ">
-            <h6 class=" font-weight-normal  ml-5 ">None at the moment</h6>
-        </div>
-
-
-
-        @*<div class="table-container ml-5  mr-5  mb-5  mt-4 ">
-            <table class="table table-bordered table-sm  ">
-                <thead class="">
-                    <tr>
-                        <th>Date</th>
-                        <th>Period</th>
-                        <th>Coverage Teacher</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (CoverageJob job in Model.AbsenceRequest.CoverageJobs)
-                    {
-                        <tr>
-
-                            <td>@job.Date</td>
-                            <td>@job.PeriodId</td>
-                            <td>@job.User.FullName</td>
-                            <td>@job.CoverageStatusType.Name</td>
-                            <td>
-                                <form method="post" asp-action="DeleteCoverageJob" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
-                                    <button class="btn btn-danger btn-sm" type="submit">
-                                        <span>
-                                            <i class="fas fa-trash-alt"></i>
-                                        </span>
-                                    </button>
-                                </form>
-
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>*@
-
-    </div>
-</div>
-
-
-
-<script>
-
-    $(function () {
-        $("#PeriodId").change(function () {
-
-            var url = '@Url.Content("~/PowerUser/")' + "Coverage/GetCoverageTeachers";
-
-            $.getJSON(url, { PeriodId: $("#PeriodId").val() }, function (data)
-            {
-                var items = "";
-                $("#TeacherId").empty();
-
-                //console.log(data);
-                $.each(data, function (i, row) {
-
-                    //console.log(row);
-                    items += "<option value='" + row.value +"'>"  + row.text + "</option>";
-                });
-                $("#TeacherId").html(items);
-            })
-        });
-    });
-    
-
-</script>
-
-
-
-
-
-
-
 
 

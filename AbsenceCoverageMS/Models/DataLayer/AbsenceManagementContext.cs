@@ -23,12 +23,9 @@ namespace AbsenceCoverageMS.Models.DataLayer
         public DbSet<DurationType> DurationTypes { get; set; }
         public DbSet<AbsenceStatusType> AbsenceStatusTypes { get; set; }
         public DbSet<Campus> Campuses { get; set; }
-        public DbSet<CoveragePeriod> CoveragePeriods { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<SubJob> SubJobs { get; set; }
-        public DbSet<CoverageJob> CoverageJobs { get; set; }
-
-        public DbSet<CoverageStatusType> CoverageStatusTypes { get; set; }
+        public DbSet<SubJobStatus> SubJobStatuses { get; set; }
 
 
 
@@ -37,27 +34,6 @@ namespace AbsenceCoverageMS.Models.DataLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-
-            //Composite primary key for NotificationUser
-            modelBuilder.Entity<NotificationUser>()
-                .HasKey(k => new { k.NotificationId, k.UserId });
-
-            //One to Many relationship between Notification and NotificationUser
-            modelBuilder.Entity<NotificationUser>()
-                .HasOne(nu => nu.User)
-                .WithMany(u => u.NotificationUsers)
-                .HasForeignKey(nu => nu.UserId);
-
-            //One to Many relationship between Period and AbsenceRequestPeriod
-            modelBuilder.Entity<NotificationUser>()
-                .HasOne(nu => nu.Notification)
-                .WithMany(n => n.NotificationUsers)
-                .HasForeignKey(nu => nu.NotificationId);
-
-
-
-
 
 
             //Composite primary key for AbsenceRequestPeriod
@@ -90,16 +66,13 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
 
 
-            //Primary key for CoveragePeriod
-            modelBuilder.Entity<CoveragePeriod>()
-                .HasKey(k => new { k.CoveragePeriodId });
 
 
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());
             modelBuilder.ApplyConfiguration(new SeedDurationTypes());
             modelBuilder.ApplyConfiguration(new SeedAbsenceStatusTypes());
-            modelBuilder.ApplyConfiguration(new SeedCoverageStatusTypes());
+            modelBuilder.ApplyConfiguration(new SeedSubJobStatuses());
             modelBuilder.ApplyConfiguration(new SeedPeriods());
             modelBuilder.ApplyConfiguration(new SeedCampuses());
         }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AbsenceCoverageMS.Migrations
 {
-    public partial class NewDatabaseERD : Migration
+    public partial class RemovedCoverageJobEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,6 +21,9 @@ namespace AbsenceCoverageMS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Courses");
+
+            migrationBuilder.DropTable(
+                name: "CoveragePeriods");
 
             migrationBuilder.DropTable(
                 name: "StatusTypes");
@@ -58,11 +61,6 @@ namespace AbsenceCoverageMS.Migrations
                 table: "AbsenceRequests");
 
             migrationBuilder.AddColumn<string>(
-                name: "CoverageStatusTypeId",
-                table: "SubJobs",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
                 name: "DurationTypeId",
                 table: "SubJobs",
                 nullable: false,
@@ -93,6 +91,11 @@ namespace AbsenceCoverageMS.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AddColumn<string>(
+                name: "SubJobStatusId",
+                table: "SubJobs",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
                 name: "TeacherInstructions",
                 table: "SubJobs",
                 nullable: true);
@@ -115,93 +118,15 @@ namespace AbsenceCoverageMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CoverageStatusTypes",
+                name: "SubJobStatuses",
                 columns: table => new
                 {
-                    CoverageStatusTypeId = table.Column<string>(nullable: false),
+                    SubJobStatusId = table.Column<string>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CoverageStatusTypes", x => x.CoverageStatusTypeId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Notification",
-                columns: table => new
-                {
-                    NotificationId = table.Column<string>(nullable: false),
-                    Subject = table.Column<string>(nullable: false),
-                    Message = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notification", x => x.NotificationId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CoverageJobs",
-                columns: table => new
-                {
-                    CoverageJobId = table.Column<string>(nullable: false),
-                    Date = table.Column<DateTime>(nullable: false),
-                    PeriodId = table.Column<string>(nullable: false),
-                    TeacherInstructions = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false),
-                    CoverageStatusTypeId = table.Column<string>(nullable: true),
-                    AbsenceRequestId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CoverageJobs", x => x.CoverageJobId);
-                    table.ForeignKey(
-                        name: "FK_CoverageJobs_AbsenceRequests_AbsenceRequestId",
-                        column: x => x.AbsenceRequestId,
-                        principalTable: "AbsenceRequests",
-                        principalColumn: "AbsenceRequestId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CoverageJobs_CoverageStatusTypes_CoverageStatusTypeId",
-                        column: x => x.CoverageStatusTypeId,
-                        principalTable: "CoverageStatusTypes",
-                        principalColumn: "CoverageStatusTypeId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CoverageJobs_Periods_PeriodId",
-                        column: x => x.PeriodId,
-                        principalTable: "Periods",
-                        principalColumn: "PeriodId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CoverageJobs_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NotificationUser",
-                columns: table => new
-                {
-                    NotificationId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NotificationUser", x => new { x.NotificationId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_NotificationUser_Notification_NotificationId",
-                        column: x => x.NotificationId,
-                        principalTable: "Notification",
-                        principalColumn: "NotificationId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NotificationUser_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_SubJobStatuses", x => x.SubJobStatusId);
                 });
 
             migrationBuilder.InsertData(
@@ -216,14 +141,13 @@ namespace AbsenceCoverageMS.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "CoverageStatusTypes",
-                columns: new[] { "CoverageStatusTypeId", "Name" },
+                table: "SubJobStatuses",
+                columns: new[] { "SubJobStatusId", "Name" },
                 values: new object[,]
                 {
                     { "1", "Filled" },
                     { "2", "Unfilled" },
-                    { "3", "Canceled" },
-                    { "4", "Unreleased" }
+                    { "3", "Canceled" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -234,44 +158,19 @@ namespace AbsenceCoverageMS.Migrations
                 filter: "[AbsenceRequestId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SubJobs_CoverageStatusTypeId",
-                table: "SubJobs",
-                column: "CoverageStatusTypeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SubJobs_DurationTypeId",
                 table: "SubJobs",
                 column: "DurationTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubJobs_SubJobStatusId",
+                table: "SubJobs",
+                column: "SubJobStatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AbsenceRequests_AbsenceStatusTypeId",
                 table: "AbsenceRequests",
                 column: "AbsenceStatusTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoverageJobs_AbsenceRequestId",
-                table: "CoverageJobs",
-                column: "AbsenceRequestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoverageJobs_CoverageStatusTypeId",
-                table: "CoverageJobs",
-                column: "CoverageStatusTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoverageJobs_PeriodId",
-                table: "CoverageJobs",
-                column: "PeriodId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoverageJobs_UserId",
-                table: "CoverageJobs",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NotificationUser_UserId",
-                table: "NotificationUser",
-                column: "UserId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AbsenceRequests_AbsenceStatusTypes_AbsenceStatusTypeId",
@@ -282,20 +181,20 @@ namespace AbsenceCoverageMS.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_SubJobs_CoverageStatusTypes_CoverageStatusTypeId",
-                table: "SubJobs",
-                column: "CoverageStatusTypeId",
-                principalTable: "CoverageStatusTypes",
-                principalColumn: "CoverageStatusTypeId",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_SubJobs_DurationTypes_DurationTypeId",
                 table: "SubJobs",
                 column: "DurationTypeId",
                 principalTable: "DurationTypes",
                 principalColumn: "DurationTypeId",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_SubJobs_SubJobStatuses_SubJobStatusId",
+                table: "SubJobs",
+                column: "SubJobStatusId",
+                principalTable: "SubJobStatuses",
+                principalColumn: "SubJobStatusId",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -305,34 +204,21 @@ namespace AbsenceCoverageMS.Migrations
                 table: "AbsenceRequests");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_SubJobs_CoverageStatusTypes_CoverageStatusTypeId",
+                name: "FK_SubJobs_DurationTypes_DurationTypeId",
                 table: "SubJobs");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_SubJobs_DurationTypes_DurationTypeId",
+                name: "FK_SubJobs_SubJobStatuses_SubJobStatusId",
                 table: "SubJobs");
 
             migrationBuilder.DropTable(
                 name: "AbsenceStatusTypes");
 
             migrationBuilder.DropTable(
-                name: "CoverageJobs");
-
-            migrationBuilder.DropTable(
-                name: "NotificationUser");
-
-            migrationBuilder.DropTable(
-                name: "CoverageStatusTypes");
-
-            migrationBuilder.DropTable(
-                name: "Notification");
+                name: "SubJobStatuses");
 
             migrationBuilder.DropIndex(
                 name: "IX_SubJobs_AbsenceRequestId",
-                table: "SubJobs");
-
-            migrationBuilder.DropIndex(
-                name: "IX_SubJobs_CoverageStatusTypeId",
                 table: "SubJobs");
 
             migrationBuilder.DropIndex(
@@ -340,12 +226,12 @@ namespace AbsenceCoverageMS.Migrations
                 table: "SubJobs");
 
             migrationBuilder.DropIndex(
+                name: "IX_SubJobs_SubJobStatusId",
+                table: "SubJobs");
+
+            migrationBuilder.DropIndex(
                 name: "IX_AbsenceRequests_AbsenceStatusTypeId",
                 table: "AbsenceRequests");
-
-            migrationBuilder.DropColumn(
-                name: "CoverageStatusTypeId",
-                table: "SubJobs");
 
             migrationBuilder.DropColumn(
                 name: "DurationTypeId",
@@ -365,6 +251,10 @@ namespace AbsenceCoverageMS.Migrations
 
             migrationBuilder.DropColumn(
                 name: "StartTime",
+                table: "SubJobs");
+
+            migrationBuilder.DropColumn(
+                name: "SubJobStatusId",
                 table: "SubJobs");
 
             migrationBuilder.DropColumn(
@@ -428,6 +318,33 @@ namespace AbsenceCoverageMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CoveragePeriods",
+                columns: table => new
+                {
+                    CoveragePeriodId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Count = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PeriodId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Priority = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoveragePeriods", x => x.CoveragePeriodId);
+                    table.ForeignKey(
+                        name: "FK_CoveragePeriods_Periods_PeriodId",
+                        column: x => x.PeriodId,
+                        principalTable: "Periods",
+                        principalColumn: "PeriodId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CoveragePeriods_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StatusTypes",
                 columns: table => new
                 {
@@ -479,6 +396,17 @@ namespace AbsenceCoverageMS.Migrations
                 name: "IX_Courses_UserId",
                 table: "Courses",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CoveragePeriods_PeriodId",
+                table: "CoveragePeriods",
+                column: "PeriodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CoveragePeriods_UserId",
+                table: "CoveragePeriods",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_AbsenceRequests_StatusTypes_StatusTypeId",

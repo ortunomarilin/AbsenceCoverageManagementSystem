@@ -33,10 +33,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
 
-        //Has Coverage Period
-        public CoveragePeriod CoveragePeriod { get; set; } //Nav
-
-
 
         //Submitted Absence Requests
         public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
@@ -45,11 +41,6 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
         //Assigned SubJob
         public ICollection<SubJob> SubJobs { get; set; }
-        public ICollection<CoverageJob> CoverageJobs { get; set; }
-
-
-        //Is send notifications 
-        public ICollection<NotificationUser> NotificationUsers { get; set; }
 
 
 
