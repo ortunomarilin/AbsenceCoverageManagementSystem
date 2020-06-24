@@ -109,11 +109,6 @@ namespace AbsenceCoverageMS.Models.Grid
             set => this[nameof(FilterGridDTO.AbsenceStatus)] = value;
         }
 
-        public string CoverageJobStatus
-        {
-            get => Get(nameof(FilterGridDTO.CoverageJobStatus));
-            set => this[nameof(FilterGridDTO.CoverageJobStatus)] = value;
-        }
 
 
         public string SubJobStatus

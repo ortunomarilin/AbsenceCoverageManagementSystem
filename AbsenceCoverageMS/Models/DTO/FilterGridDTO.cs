@@ -28,7 +28,6 @@ namespace AbsenceCoverageMS.Models.DTO
         public string Campus { get; set; } = "all";
 
         public string SubJobStatus { get; set; } = "all";
-        public string CoverageJobStatus { get; set; } = "all";
 
     }
 }

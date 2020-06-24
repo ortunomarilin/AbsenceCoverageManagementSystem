@@ -52,7 +52,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
         public string TeacherInstructions { get; set; }
 
 
-
+        //Accepted by
         public string UserId { get; set; }
         public User User { get; set; }
 

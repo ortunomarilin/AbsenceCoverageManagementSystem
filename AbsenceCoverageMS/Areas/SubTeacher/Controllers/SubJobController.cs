@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AbsenceCoverageMS.Areas.SubTeacher.Controllers
 {
 
-    [Authorize(Roles = "Sub-Teacher")]
+    //[Authorize(Roles = "Sub-Teacher")]
     [Area("SubTeacher")]
     public class SubJobController : Controller
     {
@@ -32,15 +32,11 @@ namespace AbsenceCoverageMS.Areas.SubTeacher.Controllers
         }
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
 
-        //public ViewResult List()
+        //public ViewResult JobHistory()
         //{
-        //    var Jobs = data.CoverageRequests.List(new QueryOptions<CoverageRequest> 
+        //    var Jobs = data.SubJobs.List(new QueryOptions<SubJob>
         //    {
         //        Include = "AbsenceRequest, AbsenceRequest.DurationType, AbsenceRequest.User, AbsenceRequest.User.Campus, StatusType",
         //    });
@@ -49,39 +45,58 @@ namespace AbsenceCoverageMS.Areas.SubTeacher.Controllers
         //}
 
 
-        //[HttpGet]
-        //public ViewResult AvailableJobs(FilterGridDTO values)
-        //{
-        //    //Create an instance of the SubJobeGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
-        //    var gridBuilder = new SubJobGridBuilder(HttpContext.Session, values, nameof(AbsenceRequest.StartDate));
+        [HttpGet]
+        public IActionResult AvailableJobs(FilterGridDTO values)
+        {
+            //Create an instance of the SubJobeGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
+            var gridBuilder = new SubJobGridBuilder(HttpContext.Session, values, nameof(SubJob.StartDate));
+
+            var options = new SubJobQueryOptions
+            {
+                Include = "AbsenceRequest, AbsenceRequest.DurationType, AbsenceRequest.User, AbsenceRequest.User.Campus, SubJobStatus",
+                Where = job => job.SubJobStatus.Name == "Unfilled" && job.StartDate >= DateTime.Now.Date,
+                OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
+            };
+            options.Filter(gridBuilder);
+            options.Sort(gridBuilder);
+
+            var model = new SubJobsAvailableViewModel
+            {
+                AvailableSubJobs = data.SubJobs.List(options),
+                Grid = gridBuilder.CurrentGrid,
+                Campuses = data.Campuses.List(),
+                DurationTypes = data.DurationTypes.List()
+            };
+            model.TotalPages = model.AvailableSubJobs.ToList().Count;
+
+            //Finally Set the paging. 
+            model.AvailableSubJobs = model.AvailableSubJobs.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
+
+            return View("AvailableJobs", model);
+
+        }
 
 
-        //    var options = new SubJobQueryOptions
-        //    {
-        //        Include = "AbsenceRequest, AbsenceRequest.DurationType, AbsenceRequest.User, AbsenceRequest.User.Campus, StatusType",
-        //        Where = job => job.StatusType.Name == "Unfilled" && job.AbsenceRequest.StartDate >= DateTime.Now.Date,
-        //        OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
-        //    };
-        //    options.Filter(gridBuilder);
-        //    options.Sort(gridBuilder);
+        [HttpPost]
+        public IActionResult AvailableJobsFilter(string[] filters, bool clear = false)
+        {
+            //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
+            var gridBuilder = new SubJobGridBuilder(HttpContext.Session);
 
+            if (clear)
+            {
+                gridBuilder.ClearSearchOptions();
+            }
+            else
+            {
+                //Set new filter value to current route and serialize. 
+                gridBuilder.SetSearchOptions(filters);
+                gridBuilder.SerializeRoutes();
+            }
 
-        //    var model = new SubJobsAvailableViewModel
-        //    {
-        //        //Only available jobs (Unfilled). 
-        //        AvailableSubJobs = data.CoverageRequests.List(options),
-        //        Grid = gridBuilder.CurrentGrid,
-        //        Campuses = data.Campuses.List(),
-        //        DurationTypes = data.DurationTypes.List()
-        //    };
-        //    model.TotalPages = model.AvailableSubJobs.ToList().Count;
-
-        //    //Finally Set the paging. 
-        //    model.AvailableSubJobs = model.AvailableSubJobs.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
-
-        //    return View(model);
-
-        //}
+            //Redirect to the List Action Method with updated routes 
+            return RedirectToAction("AvailableJobs", gridBuilder.CurrentGrid);
+        }
 
 
         //[HttpPost]

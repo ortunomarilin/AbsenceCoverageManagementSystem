@@ -155,7 +155,7 @@
                        asp-route-todate="@Model.Grid.ToDate"
                        asp-route-duration="@Model.Grid.Duration"
                        asp-route-subjobstatus="@Model.Grid.SubJobStatus"
-                       asp-route-coveragejobstatus="@Model.Grid.CoverageJobStatus"
+                       asp-route-coveragejobstatus="@Model.Grid.SubJobStatus"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceCoverageMS.Models.DomainModels.User.LastName) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort"></i>
@@ -172,7 +172,7 @@
                        asp-route-todate="@Model.Grid.ToDate"
                        asp-route-duration="@Model.Grid.Duration"
                        asp-route-subjobstatus="@Model.Grid.SubJobStatus"
-                       asp-route-coveragejobstatus="@Model.Grid.CoverageJobStatus"
+                       asp-route-coveragejobstatus="@Model.Grid.SubJobStatus"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.StartDate) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort"></i>
@@ -191,7 +191,7 @@
                        asp-route-todate="@Model.Grid.ToDate"
                        asp-route-duration="@Model.Grid.Duration"
                        asp-route-subjobstatus="@Model.Grid.SubJobStatus"
-                       asp-route-coveragejobstatus="@Model.Grid.CoverageJobStatus"
+                       asp-route-coveragejobstatus="@Model.Grid.SubJobStatus"
                        class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.DurationType) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort"></i>
@@ -281,7 +281,7 @@
                asp-route-todate="@Model.Grid.ToDate"
                asp-route-duration="@Model.Grid.Duration"
                asp-route-subjobstatus="@Model.Grid.SubJobStatus"
-               asp-route-coveragejobstatus="@Model.Grid.CoverageJobStatus"
+               asp-route-coveragejobstatus="@Model.Grid.SubJobStatus"
                asp-route-pagenumber="@i"
                asp-route-pagesize="@Model.Grid.PageSize"
                class="btn btn-link   @(i==Model.Grid.PageNumber ? "active" : "" )">

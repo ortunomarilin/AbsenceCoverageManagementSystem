@@ -1,5 +1,5 @@
 ﻿
-@*@model SubJobsAvailableViewModel
+@model SubJobsAvailableViewModel
 
 
 @{
@@ -44,7 +44,7 @@
 
 <div class="content-container shadow-sm  mt-2">
 
-    <form asp-action="Filter" method="post">
+    <form asp-action="AvailableJobsFilter" method="post">
 
 
         <div class="form-row ">
@@ -99,11 +99,11 @@
                 <th>
                     Job Date
                     <a asp-action="AvailableJobs"
-                       asp-route-sortby=@nameof(AbsenceRequest.StartDate)
-                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.StartDate))
+                       asp-route-sortby=@nameof(SubJob.StartDate)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(SubJob.StartDate))
                        asp-route-campus="@Model.Grid.Campus"
                        asp-route-duration="@Model.Grid.Duration"
-                       class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.StartDate) ? "text-primary" : "text-secondary")">
+                       class=" @(Model.Grid.SortBy == nameof(SubJob.StartDate) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -113,11 +113,11 @@
                 <th>
                     Duration
                     <a asp-action="AvailableJobs"
-                       asp-route-sortby=@nameof(AbsenceRequest.DurationType.Name)
-                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.DurationType.Name))
+                       asp-route-sortby=@nameof(SubJob.DurationType.Name)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(SubJob.DurationType.Name))
                        asp-route-campus="@Model.Grid.Campus"
                        asp-route-duration="@Model.Grid.Duration"
-                       class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.DurationType.Name) ? "text-primary" : "text-secondary")">
+                       class=" @(Model.Grid.SortBy == nameof(SubJob.DurationType.Name) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -130,11 +130,11 @@
                 <th>
                     Campus
                     <a asp-action="AvailableJobs"
-                       asp-route-sortby=@nameof(Campus.Name)
-                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(Campus.Name))
+                       asp-route-sortby=@nameof(SubJob.AbsenceRequest.User.Campus)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(SubJob.AbsenceRequest.User.Campus))
                        asp-route-campus="@Model.Grid.Campus"
                        asp-route-duration="@Model.Grid.Duration"
-                       class=" @(Model.Grid.SortBy == nameof(Campus.Name) ? "text-primary" : "text-secondary")">
+                       class=" @(Model.Grid.SortBy == nameof(SubJob.AbsenceRequest.User.Campus) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -166,10 +166,10 @@
 
                 <td>@job.DurationType.Name</td>
                 <td>@job.StartTime.Value.ToShortTimeString() - @job.EndTime.Value.ToShortTimeString()</td>
-                <td>@job.CoverageRequest.AbsenceRequest.User.FullName</td>
-                <td>@job.CoverageRequest.AbsenceRequest.User.PositionTitle</td>
-                <td>@job.CoverageRequest.AbsenceRequest.User.Campus.Name</td>
-                <td>@job.StatusType.Name</td>
+                <td>@job.AbsenceRequest.User.FullName</td>
+                <td>@job.AbsenceRequest.User.PositionTitle</td>
+                <td>@job.AbsenceRequest.User.Campus.Name</td>
+                <td>@job.SubJobStatus.Name</td>
 
 
                 <td class="text-center">
@@ -220,7 +220,7 @@
             </a>
         }
     </div>
-</div>*@
+</div>
 
 
 

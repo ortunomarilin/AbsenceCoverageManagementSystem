@@ -23,8 +23,6 @@ namespace AbsenceCoverageMS.Models.Grid
             grid.ToDate = values.ToDate;
             grid.Duration = values.Duration;
             grid.SubJobStatus = values.SubJobStatus;
-            grid.CoverageJobStatus = values.CoverageJobStatus;
-
 
             SerializeRoutes();
 
@@ -73,7 +71,6 @@ namespace AbsenceCoverageMS.Models.Grid
         {
             grid.Duration = "all";
             grid.SubJobStatus = "all";
-            grid.CoverageJobStatus = "all";
             grid.FromDate = "";
             grid.ToDate = "";
             grid.Search = "";
