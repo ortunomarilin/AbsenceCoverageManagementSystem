@@ -33,16 +33,63 @@ namespace AbsenceCoverageMS.Areas.SubTeacher.Controllers
 
 
 
+        [HttpGet]
+        public async Task<IActionResult> JobHistory(FilterGridDTO values)
+        {
+            //First, find the current user signed in, only show accepted jobs. 
+            User user = await userManager.GetUserAsync(User);
 
-        //public ViewResult JobHistory()
-        //{
-        //    var Jobs = data.SubJobs.List(new QueryOptions<SubJob>
-        //    {
-        //        Include = "AbsenceRequest, AbsenceRequest.DurationType, AbsenceRequest.User, AbsenceRequest.User.Campus, StatusType",
-        //    });
+            //Create an instance of the SubJobeGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
+            var gridBuilder = new SubJobGridBuilder(HttpContext.Session, values, nameof(SubJob.StartDate));
 
-        //    return View(Jobs);
-        //}
+            var options = new SubJobQueryOptions
+            {
+                Include = "AbsenceRequest, AbsenceRequest.DurationType, AbsenceRequest.User, AbsenceRequest.User.Campus, SubJobStatus",
+                Where = job => job.User.Id == user.Id,
+                OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
+            };
+            options.Filter(gridBuilder);
+            options.Sort(gridBuilder);
+
+
+            var model = new SubJobsHistoryViewModel
+            {
+                SubJobs = data.SubJobs.List(options),
+                Grid = gridBuilder.CurrentGrid,
+                Campuses = data.Campuses.List(),
+                DurationTypes = data.DurationTypes.List()
+            };
+            model.TotalPages = model.SubJobs.ToList().Count;
+
+            //Finally Set the paging. 
+            model.SubJobs = model.SubJobs.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
+
+            return View("JobHistory", model);
+
+        }
+
+        [HttpPost]
+        public IActionResult JobHistoryFilter(string[] filters, bool clear = false)
+        {
+            //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
+            var gridBuilder = new SubJobGridBuilder(HttpContext.Session);
+
+            if (clear)
+            {
+                gridBuilder.ClearSearchOptions();
+            }
+            else
+            {
+                //Set new filter value to current route and serialize. 
+                gridBuilder.SetSearchOptions(filters);
+                gridBuilder.SerializeRoutes();
+            }
+
+            //Redirect to the List Action Method with updated routes 
+            return RedirectToAction("JobHistory", gridBuilder.CurrentGrid);
+        }
+
+
 
 
         [HttpGet]
@@ -99,26 +146,52 @@ namespace AbsenceCoverageMS.Areas.SubTeacher.Controllers
         }
 
 
-        //[HttpPost]
-        //public IActionResult Filter(string[] filters, bool clear = false)
-        //{
-        //    //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
-        //    var gridBuilder = new SubJobGridBuilder(HttpContext.Session);
+        [HttpPost]
+        public async Task<IActionResult> AcceptJob(string id)
+        {
+            //First, find the current user signed in, this will be the Sub accepting the sub job. 
+            User user = await userManager.GetUserAsync(User);
 
-        //    if (clear)
-        //    {
-        //        gridBuilder.ClearSearchOptions();
-        //    }
-        //    else
-        //    {
-        //        //Set new filter value to current route and serialize. 
-        //        gridBuilder.SetSearchOptions(filters);
-        //        gridBuilder.SerializeRoutes();
-        //    }
+            //Second, find the SubJob being accepted.
+            SubJob subJob = data.SubJobs.Get(new QueryOptions<SubJob>
+            {
+                Where = job => job.SubJobId == id,
+                Include = "SubJobStatus, User, AbsenceRequest, DurationType",
+            });
 
-        //    //Redirect to the List Action Method with updated routes 
-        //    return RedirectToAction("AvailableJobs", gridBuilder.CurrentGrid);
-        //}
+            //Finally assing Sub to Sub Job / change status to filled. 
+            subJob.User = user;
+            subJob.SubJobStatus.Name = "Filled";
+
+            data.SubJobs.Update(subJob);
+            data.Save();
+
+
+            //Redirect to the List Action Method with updated routes 
+            return RedirectToAction("AvailableJobs");
+        }
+
+
+        public IActionResult CancelAcceptance(string id)
+        {
+            SubJob subJob = data.SubJobs.Get(new QueryOptions<SubJob>
+            {
+                Where = job => job.SubJobId == id,
+                Include = "SubJobStatus, User, AbsenceRequest, DurationType",
+            });
+
+            //Finally assing Sub to Sub Job / change status to filled. 
+            subJob.User = null;
+            subJob.SubJobStatus.Name = "Unfilled";
+
+            data.SubJobs.Update(subJob);
+            data.Save();
+
+
+            //Redirect to the job history 
+            return RedirectToAction("JobHistory");
+
+        }
 
 
 
