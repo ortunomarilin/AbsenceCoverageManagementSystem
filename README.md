@@ -56,6 +56,9 @@ Power-User - Manage Absence Requests
 <img src="Images/PowerUserManageAbsenceRequests.PNG">
 
 
+Power-User - Process Absence Requests 
+<img src="Images/PowerUserProcessAbsenceRequest.PNG">
+
 Power-User - Manage Coverage Requests 
 <img src="Images/PowerUserManageCoverage.PNG">
 
@@ -85,7 +88,7 @@ Admin - Absence Types
 <img src="Images/AdminAbsenceTypes.PNG">
 
 Admin - Add New Absence Type
-<img src="Images/AdminAddAbsenceTypes.PNG">
+<img src="Images/AdminAddAbsenceType.PNG">
 
 
 ## Author 
