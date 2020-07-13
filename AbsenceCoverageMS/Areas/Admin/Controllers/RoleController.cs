@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Areas.Admin.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class RoleController : Controller
     {
@@ -31,13 +31,13 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            var model = new RoleAddViewModel();
-            return View(model);
+            var model = new RoleViewModel();
+            return View("Role", model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Add(RoleAddViewModel model)
+        public async Task<IActionResult> Add(RoleViewModel model)
         {
             if (model != null)
             {
@@ -54,7 +54,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                         {
                             ModelState.AddModelError("", error.Description);
                         }
-                        return View(model);
+                        return View("Role", model);
                     }
                 }
             }
@@ -66,13 +66,13 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             IdentityRole role = await roleManager.FindByIdAsync(id);
-            RoleEditViewModel model = new RoleEditViewModel { RoleId = id, RoleName = role.Name };
-            return View(model);
+            RoleViewModel model = new RoleViewModel { RoleId = id, RoleName = role.Name };
+            return View("Role", model);
         }
 
 
         [HttpPost]
-        public async Task<IActionResult> Edit(RoleEditViewModel model)
+        public async Task<IActionResult> Edit(RoleViewModel model)
         {
             var role = await roleManager.FindByIdAsync(model.RoleId);
             if (role != null)
@@ -92,7 +92,7 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
                     return RedirectToAction("List");
                 }
             }
-            return View(model);
+            return View("Role", model);
         }
 
         [HttpGet]
@@ -121,10 +121,10 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserToRole(RoleManageUsersViewModel model, string id)
+        public async Task<IActionResult> AddUserToRole(RoleManageUsersViewModel model)
         {
             //Find the user 
-            User user = await userManager.FindByIdAsync(id);
+            User user = await userManager.FindByIdAsync(model.UserId);
             if(user != null)
             {
                 var result = await userManager.AddToRoleAsync(user, model.RoleName);
@@ -139,10 +139,10 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RemoveUserFromRole(RoleManageUsersViewModel model, string id)
+        public async Task<IActionResult> RemoveUserFromRole(RoleManageUsersViewModel model, string userId)
         {
             //Find User
-            User user = await userManager.FindByIdAsync(id);
+            User user = await userManager.FindByIdAsync(userId);
 
             //If finding user was successful
             if (user != null)

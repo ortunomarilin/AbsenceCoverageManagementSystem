@@ -79,16 +79,16 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<StatusType> statusTypeRepo;
-        public Repository<StatusType> StatusTypes
+        private Repository<AbsenceStatus> AbsenceStatusTypeRepo;
+        public Repository<AbsenceStatus> AbsenceStatusTypes
         {
             get
             {
-                if (statusTypeRepo == null)
+                if (AbsenceStatusTypeRepo == null)
                 {
-                    statusTypeRepo = new Repository<StatusType>(context);
+                    AbsenceStatusTypeRepo = new Repository<AbsenceStatus>(context);
                 }
-                return statusTypeRepo;
+                return AbsenceStatusTypeRepo;
             }
         }
 
@@ -107,32 +107,6 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<Course> courseRepo;
-        public Repository<Course> Courses
-        {
-            get
-            {
-                if (courseRepo == null)
-                {
-                    courseRepo = new Repository<Course>(context);
-                }
-                return courseRepo;
-            }
-        }
-
-
-        private Repository<CoveragePeriod> coveragePeriodRepo;
-        public Repository<CoveragePeriod> CoveragePeriods
-        {
-            get
-            {
-                if (coveragePeriodRepo == null)
-                {
-                    coveragePeriodRepo = new Repository<CoveragePeriod>(context);
-                }
-                return coveragePeriodRepo;
-            }
-        }
 
 
         private Repository<Period> periodRepo;
@@ -149,6 +123,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
+
         private Repository<SubJob> subJobRepo;
         public Repository<SubJob> SubJobs
         {
@@ -161,6 +136,26 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
                 return subJobRepo;
             }
         }
+
+
+
+        private Repository<SubJobStatus> subJobStatusRepo;
+        public Repository<SubJobStatus> SubJobStatuses
+        {
+            get
+            {
+                if (subJobStatusRepo == null)
+                {
+                    subJobStatusRepo = new Repository<SubJobStatus>(context);
+                }
+                return subJobStatusRepo;
+            }
+        }
+
+
+
+
+
 
 
         public void AddNewAbsenceRequestPeriods(AbsenceRequest absenceRequest, List<SelectablePeriodViewModel> selectablePeriods)

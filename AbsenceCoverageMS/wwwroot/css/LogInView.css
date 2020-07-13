@@ -1,29 +1,59 @@
-﻿body {
-    width: 100%;
-    
-    background-color: #4e7396;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+﻿
+body {
+    background-color: #F2F8FD;
 }
 
-h1 {
-    text-align: center;
-    color: #022444;
-    margin: 30px;
-    letter-spacing: 0px;
+.navbar {
+    background-color: #00316E;
+    position: fixed;
+    left: 0;
 }
 
-.center {
-    width: 40%;
+.navbar {
+    border-bottom: solid 2px #00224D;
+    box-shadow: 0 0.125rem 0.25rem #001D42;
+    padding-right: 30px;
+    top: 0;
+    right: 0;
+    z-index: 100;
+}
+
+    .navbar .navbar-brand, .navbar .nav-link {
+        color: white;
+        font-size: 15px;
+    }
+
+.navbar-brand:hover {
+    color: #c7e0f4;
+}
+
+
+.view-content {
+    top: 57px;
+}
+
+
+.view-content {
+    position: absolute;
+    left: 0px;
+    right: 0px;
     margin: auto;
+    width: 35%;
     padding: 30px;
     background-color: white;
-    border: solid 1px #4e7396;
+    border: solid 1px #00316E;
     border-radius: 10px;
 }
 
+label, h3 {
+    font-family: Arial;
+    color: #005a9e;
+    font-weight: normal;
+}
+
+
 .btn {
-    background-color: #022444;
+    background-color: #00316E;
     display: block;
     width: 100%;
     border: #022444;
@@ -32,3 +62,17 @@ h1 {
     .btn:hover {
         background-color: #4e7396;
     }
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+.validation-summary-errors ul {
+    list-style: none;
+    padding-left: 30px;
+}
+
+.input-validation-error {
+    border: solid 1px #dc3545;
+}

@@ -12,10 +12,12 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         Repository<AbsenceRequestPeriod> AbsenceRequestPeriods { get; }
         Repository<AbsenceType> AbsenceTypes { get; }
         Repository<Campus> Campuses { get; }
-        Repository<Course> Courses { get; }
-        Repository<CoveragePeriod> CoveragePeriods { get; }
         Repository<Period> Periods { get; }
         Repository<SubJob> SubJobs { get; }
+        Repository<AbsenceStatus> AbsenceStatusTypes { get; }
+        Repository<SubJobStatus> SubJobStatuses { get; }
+
+
 
         void Save();
     }

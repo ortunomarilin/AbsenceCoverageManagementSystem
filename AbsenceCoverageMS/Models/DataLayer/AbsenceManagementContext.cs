@@ -21,12 +21,13 @@ namespace AbsenceCoverageMS.Models.DataLayer
         public DbSet<AbsenceRequest> AbsenceRequests { get; set; }
         public DbSet<AbsenceType> AbsenceTypes { get; set; }
         public DbSet<DurationType> DurationTypes { get; set; }
-        public DbSet<StatusType> StatusTypes { get; set; }
+        public DbSet<AbsenceStatus> AbsenceStatusTypes { get; set; }
         public DbSet<Campus> Campuses { get; set; }
-        public DbSet<Course> Courses { get; set; }
-        public DbSet<CoveragePeriod> CoveragePeriods { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<SubJob> SubJobs { get; set; }
+        public DbSet<SubJobStatus> SubJobStatuses { get; set; }
+
+
 
 
 
@@ -45,7 +46,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
                 .WithMany(ar => ar.AbsenceRequestPeriods)
                 .HasForeignKey(arp => arp.AbsenceRequestId);
 
-            //One ot Many relationship between Period and AbsenceRequestPeriod
+            //One to Many relationship between Period and AbsenceRequestPeriod
             modelBuilder.Entity<AbsenceRequestPeriod>()
                 .HasOne(arp => arp.Period)
                 .WithMany(p => p.AbsenceRequestPeriods)
@@ -57,29 +58,21 @@ namespace AbsenceCoverageMS.Models.DataLayer
             modelBuilder.Entity<AbsenceRequest>()
                 .HasKey(k => new { k.AbsenceRequestId});
 
-            //Primary key for Course
-            modelBuilder.Entity<Course>()
-                .HasKey(k => new { k.CourseId });
 
-            //Primary key for SubJob
+
+            //Primary key for Sub Job
             modelBuilder.Entity<SubJob>()
                 .HasKey(k => new { k.SubJobId });
 
-            //Primary key for CoveragePeriod
-            modelBuilder.Entity<CoveragePeriod>()
-                .HasKey(k => new { k.CoveragePeriodId });
 
 
-            ////Don't delete dependent rows. 
-            //modelBuilder.Entity<User>()
-            //    .HasOne(u => u.Approver)
-            //    .WithMany(a => a.Employees)
-            //    .OnDelete(DeleteBehavior.Restrict); 
+
 
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());
             modelBuilder.ApplyConfiguration(new SeedDurationTypes());
-            modelBuilder.ApplyConfiguration(new SeedStatusTypes());
+            modelBuilder.ApplyConfiguration(new SeedAbsenceStatuses());
+            modelBuilder.ApplyConfiguration(new SeedSubJobStatuses());
             modelBuilder.ApplyConfiguration(new SeedPeriods());
             modelBuilder.ApplyConfiguration(new SeedCampuses());
         }

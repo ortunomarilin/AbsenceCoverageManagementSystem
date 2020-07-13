@@ -66,31 +66,34 @@ namespace AbsenceCoverageMS.Models.DomainModels
         [Required(ErrorMessage = "Please select a duration.")]
         public string DurationTypeId { get; set; }
         public DurationType DurationType { get; set; }
-        
 
 
 
         [Required(ErrorMessage = "Please select if coverage is needed.")]
         public bool NeedCoverage { get; set; }
 
+
+        
+        //Periods need coverage for. 
         public ICollection<AbsenceRequestPeriod> AbsenceRequestPeriods { get; set; }
 
-        //Produces SubJobs
-        public ICollection<SubJob> SubJobs { get; set; }  //Nav
-
-
-
-
+  
         //Status 
-        public string StatusTypeId { get; set; }
-        public StatusType StatusType { get; set; }
+        public string AbsenceStatusId { get; set; }
+        public AbsenceStatus AbsenceStatus { get; set; }
 
 
         public string StatusRemarks { get; set; }
 
+
+
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime DateProcessed { get; set; }
 
+
+
+        //Produces SubJobs
+        public SubJob SubJob { get; set; }  //Nav
 
     }
 }

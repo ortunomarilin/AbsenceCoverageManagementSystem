@@ -1,0 +1,229 @@
+﻿
+@model AbsenceDetailsViewModel
+
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="view-header">
+    <h5>Absence Request Details</h5>
+</div>
+
+
+    <div class="row justify-content-center">
+        <div class="col-md-10  form-section  shadow-sm ">
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>Absence Details </h6>
+                </div>
+            </div>
+
+
+
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2  text-md-right ">
+                    <label class="form-label ">Absence Request #</label>
+                </div>
+                <div class=" col-md-8 pl-3 ">
+                    <input  class="form-control" readonly  asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
+                </div>
+            </div>
+
+
+
+            <div class="form-row ml-5  mr-5   ">
+                <div class=" col-md-2  text-md-right  ">
+                    <label class="form-label ">Absence Type</label>
+                </div>
+                <div class=" col-md-3 pl-3 ">
+                    <label asp-for="@Model.AbsenceRequest.AbsenceType.Name" >@Model.AbsenceRequest.AbsenceType.Name</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2   text-md-right ">
+                    <label class="form-label">Start Date</label>
+                </div>
+                <div class=" col-md-3  pl-3 ">
+                    <label>@Model.AbsenceRequest.StartDate.Value.ToShortDateString()</label>
+                </div>
+            </div>
+
+
+            <div class="form-row   ml-5  mr-5  ">
+                <div class=" col-md-2  text-md-right ">
+                    <label class="form-label">End Date</label>
+                </div>
+                <div class=" col-md-3  pl-3">
+                    <label>@Model.AbsenceRequest.EndDate.Value.ToShortDateString()</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5   ">
+                <div class="col-md-2   text-md-right ">
+                    <label class="form-label">Duration</label>
+                </div>
+                <div class=" col-md-3  pl-3  ">
+                    <label>@Model.AbsenceRequest.DurationType.Name</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2   text-md-right ">
+                    <label class="form-label">Start Time</label>
+                </div>
+                <div class=" col-md-3  pl-3 ">
+                    <label>@Model.AbsenceRequest.StartTime.Value.ToShortTimeString()</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5   ">
+                <div class=" col-md-2  text-md-right ">
+                    <label class="form-label">End Time</label>
+                </div>
+                <div class=" col-md-3  pl-3 ">
+                    <label>@Model.AbsenceRequest.EndTime.Value.ToShortTimeString()</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5    ">
+                <div class="col-md-2   text-md-right ">
+                    <label class="form-label">Need Coverage</label>
+                </div>
+                <div class=" col-md-3   pl-3  ">
+                    <label>@(Model.AbsenceRequest.NeedCoverage == true ? "Yes" : "No")</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5   ">
+                <div class="col-md-2    text-md-right  ">
+                    <label class="form-label">Periods</label>
+                </div>
+                <div class=" col-md-3  pl-3 ">
+                    <label >@Model.GetPeriodsNeedCoverage()</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5 mt-2 border-top">
+                <div class="col-md-2   text-md-right  ">
+                    <label class="form-label">Submitted By</label>
+                </div>
+                <div class=" col-md-3  pl-3 ">
+                    <label>@Model.AbsenceRequest.User.FullName</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2   text-md-right ">
+                    <label class="form-label">Date Submitted</label>
+                </div>
+                <div class=" col-md-3  pl-3  ">
+                    <label>@Model.AbsenceRequest.DateSubmitted.Value.ToShortDateString()</label>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="row justify-content-center">
+        <div class="col-md-10  form-section shadow-sm ">
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>Status Details </h6>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right">
+                    <label class="form-label">Status</label>
+                </div>
+                <div class=" col-md-3  pl-3  ">
+                    <label>@Model.AbsenceRequest.AbsenceStatus.Name</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right  ">
+                    <label class="form-label">Date Processed</label>
+                </div>
+                <div class=" col-md-3   pl-3  ">
+                    <label>@(Model.AbsenceRequest.AbsenceStatus.Name == "Submitted" ? "N/A" : Model.AbsenceRequest.DateProcessed.ToShortDateString())</label>
+                </div>
+            </div>
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right  ">
+                    <label class="form-label">Approver Remarks </label>
+                </div>
+                <div class=" col-md-10   pl-3 ">
+                    <label>@Model.AbsenceRequest.StatusRemarks</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="form-row justify-content-center ">
+        <div class="col-md-10   ">
+
+            <div class="form-row">   
+
+                @if (Model.AbsenceRequest.AbsenceStatus.Name == "Submitted")
+                {
+                    <div class="col-md-2 ">
+                        <partial name="_ApproveModalPartial" model="@Model.AbsenceRequest"  />
+                    </div>
+
+                    <div class="col-md-2  ">
+                        <partial name="_DenyModalPartial" model="@Model.AbsenceRequest" />
+                    </div>
+                }
+                else if (Model.AbsenceRequest.AbsenceStatus.Name != "Canceled")
+                {     
+                    <div class="col-md-2 ">
+                        <partial name="_CancelModalPartial" model="@Model.AbsenceRequest" /> 
+                    </div>
+                }
+
+                <div class="col text-right ">
+                    <a asp-action="List"
+                        asp-route-sortby="@Model.Grid.SortBy"
+                        asp-route-sortdirection="@Model.Grid.SortDirection"
+                        asp-route-search="@Model.Grid.Search"
+                        asp-route-fromdate="@Model.Grid.FromDate"
+                        asp-route-todate="@Model.Grid.ToDate"
+                        asp-route-absencetype="@Model.Grid.AbsenceType"
+                        asp-route-duration="@Model.Grid.Duration"
+                        asp-route-needcoverage="@Model.Grid.NeedCoverage"
+                       asp-route-absencestatus="@Model.Grid.AbsenceStatus"
+                        asp-route-pagenumber="@Model.Grid.PageNumber"
+                        asp-route-pagesize="@Model.Grid.PageSize"
+                        class="btn btn-link ">Return to Manage Requests </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+

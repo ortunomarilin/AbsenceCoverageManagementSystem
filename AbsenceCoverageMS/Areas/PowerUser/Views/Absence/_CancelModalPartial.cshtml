@@ -1,0 +1,55 @@
+﻿
+@model AbsenceRequest
+
+<button class="btn btn-outline-warning text-danger  btn-sm  btn-block " data-toggle="modal" data-target="#modal@(Model.AbsenceRequestId)">
+    Cancel Absence
+</button>
+
+
+<form method="post" asp-action="Cancel">
+
+    <input type="hidden" asp-for="@Model.AbsenceRequestId" />
+
+    <div class="modal  " tabindex="-1" role="dialog" id="modal@(Model.AbsenceRequestId)">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header  form-section-header ">
+
+                    <h5 class="modal-title  p-2">Cancel Absence Request</h5>
+
+                </div>
+                <div class="modal-body">
+
+                    <div class="row  mb-3">
+                        <div class="col-md-12">
+                            <h5 class="form-label font-weight-normal ">Are you sure you want to cancel the below absence? </h5>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-label  ">Absence Request ID # </label>
+                            <label class="d-block small ">@Model.AbsenceRequestId</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-label  ">Submitted By </label>
+                            <label class="d-block small ">@Model.User.FullName</label>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger">
+                        Cancel Absence Request
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

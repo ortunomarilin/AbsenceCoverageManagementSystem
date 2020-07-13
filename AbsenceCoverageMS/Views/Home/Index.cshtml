@@ -1,9 +1,85 @@
 ﻿
+@model HomeViewModel
+
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Home - Regular User</h1>
+<div class="view-header mb-2 ">
+    <h3>Dashboard</h3>
+</div>
+
+
+
+
+<div class="form-row  ml-5 mr-5 mb-3 mt-4 text-left">
+    <div class="form-group col-md-12  border-bottom  ">
+        <h6 class="form-label  font-weight-bold  ">My Absence Requests</h6>
+    </div>
+</div>
+
+<div class="row ml-5 mr-5 mt-3">
+
+    <div class="col-sm-3">
+        <div class="card border-warning text-white bg-warning mb-3">
+            <div class="card-header text-center">Waiting Approval</div>
+            <div class="card-body bg-light text-dark p-1">
+                <h1 class="card-title text-center">@Model.WaitingApproval</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="card border-success text-white bg-success mb-3">
+            <div class="card-header text-center">Approved</div>
+            <div class="card-body  bg-light text-dark  p-1">
+                <h1 class="card-title text-center">@Model.Approved</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-3">
+        <div class="card  border-danger  text-white bg-danger mb-3">
+            <div class="card-header text-center">Denied</div>
+            <div class="card-body bg-light text-dark  p-1">
+                <h1 class="card-title text-center">@Model.Denied</h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<div class="form-row  ml-5 mr-5 mb-3 mt-4 text-left">
+    <div class="form-group col-md-12  border-bottom  ">
+        <h6 class="form-label  font-weight-bold  ">My Absences</h6>
+    </div>
+</div>
+
+
+
+<div class="row ml-5 mr-5 mt-3">
+
+    @foreach (var kvp in Model.TotalAbsences)
+    {
+        <div class="col-sm-3">
+
+            <div class="card  border-info  text-white bg-info mb-3">
+
+                <div class="card-header text-center">@kvp.Key</div>
+
+                <div class="card-body  bg-light text-dark   p-1">
+                    <h1 class="card-title text-center">@kvp.Value</h1>
+                </div>
+            </div>
+
+        </div>
+
+    }
+</div>
 
 
 

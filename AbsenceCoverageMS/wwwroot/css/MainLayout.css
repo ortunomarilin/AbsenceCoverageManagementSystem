@@ -42,9 +42,6 @@ body {
 
 
 
-
-
-
 .sidebarMenu {
     padding-top: 5px;
     width: 235px;
@@ -109,6 +106,7 @@ body {
     color: #005a9e;
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 10px;
     border-bottom: 1px solid #71afe5;
 }
 
@@ -190,13 +188,11 @@ tbody {
 
 
 
-
-/*.search-container {
-    background-color: white;
-    margin: 20px 15px 25px 15px;
-    padding: 10px 20px 10px 20px;
-    border-radius: 15px;
+/*.form-table-head {
+    background-color: #71afe5;
+    color: black;
 }*/
+
 
 
 .content-container {
@@ -205,6 +201,32 @@ tbody {
     padding: 10px 20px 10px 20px;
     border-radius: 20px;
 }
+
+.search-btn{
+    width: 100px;
+}
+
+.take-action-btn {
+    background-color: #0288d1;
+    /*background-color: #b2dfdb;*/
+    color: white;
+}
+
+    .take-action-btn:hover {
+        background-color: #0277bd;
+        color: white;
+    }
+
+
+.modal {
+    top: 60px;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-backdrop {
+    display: none;
+}
+
 
 
 
@@ -222,6 +244,4 @@ tbody {
     border: solid 1px #dc3545; 
 }
 
-.drop {
-    background-color: #0f3d77;
-}
+

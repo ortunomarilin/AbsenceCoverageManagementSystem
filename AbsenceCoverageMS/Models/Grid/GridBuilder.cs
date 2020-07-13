@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,13 +13,13 @@ namespace AbsenceCoverageMS.Models.Grid
     {
 
         //To key to use for serializing/desirializing route dictionary
-        private const string GridKey = "GridDictionary";
+        protected const string GridKey = "GridDictionary";
 
         //Protected so that derived clases can access this property only. 
         protected GridDictionary grid { get; set; }
 
         //To store current session.
-        private ISession session { get; set; }
+        protected ISession session { get; set; }
 
 
 
@@ -29,7 +30,7 @@ namespace AbsenceCoverageMS.Models.Grid
             //Save session
             session = s;
 
-            //Deserialize AbsenceGridRouteDictionary
+            //Deserialize AbsenceGridDictionary
             DeserializeRoutes();
         }
 
@@ -91,6 +92,32 @@ namespace AbsenceCoverageMS.Models.Grid
             return total;
         }
 
+
+        //Method to help validate the string date. 
+        public bool IsValidDate(string stringDate)
+        {
+            string validformat = "MM/dd/yyyy";
+            DateTime DateTimeDate;
+
+            if (DateTime.TryParseExact(stringDate, validformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeDate))
+            {
+                return true;
+            }
+            else
+            {
+                //Invalid Date input. 
+                return false;
+            }
+        }
+
+        public DateTime ConvertToDateTime(string stringDate)
+        {
+            string validformat = "MM/dd/yyyy";
+            DateTime DateTimeDate;
+
+            DateTime.TryParseExact(stringDate, validformat, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTimeDate);
+            return DateTimeDate;
+        }
 
 
 

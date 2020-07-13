@@ -25,6 +25,9 @@ namespace AbsenceCoverageMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AbsenceStatusId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("AbsenceTypeId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -62,20 +65,17 @@ namespace AbsenceCoverageMS.Migrations
                     b.Property<string>("StatusRemarks")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StatusTypeId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("AbsenceRequestId");
 
+                    b.HasIndex("AbsenceStatusId");
+
                     b.HasIndex("AbsenceTypeId");
 
                     b.HasIndex("DurationTypeId");
-
-                    b.HasIndex("StatusTypeId");
 
                     b.HasIndex("UserId");
 
@@ -96,6 +96,42 @@ namespace AbsenceCoverageMS.Migrations
                     b.HasIndex("PeriodId");
 
                     b.ToTable("AbsenceRequestPeriod");
+                });
+
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.AbsenceStatus", b =>
+                {
+                    b.Property<string>("AbsenceStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AbsenceStatusId");
+
+                    b.ToTable("AbsenceStatusTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            AbsenceStatusId = "1",
+                            Name = "Submitted"
+                        },
+                        new
+                        {
+                            AbsenceStatusId = "2",
+                            Name = "Approved"
+                        },
+                        new
+                        {
+                            AbsenceStatusId = "3",
+                            Name = "Denied"
+                        },
+                        new
+                        {
+                            AbsenceStatusId = "4",
+                            Name = "Canceled"
+                        });
                 });
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.AbsenceType", b =>
@@ -232,67 +268,6 @@ namespace AbsenceCoverageMS.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Course", b =>
-                {
-                    b.Property<string>("CourseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PeriodId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Room")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CourseId");
-
-                    b.HasIndex("PeriodId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", b =>
-                {
-                    b.Property<string>("CoveragePeriodId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Count")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PeriodId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CoveragePeriodId");
-
-                    b.HasIndex("PeriodId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("CoveragePeriods");
-                });
-
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.DurationType", b =>
                 {
                     b.Property<string>("DurationTypeId")
@@ -393,42 +368,6 @@ namespace AbsenceCoverageMS.Migrations
                         });
                 });
 
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.StatusType", b =>
-                {
-                    b.Property<string>("StatusTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("StatusTypeId");
-
-                    b.ToTable("StatusTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            StatusTypeId = "1",
-                            Name = "Submitted"
-                        },
-                        new
-                        {
-                            StatusTypeId = "2",
-                            Name = "Approved"
-                        },
-                        new
-                        {
-                            StatusTypeId = "3",
-                            Name = "Denied"
-                        },
-                        new
-                        {
-                            StatusTypeId = "4",
-                            Name = "Canceled"
-                        });
-                });
-
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJob", b =>
                 {
                     b.Property<string>("SubJobId")
@@ -438,29 +377,79 @@ namespace AbsenceCoverageMS.Migrations
                     b.Property<string>("AbsenceRequestId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CourseId")
+                    b.Property<string>("DurationTypeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PeriodId")
+                    b.Property<DateTime?>("EndTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("StartTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SubJobStatusId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TeacherInstructions")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("SubJobId");
 
-                    b.HasIndex("AbsenceRequestId");
+                    b.HasIndex("AbsenceRequestId")
+                        .IsUnique()
+                        .HasFilter("[AbsenceRequestId] IS NOT NULL");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("DurationTypeId");
 
-                    b.HasIndex("PeriodId");
+                    b.HasIndex("SubJobStatusId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("SubJobs");
+                });
+
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJobStatus", b =>
+                {
+                    b.Property<string>("SubJobStatusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SubJobStatusId");
+
+                    b.ToTable("SubJobStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            SubJobStatusId = "1",
+                            Name = "Filled"
+                        },
+                        new
+                        {
+                            SubJobStatusId = "2",
+                            Name = "Unfilled"
+                        },
+                        new
+                        {
+                            SubJobStatusId = "3",
+                            Name = "Canceled"
+                        });
                 });
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.User", b =>
@@ -679,6 +668,10 @@ namespace AbsenceCoverageMS.Migrations
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.AbsenceRequest", b =>
                 {
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceStatus", "AbsenceStatus")
+                        .WithMany("AbsenceRequests")
+                        .HasForeignKey("AbsenceStatusId");
+
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceType", "AbsenceType")
                         .WithMany("AbsenceRequests")
                         .HasForeignKey("AbsenceTypeId")
@@ -690,10 +683,6 @@ namespace AbsenceCoverageMS.Migrations
                         .HasForeignKey("DurationTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.StatusType", "StatusType")
-                        .WithMany("AbsenceRequests")
-                        .HasForeignKey("StatusTypeId");
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
                         .WithMany("AbsenceRequests")
@@ -717,49 +706,21 @@ namespace AbsenceCoverageMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.Course", b =>
-                {
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.Period", "Period")
-                        .WithMany("Courses")
-                        .HasForeignKey("PeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
-                        .WithMany("Courses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", b =>
-                {
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.Period", "Period")
-                        .WithMany("CoveragePeriods")
-                        .HasForeignKey("PeriodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
-                        .WithOne("CoveragePeriod")
-                        .HasForeignKey("AbsenceCoverageMS.Models.DomainModels.CoveragePeriod", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.SubJob", b =>
                 {
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceRequest", "AbsenceRequest")
-                        .WithMany("SubJobs")
-                        .HasForeignKey("AbsenceRequestId");
+                        .WithOne("SubJob")
+                        .HasForeignKey("AbsenceCoverageMS.Models.DomainModels.SubJob", "AbsenceRequestId");
 
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.Course", "Course")
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.DurationType", "DurationType")
                         .WithMany()
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("DurationTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.Period", null)
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.SubJobStatus", "SubJobStatus")
                         .WithMany("SubJobs")
-                        .HasForeignKey("PeriodId");
+                        .HasForeignKey("SubJobStatusId");
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.User", "User")
                         .WithMany("SubJobs")

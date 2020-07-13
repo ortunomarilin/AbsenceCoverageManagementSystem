@@ -12,7 +12,7 @@ namespace AbsenceCoverageMS.Models.ViewModels
     {
 
         //For Current Route 
-        public AbsenceGridRouteDictionary Route { get; set; }
+        public GridDictionary Grid { get; set; }
 
         //For List of Absence Requests 
         public IEnumerable<AbsenceRequest> AbsenceRequests { get; set; }
@@ -21,7 +21,7 @@ namespace AbsenceCoverageMS.Models.ViewModels
         //For DropDown Filter Select Lists 
         public IEnumerable<AbsenceType> AbsenceTypes { get; set; }    
         public IEnumerable<DurationType> DurationTypes { get; set; }  
-        public IEnumerable<StatusType> StatusTypes { get; set; }
+        public IEnumerable<AbsenceStatus> StatusTypes { get; set; }
 
 
         //For Total number of pages

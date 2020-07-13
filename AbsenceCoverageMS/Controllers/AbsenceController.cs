@@ -29,32 +29,32 @@ namespace AbsenceCoverageMS.Controllers
         }
 
 
-        public async Task<ViewResult> List(AbsenceGridDTO parameters)
+        public async Task<ViewResult> List(FilterGridDTO values)
         {
             //First, find the current user signed in to only show their records. 
             User user = await userManager.GetUserAsync(User);
 
             //Create an instance of the AbsenceGridBuilder to save the route parameters for Sorting/Filtering the grid into a session. 
-            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, parameters);
+            var gridBuilder = new AbsenceGridBuilder(HttpContext.Session, values, nameof(AbsenceRequest.StartDate));
 
 
             //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
-            var options = new AbsenceRequestQueryOptions
+            var options = new AbsenceQueryOptions
             {
-                Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatus, User, AbsenceRequestPeriods",
                 Where = ar => ar.UserId == user.Id,
-                OrderByDirection = gridBuilder.GetCurrentRoute.SortDirection,
+                OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
             options.FromDateRange(gridBuilder);
             options.Filter(gridBuilder);
-            options.sort(gridBuilder);
+            options.Sort(gridBuilder);
 
 
             //Create and initialize the View Model 
             var model = new AbsenceListViewModel
             {
                 //Set current route 
-                Route = gridBuilder.GetCurrentRoute,
+                Grid = gridBuilder.CurrentGrid,
 
                 //Absence Requests List with query options applied. 
                 AbsenceRequests = data.AbsenceRequests.List(options),
@@ -62,12 +62,12 @@ namespace AbsenceCoverageMS.Controllers
                 //DropDown Lists 
                 AbsenceTypes = data.AbsenceTypes.List(),
                 DurationTypes = data.DurationTypes.List(),
-                StatusTypes = data.StatusTypes.List(),
+                StatusTypes = data.AbsenceStatusTypes.List(),
             };
             model.TotalPages = gridBuilder.GetTotalPages(model.AbsenceRequests.Count());
 
             //Finally Set the paging. 
-            model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.GetCurrentRoute.PageNumber - 1) * gridBuilder.GetCurrentRoute.PageSize).Take(gridBuilder.GetCurrentRoute.PageSize);
+            model.AbsenceRequests = model.AbsenceRequests.Skip((gridBuilder.CurrentGrid.PageNumber - 1) * gridBuilder.CurrentGrid.PageSize).Take(gridBuilder.CurrentGrid.PageSize);
 
             return View(model);
         }
@@ -75,17 +75,24 @@ namespace AbsenceCoverageMS.Controllers
 
 
         [HttpPost]
-        public RedirectToActionResult Filter(string[] filters, string fromdate, string todate)
+        public RedirectToActionResult Filter(string[] filters, string fromdate, string todate, bool clear = false)
         {
             //Initialize with the GET constructor (Desirializes route dictionary to use and make changes.)
             var gridBuilder = new AbsenceGridBuilder(HttpContext.Session);
 
-            //Set new filter value to current route and serialize. 
-            gridBuilder.ReSetFilters(filters, fromdate, todate);
-            gridBuilder.SerializeRoutes();
+            if (clear)
+            {
+                gridBuilder.ClearSearchOptions();
+            }
+            else
+            {
+                //Set new filter value to current route and serialize. 
+                gridBuilder.SetSearchOptions(filters, fromdate, todate, null);
+                gridBuilder.SerializeRoutes();
+            }
 
             //Redirect to the List Action Method with updated routes 
-            return RedirectToAction("List", gridBuilder.GetCurrentRoute);
+            return RedirectToAction("List", gridBuilder.CurrentGrid);
         }
 
 
@@ -102,7 +109,7 @@ namespace AbsenceCoverageMS.Controllers
                     {
                         UserId = user.Id,
                         DateSubmitted = DateTime.Now,
-                        StatusTypeId = data.StatusTypes.List().Where(s => s.Name == "Submitted").FirstOrDefault().StatusTypeId
+                        AbsenceStatusId = data.AbsenceStatusTypes.List().Where(s => s.Name == "Submitted").FirstOrDefault().AbsenceStatusId
                     },
                     AbsenceTypes = data.AbsenceTypes.List(),
                     DurationTypes = data.DurationTypes.List(),
@@ -148,7 +155,7 @@ namespace AbsenceCoverageMS.Controllers
                     //Save the changes to the database. 
                     data.Save();
 
-                    TempData["Message"] = "The Absence Request with ID# " + model.AbsenceRequest.AbsenceRequestId + ", was created successfully.";
+                    TempData["SucessMessage"] = "The Absence Request with ID# " + model.AbsenceRequest.AbsenceRequestId + ", was created successfully.";
 
                     return RedirectToAction("List");
                 }
@@ -223,7 +230,7 @@ namespace AbsenceCoverageMS.Controllers
                     //Save the changes to the database. 
                     data.Save();
 
-                    TempData["Message"] = "The Absence Request # " + model.AbsenceRequest.AbsenceRequestId + ", was successfully updated.";
+                    TempData["SucessMessage"] = "The Absence Request # " + model.AbsenceRequest.AbsenceRequestId + ", was successfully updated.";
                     return RedirectToAction("List");
                 }
             }
@@ -251,12 +258,6 @@ namespace AbsenceCoverageMS.Controllers
         [HttpPost]
         public RedirectToActionResult Delete(string id)
         {
-            AbsenceRequest absenceRequest = GetAbsenceRequest(id);
-            if(absenceRequest.StatusType.Name != "Submitted")
-            {
-                TempData["ErrorMessage"] = "Deletion Failed - Cannot delete absence request with a current status other than submitted. Please contact your manager.";
-                return RedirectToAction("List");
-            }
             data.AbsenceRequests.Delete(GetAbsenceRequest(id));
             data.AbsenceRequests.Save();
             return RedirectToAction("List");
@@ -265,14 +266,12 @@ namespace AbsenceCoverageMS.Controllers
 
 
 
-
-
         private AbsenceRequest GetAbsenceRequest(string id)
         {
             AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
             {
                 Where = ar => ar.AbsenceRequestId == id,
-                Include = "AbsenceType, DurationType, StatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatus, User, AbsenceRequestPeriods",
             });
             return absenceRequest;
         }

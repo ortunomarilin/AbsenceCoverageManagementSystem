@@ -3,7 +3,270 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="view-header mb-2 ">
+    <h3>Dashboard</h3>
+</div>
 
-<p>Power-User Home Page</p>
 
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
+    </div>
+}
+
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
+
+    </div>
+}
+
+
+
+
+
+<div class="row justify-content-center">
+    <div class="col-md-11   ">
+
+        <div class="row content-container">
+            <div class="col-md-12">
+
+                <div class="row  justify-content-between  border-bottom  mb-3 ">
+                    <div class="col-md-4    ">
+                        <h5 class="form-label  font-weight-normal ">Today's Report : @DateTime.Now.ToShortDateString() </h5>
+                    </div>
+                    <div class="form-group col-md-3  ">
+                        <h5 class="form-label  font-weight-normal">Employee Absences </h5>
+                    </div>
+                </div>
+
+                <div class="row  justify-content-center">
+                    <div class="col-md-2   form-section  shadow-sm  ">
+                        <div class="form-row form-section-header ">
+                            <div class=" col-md-12  ">
+                                <h6>Total</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p>10</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2   form-section  shadow-sm   ml-4  mr-4 ">
+                        <div class="form-row form-section-header ">
+                            <div class=" col-md-12    ">
+                                <h6>Filled</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p>10</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2   form-section  shadow-sm ">
+                        <div class="form-row form-section-header ">
+                            <div class=" col-md-12  ">
+                                <h6>Unfilled</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p>10</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2   form-section  shadow-sm  ml-4">
+                        <div class="form-row form-section-header ">
+                            <div class=" col-md-12  ">
+                                <h6>No Sub-Needed</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <p>10</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="row content-container  justify-content-center">
+
+            <div class="form-group col-md-12  mb-2 border-bottom  ">
+                <h5 class="form-label  font-weight-normal">Need Manager Attention</h5>
+            </div>
+
+            <div class="col-md-2   form-section  shadow-sm  ">
+                <div class="form-row form-section-header ">
+                    <div class=" col-md-12  ">
+                        <h6 class="font-weight-bold">Absence Requests</h6>
+                        <h6 class="font-weight-normal">Waiting Approval</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>10</p>
+                </div>
+            </div>
+
+            <div class="col-md-2  form-section  shadow-sm   ml-4  mr-4 ">
+                <div class="form-row form-section-header ">
+                    <div class=" col-md-12  ">
+                        <h6>Coverage Needed</h6>
+                        <h6>Unfilled</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>10</p>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row content-container  justify-content-center">
+
+            <div class="form-group col-md-12  mb-2 border-bottom   ">
+                <h5 class="form-label  font-weight-normal">My Absences</h5>
+            </div>
+
+
+            <div class="col-md-2   form-section  shadow-sm  mr-4 ">
+                <div class="form-row form-section-header ">
+                    <div class=" col-md-12  ">
+                        <h6 class="font-weight-bold">Absence Totals</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>10</p>
+                </div>
+            </div>
+
+            <div class="col-md-2   form-section  shadow-sm  ">
+                <div class="form-row form-section-header ">
+                    <div class=" col-md-12  ">
+                        <h6 class="font-weight-bold">Approved</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>10</p>
+                </div>
+            </div>
+
+            <div class="col-md-2  form-section  shadow-sm   ml-4  mr-4 ">
+                <div class="form-row form-section-header ">
+                    <div class=" col-md-12  ">
+                        <h6>Denied</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>10</p>
+                </div>
+            </div>
+
+            <div class="col-md-2   form-section  shadow-sm ">
+                <div class="form-row form-section-header ">
+                    <div class=" col-md-12  ">
+                        <h6>Waiting Approval</h6>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>10</p>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="content-container shadow-sm  mt-2">
+
+        <form asp-action="SearchOptions" method="post">
+
+            <div class="form-row ">
+                <div class="form-group col-md-2 ">
+                    <label class="form-label small ">From Date</label>
+                    <div class="input-group mr-2">
+                        <div class="input-group">
+                            <input id="SD" class="form-control  form-control-sm  bg-white" autocomplete="off" placeholder="mm/dd/yyyy" type="text" name="fromdate" asp-for="@Model.Grid.FromDate" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">To Date</label>
+                    <div class="input-group ">
+                        <div class="input-group ">
+                            <input id="ED" class="form-control form-control-sm bg-white" autocomplete="off" placeholder="mm/dd/yyyy" type="text" name="todate" asp-for="@Model.Grid.ToDate" />
+                            <div class="input-group-append">
+                                <span class="input-group-text  form-icon">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+                <div class=" ml-2 pt-4">
+                    <button type="submit" class="btn btn-sm btn-primary  search-btn ">
+                        Search
+                    </button>
+                </div>
+                <div class=" ml-2 pt-4">
+                    <button class="btn btn-sm btn-outline-primary  search-btn " type="submit" name="clear" value="true">
+                        Clear
+                    </button>
+                </div>
+
+
+        </form>
+
+    </div>*@

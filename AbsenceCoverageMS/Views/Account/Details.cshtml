@@ -1,0 +1,143 @@
+﻿
+@model AccountViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="view-header">
+    <h5> My Profile</h5>
+</div>
+
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
+    </div>
+}
+
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
+
+    </div>
+}
+
+
+<input type="hidden" asp-for="@Model.UserId" />
+
+<div class="row justify-content-center">
+    <div class="col-md-8  form-section  shadow-sm   ">
+
+
+        <div class="form-row form-section-header ">
+            <div class=" col-md-12  ">
+                <h6>Profile </h6>
+            </div>
+        </div>
+
+        <div class="form-row  ml-5 mr-5 mb-3 mt-4 text-left">
+            <div class="form-group col-md-12  border-bottom  ">
+                <h6 class="form-label  font-weight-normal  ">Employee Details</h6>
+            </div>
+        </div>
+
+
+
+        <div class="form-row  ml-5   mr-5  ">
+            <div class="form-group col-md-2  ">
+                <label class="form-label small ">Full Name</label>
+            </div>
+            <div class=" col-md-4">
+                <label>@Model.FirstName @Model.LastName</label>
+            </div>
+        </div>
+
+        <div class="form-row  ml-5   mr-5   ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Position Title</label>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@Model.PositionTitle</label>
+            </div>
+        </div>
+
+        <div class="form-row   ml-5   mr-5   ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Email</label>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@Model.Email</label>
+            </div>
+        </div>
+
+        <div class="form-row   ml-5   mr-5   ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Phone</label>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@Model.Phone</label>
+            </div>
+        </div>
+
+        <div class="form-row   ml-5   mr-5    ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Campus</label>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@Model.Campuses.Where(c => c.CampusId == Model.CampusId).ToList().First().Name</label>
+            </div>
+        </div>
+
+
+        <div class="form-row  ml-5 mr-5 mb-3 mt-5 text-left">
+            <div class="form-group col-md-12  border-bottom ">
+                <h6 class="form-label font-weight-normal  ">Account Details</h6>
+            </div>
+        </div>
+
+        <div class="form-row   ml-5   mr-5  ">
+            <div class="form-group col-md-2">
+                <label class="form-label small ">Username</label>
+            </div>
+            <div class="form-group col-md-8">
+                <label>@Model.Username</label>
+            </div>
+        </div>
+
+
+        <div class="form-row justify-content-end form-section-footer bg-white border-0  pr-2 mt-2">
+            <div class="col-md-2 ">
+
+                <a class="btn btn-success btn-block  btn-sm " asp-action="Edit" asp-route-id="@Model.UserId">
+                    <span>
+                        <i class="fas fa-edit text-white"></i>
+                    </span>
+                    Edit
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+

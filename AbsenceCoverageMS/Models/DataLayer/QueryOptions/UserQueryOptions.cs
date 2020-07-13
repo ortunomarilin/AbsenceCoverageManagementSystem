@@ -10,7 +10,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.QueryOptions
     public class UserQueryOptions : QueryOptions<User>
     {
 
-        public void Search(GridBuilder gridBuilder)
+        public void Search(UserGridBuilder gridBuilder)
         {
             if(gridBuilder.CurrentGrid.Search != null)
             {
@@ -19,7 +19,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.QueryOptions
             }
         }
 
-        public void Filter(GridBuilder gridBuilder)
+        public void Filter(UserGridBuilder gridBuilder)
         {
             //Filter by Campus 
             if(gridBuilder.CurrentGrid.Campus != "all")
@@ -29,7 +29,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.QueryOptions
         }
 
 
-        public void Sort(GridBuilder gridBuilder)
+        public void Sort(UserGridBuilder gridBuilder)
         {
             switch (gridBuilder.CurrentGrid.SortBy)
             {

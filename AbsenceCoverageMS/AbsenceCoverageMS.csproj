@@ -7,16 +7,12 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Manager\**" />
-    <Compile Remove="Areas\SubTeacher\**" />
     <Compile Remove="Areas\Teacher\**" />
     <Content Remove="Areas\Manager\**" />
-    <Content Remove="Areas\SubTeacher\**" />
     <Content Remove="Areas\Teacher\**" />
     <EmbeddedResource Remove="Areas\Manager\**" />
-    <EmbeddedResource Remove="Areas\SubTeacher\**" />
     <EmbeddedResource Remove="Areas\Teacher\**" />
     <None Remove="Areas\Manager\**" />
-    <None Remove="Areas\SubTeacher\**" />
     <None Remove="Areas\Teacher\**" />
   </ItemGroup>
 
@@ -89,10 +85,16 @@
     <Compile Remove="Migrations\20200417084724_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200417085605_Initial.cs" />
     <Compile Remove="Migrations\20200417085605_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200417091009_Initial.cs" />
+    <Compile Remove="Migrations\20200417091009_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200417103027_AutoGeneratePK.cs" />
     <Compile Remove="Migrations\20200417103027_AutoGeneratePK.Designer.cs" />
+    <Compile Remove="Migrations\20200417112009_AddDatabaseGeneratedAnnotationForStringPK.cs" />
+    <Compile Remove="Migrations\20200417112009_AddDatabaseGeneratedAnnotationForStringPK.Designer.cs" />
     <Compile Remove="Migrations\20200418073446_ConfiguredAbsentRequestRelationshipsWithFluentAPI.cs" />
     <Compile Remove="Migrations\20200418073446_ConfiguredAbsentRequestRelationshipsWithFluentAPI.Designer.cs" />
+    <Compile Remove="Migrations\20200420085534_SeedCampusHoursOfOperation.cs" />
+    <Compile Remove="Migrations\20200420085534_SeedCampusHoursOfOperation.Designer.cs" />
     <Compile Remove="Migrations\20200429071103_SeedDurationTypeAndStatusType.cs" />
     <Compile Remove="Migrations\20200429071103_SeedDurationTypeAndStatusType.Designer.cs" />
     <Compile Remove="Migrations\20200429071453_SeedDurationTypeAndStatusType.cs" />
@@ -105,6 +107,14 @@
     <Compile Remove="Migrations\20200429090859_AppliedSeedDurationTypeAndStatusTypeDataToDatabase.Designer.cs" />
     <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.cs" />
     <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200429092413_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.cs" />
+    <Compile Remove="Migrations\20200429092413_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200429114802_CorrectedManyToManyConfiguration.cs" />
+    <Compile Remove="Migrations\20200429114802_CorrectedManyToManyConfiguration.Designer.cs" />
+    <Compile Remove="Migrations\20200506131347_AddedPeriodNumberToPeriodEntity.cs" />
+    <Compile Remove="Migrations\20200506131347_AddedPeriodNumberToPeriodEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200507053109_UpdatedCampusSeedData.cs" />
+    <Compile Remove="Migrations\20200507053109_UpdatedCampusSeedData.Designer.cs" />
     <Compile Remove="Migrations\20200507065253_UpdatedUserEntityWithApproverProperty.cs" />
     <Compile Remove="Migrations\20200507065253_UpdatedUserEntityWithApproverProperty.Designer.cs" />
     <Compile Remove="Migrations\20200507065752_20200507065253_UpdatedUserEntityWithApproverProperty.cs" />
@@ -115,6 +125,36 @@
     <Compile Remove="Migrations\20200507070205_UpdatedUserEntityWithApproverProperty.Designer.cs" />
     <Compile Remove="Migrations\20200507071416_UpdatedUserEntityWithApproverProperty.cs" />
     <Compile Remove="Migrations\20200507071416_UpdatedUserEntityWithApproverProperty.Designer.cs" />
+    <Compile Remove="Migrations\20200513210611_AddedStatusTypeAndPeriodPropertiesToSubJobModel.cs" />
+    <Compile Remove="Migrations\20200513210611_AddedStatusTypeAndPeriodPropertiesToSubJobModel.Designer.cs" />
+    <Compile Remove="Migrations\20200513210841_AddedStatusTypeAndToSubJobEntity.cs" />
+    <Compile Remove="Migrations\20200513210841_AddedStatusTypeAndToSubJobEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200513213112_CorrectedSubJobModel.cs" />
+    <Compile Remove="Migrations\20200513213112_CorrectedSubJobModel.Designer.cs" />
+    <Compile Remove="Migrations\20200514183525_DeletedCourseAndAddedCoverageAssignmentEntity.cs" />
+    <Compile Remove="Migrations\20200514183525_DeletedCourseAndAddedCoverageAssignmentEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200514201916_CorrectedAbsenceRequestAndSubJobRelationship.cs" />
+    <Compile Remove="Migrations\20200514201916_CorrectedAbsenceRequestAndSubJobRelationship.Designer.cs" />
+    <Compile Remove="Migrations\20200515064235_ConfigureWithAPIRelationshipAbsenceRequestAndSubJob.cs" />
+    <Compile Remove="Migrations\20200515064235_ConfigureWithAPIRelationshipAbsenceRequestAndSubJob.Designer.cs" />
+    <Compile Remove="Migrations\20200515231508_RedesingEntityModelsForAbsenceAndCoverage.cs" />
+    <Compile Remove="Migrations\20200515231508_RedesingEntityModelsForAbsenceAndCoverage.Designer.cs" />
+    <Compile Remove="Migrations\20200515232231_RedesingERDForDatabase.cs" />
+    <Compile Remove="Migrations\20200515232231_RedesingERDForDatabase.Designer.cs" />
+    <Compile Remove="Migrations\20200516095808_NewERD.cs" />
+    <Compile Remove="Migrations\20200516095808_NewERD.Designer.cs" />
+    <Compile Remove="Migrations\20200517015816_SeedCoverageTypes.cs" />
+    <Compile Remove="Migrations\20200517015816_SeedCoverageTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200517084131_SeedCoverageStatusTypes.cs" />
+    <Compile Remove="Migrations\20200517084131_SeedCoverageStatusTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200517090006_SeedCoverageStatusTypes.cs" />
+    <Compile Remove="Migrations\20200517090006_SeedCoverageStatusTypes.Designer.cs" />
+    <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.cs" />
+    <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200518040030_NewDatabaseERD.cs" />
+    <Compile Remove="Migrations\20200518040030_NewDatabaseERD.Designer.cs" />
+    <Compile Remove="Migrations\20200623085837_RemovedCoverageJobEntity.cs" />
+    <Compile Remove="Migrations\20200623085837_RemovedCoverageJobEntity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -126,7 +166,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\PowerUser\Views\Shared\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,106 @@
+﻿
+@model RoleViewModel
+
+
+@{
+    ViewData["Title"] = "Role";
+    string action = ViewContext.RouteData.Values["action"].ToString();
+}
+
+
+
+<div class="view-header">
+    <h5>@(action == "Edit" ? "Edit" : "Add") Role</h5>
+</div>
+
+<div class="alert alert-danger" asp-validation-summary="All">
+    <h6>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        Please correct the following.
+    </h6>
+</div>
+
+
+
+<form method="post" asp-action="@action">
+
+    <input type="hidden" asp-for="@Model.RoleId" />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8  form-section  shadow-sm   ">
+
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>Role </h6>
+                </div>
+            </div>
+
+            @if (action == "Edit")
+            {
+
+                <div class="form-row ml-5  mr-5 ">
+                    <div class="form-group col-md-2  ">
+                        <label class="form-label small ">Role ID#</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-sm" readonly asp-for="@Model.RoleId" />
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-row  ml-5   mr-5  mt-4 ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Role Name</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.RoleName" />
+                    <span class="text-danger" asp-validation-for="@Model.RoleName"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-row justify-content-end form-section-footer bg-white border-0  pr-2 mt-2">
+                <div class="col-md-2 ">
+                    @if (action == "Add")
+                    {
+                        <button type="submit" class="btn btn-primary btn-block btn-sm">
+                            <span>
+                                <i class="fas fa-check"></i>
+                            </span>
+                            Submit
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success btn-block text-white  btn-sm ">
+                            <span>
+                                <i class="fas fa-edit text-white"></i>
+                            </span>
+                            Update
+                        </button>
+                    }
+                    @*<button type="submit" class="btn btn-success btn-block btn-sm ">
+                    <span>
+                        <i class="fas fa-edit text-white"></i>
+                    </span>
+                    Update
+                </button>*@
+
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-secondary btn-block  btn-sm " asp-action="List">Cancel </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+
+

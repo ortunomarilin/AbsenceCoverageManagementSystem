@@ -1,8 +1,13 @@
-﻿using AbsenceCoverageMS.Models.DTO;
+﻿/// <summary>
+/// This class is responsible for storing all grid values for paging, sorting, and filtering. 
+/// This class will be stored whithin a session state. 
+/// </summary>
+/// 
+
+using AbsenceCoverageMS.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.Grid
 {
@@ -47,20 +52,70 @@ namespace AbsenceCoverageMS.Models.Grid
         }
 
 
-
-        //Filter parameters
-        public string Campus
-        {
-            get => Get(nameof(UserGridDTO.Campus));
-            set => this[nameof(UserGridDTO.Campus)] = value;
-        }
-
+        //Search parameter
         public string Search
         {
-            get => Get(nameof(UserGridDTO.Search));
-            set => this[nameof(UserGridDTO.Search)] = value;
+            get => Get(nameof(FilterGridDTO.Search));
+            set => this[nameof(FilterGridDTO.Search)] = value;
         }
 
+
+        //Date Search parameters
+        public string FromDate
+        {
+            get => Get(nameof(FilterGridDTO.FromDate))?.Replace("-", "/");
+            set => this[nameof(FilterGridDTO.FromDate)] = value?.Replace("/", "-");
+        }
+
+        public string ToDate
+        {
+            get => Get(nameof(FilterGridDTO.ToDate))?.Replace("-", "/");
+            set => this[nameof(FilterGridDTO.ToDate)] = value?.Replace("/", "-");
+        }
+
+
+
+        //Filter Parameters 
+        public string Campus
+        {
+            get => Get(nameof(FilterGridDTO.Campus));
+            set => this[nameof(FilterGridDTO.Campus)] = value;
+        }
+
+
+        public string AbsenceType
+        {
+            get => Get(nameof(FilterGridDTO.AbsenceType));
+            set => this[nameof(FilterGridDTO.AbsenceType)] = value;
+        }
+
+
+        public string Duration
+        {
+            get => Get(nameof(FilterGridDTO.Duration));
+            set => this[nameof(FilterGridDTO.Duration)] = value;
+        }
+
+        public string NeedCoverage
+        {
+            get => Get(nameof(FilterGridDTO.NeedCoverage));
+            set => this[nameof(FilterGridDTO.NeedCoverage)] = value;
+        }
+
+
+        public string AbsenceStatus
+        {
+            get => Get(nameof(FilterGridDTO.AbsenceStatus));
+            set => this[nameof(FilterGridDTO.AbsenceStatus)] = value;
+        }
+
+
+
+        public string SubJobStatus
+        {
+            get => Get(nameof(FilterGridDTO.SubJobStatus));
+            set => this[nameof(FilterGridDTO.SubJobStatus)] = value;
+        }
 
 
         //All getters will call this method to check if there is a value in the key with name given, and reutrn the value if any. 

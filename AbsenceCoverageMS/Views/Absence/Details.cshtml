@@ -112,54 +112,8 @@
                     <label>@Model.GetPeriodsNeedCoverage()</label>
                 </div>
             </div>
-        </div>
-    </div>
 
-
-    <div class="row justify-content-center">
-        <div class="col-md-11  form-section shadow-sm ">
-
-            <div class="form-row form-section-header ">
-                <div class=" col-md-12  ">
-                    <h6>Status Details </h6>
-                </div>
-            </div>
-
-
-            <div class="form-row  ml-5  mr-5 ">
-                <div class="col-md-2  text-right">
-                    <label class="form-label">Status</label>
-                </div>
-                <div class=" col-md-3">
-                    <label>@Model.AbsenceRequest.StatusType.Name</label>
-                </div>
-            </div>
-
-
-            <div class="form-row  ml-5  mr-5 ">
-                <div class="col-md-2  text-right  ">
-                    <label class="form-label">Date Processed</label>
-                </div>
-                <div class=" col-md-3">
-                    <label>@(Model.AbsenceRequest.DateProcessed.ToShortDateString() == "1/1/0001" ? "Waiting for Approval" : Model.AbsenceRequest.DateProcessed.ToShortDateString())</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div class="row justify-content-center">
-        <div class="col-md-11  form-section shadow-sm ">
-
-            <div class="form-row form-section-header ">
-                <div class=" col-md-12  ">
-                    <h6>Submission Details </h6>
-                </div>
-            </div>
-
-
-            <div class="form-row  ml-5  mr-5 ">
+            <div class="form-row  ml-5  mr-5 mt-2 border-top">
                 <div class="col-md-2   text-md-right  ">
                     <label class="form-label">Submitted By</label>
                 </div>
@@ -182,27 +136,75 @@
     </div>
 
 
+    <div class="row justify-content-center">
+        <div class="col-md-11  form-section shadow-sm ">
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>Status Details </h6>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right">
+                    <label class="form-label">Status</label>
+                </div>
+                <div class=" col-md-3">
+                    <label>@Model.AbsenceRequest.AbsenceStatus.Name</label>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right  ">
+                    <label class="form-label">Date Processed</label>
+                </div>
+                <div class=" col-md-3">
+                    <label>@(Model.AbsenceRequest.DateProcessed.ToShortDateString() == "1/1/0001" ? "Waiting for Approval" : Model.AbsenceRequest.DateProcessed.ToShortDateString())</label>
+                </div>
+            </div>
+
+            <div class="form-row  ml-5  mr-5 ">
+                <div class="col-md-2  text-right  ">
+                    <label class="form-label">Approver Remarks</label>
+                </div>
+                <div class=" col-md-10">
+                    <label>@Model.AbsenceRequest.StatusRemarks</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
     <div class="form-row justify-content-center ">
         <div class="col-md-11   ">
 
             <div class="form-row ">
-                <div class="col-md-2 ">
-                    <a class="btn btn-warning btn-block text-white  btn-sm" asp-action="Edit" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
-                        <span>
-                            <i class="fas fa-edit text-white"></i>
-                        </span>
-                        Edit
-                    </a>
-                </div>
-                <div class="col-md-2  ">
-                    <button type="submit" class="btn btn-danger btn-block btn-sm ">
-                        <span>
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
-                        Delete
-                    </button>
-                </div>
-                <div class="col-md-8  text-right " >
+
+                @if (Model.AbsenceRequest.AbsenceStatus.Name == "Submitted")
+                {
+                    <div class="col-md-2 ">
+                        <a class="btn btn-success btn-block text-white  btn-sm" asp-action="Edit" asp-route-id="@Model.AbsenceRequest.AbsenceRequestId">
+                            <span>
+                                <i class="fas fa-edit text-white"></i>
+                            </span>
+                            Edit
+                        </a>
+                    </div>
+                    <div class="col-md-2  ">
+                        <button type="submit" class="btn btn-danger btn-block btn-sm ">
+                            <span>
+                                <i class="fas fa-trash-alt"></i>
+                            </span>
+                            Delete
+                        </button>
+                    </div>
+                }
+
+                <div class="col  text-right ">
                     <a class="btn btn-link " asp-action="List">Return to Absent History </a>
                 </div>
             </div>

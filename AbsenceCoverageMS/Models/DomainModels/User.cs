@@ -33,18 +33,13 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
 
 
-        //Has Coverage Period
-        public CoveragePeriod CoveragePeriod { get; set; } //Nav
-
-
-        //Teaches Courses 
-        public ICollection<Course> Courses { get; set; }
-
 
         //Submitted Absence Requests
         public ICollection<AbsenceRequest> AbsenceRequests { get; set; }
 
-        //Assigned SubAssignments
+
+
+        //Assigned SubJob
         public ICollection<SubJob> SubJobs { get; set; }
 
 

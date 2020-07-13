@@ -1,10 +1,16 @@
-﻿using System;
+﻿/// <summary>
+/// This class is responsible for binding Paging and Sorting values to Action Method parameters for Grid creation. 
+/// </summary>
+/// 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DTO
 {
+
     public class GridDTO
     {
 

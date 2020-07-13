@@ -5,15 +5,16 @@
     string action = ViewContext.RouteData.Values["action"].ToString();
 }
 
-<!--View used for Add, Edit, and Delete-->
+<!--View used for Add and Edit-->
 
 <div class="view-header">
-    <h5>@(action == "Edit" ? "Edit" : "") Absence Request   </h5>
+    <h5>@(action == "Edit" ? "Edit" : "Add") Absence Request   </h5>
 </div>
 
 
 
-<div class="alert alert-danger"  asp-validation-summary="All">
+<div class="alert alert-danger  alert-dismissible " asp-validation-summary="All">
+    <button class="close" data-dismiss="alert">&times;</button>
     <h6>
         <span>
             <i class="fas fa-exclamation-triangle"></i>
@@ -31,7 +32,7 @@
     <input type="hidden" asp-for="@Model.AbsenceRequest.AbsenceRequestId" />
     <input type="hidden" asp-for="@Model.AbsenceRequest.UserId" />
     <input type="hidden" asp-for="@Model.AbsenceRequest.DateSubmitted" />
-    <input type="hidden" asp-for="@Model.AbsenceRequest.StatusTypeId" />
+    <input type="hidden" asp-for="@Model.AbsenceRequest.AbsenceStatusId" />
 
 
     <div class="row justify-content-center  ">
@@ -213,7 +214,7 @@
                     }
                     else
                     {
-                        <button type="submit" class="btn btn-warning btn-block text-white  btn-sm ">
+                        <button type="submit" class="btn btn-success btn-block text-white  btn-sm ">
                             <span>
                                 <i class="fas fa-edit text-white"></i>
                             </span>

@@ -37,7 +37,7 @@ namespace AbsenceCoverageMS
             services.AddMemoryCache();
             services.AddSession();
 
-            services.AddControllersWithViews().AddNewtonsoftJson(); ; 
+            services.AddControllersWithViews().AddNewtonsoftJson(); 
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
@@ -81,29 +81,18 @@ namespace AbsenceCoverageMS
                     areaName: "Admin",
                     pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-                // route for Admin area
+
+                // route for Power User area
                 endpoints.MapAreaControllerRoute(
                     name: "poweruser",
                     areaName: "PowerUser",
                     pattern: "PowerUser/{controller=Home}/{action=Index}/{id?}");
 
-
-
-
-
-                // route for date range, filtering, and sorting 
-                endpoints.MapControllerRoute(
-                    name: "",
-                    pattern: "{controller}/{action}/fromdate/{fromdate}/todate/{todate}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
-
-
-
-                // route for filtering and sorting 
-                endpoints.MapControllerRoute(
-                    name: "",
-                    pattern: "{controller}/{action}/filterby/{absencetype}/{duration}/{status}/sortby/{sortby}-{sortdirection}/page-{pagenumber}/pagesize-{pagesize}");
-
-
+                // route for SubTeacher area
+                endpoints.MapAreaControllerRoute(
+                    name: "subteacher",
+                    areaName: "SubTeacher",
+                    pattern: "SubTeacher/{controller=Home}/{action=Index}/{id?}");
 
 
 
