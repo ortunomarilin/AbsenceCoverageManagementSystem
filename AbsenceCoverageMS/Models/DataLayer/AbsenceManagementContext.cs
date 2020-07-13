@@ -21,7 +21,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
         public DbSet<AbsenceRequest> AbsenceRequests { get; set; }
         public DbSet<AbsenceType> AbsenceTypes { get; set; }
         public DbSet<DurationType> DurationTypes { get; set; }
-        public DbSet<AbsenceStatusType> AbsenceStatusTypes { get; set; }
+        public DbSet<AbsenceStatus> AbsenceStatusTypes { get; set; }
         public DbSet<Campus> Campuses { get; set; }
         public DbSet<Period> Periods { get; set; }
         public DbSet<SubJob> SubJobs { get; set; }
@@ -71,7 +71,7 @@ namespace AbsenceCoverageMS.Models.DataLayer
 
             modelBuilder.ApplyConfiguration(new SeedAbsenceTypes());
             modelBuilder.ApplyConfiguration(new SeedDurationTypes());
-            modelBuilder.ApplyConfiguration(new SeedAbsenceStatusTypes());
+            modelBuilder.ApplyConfiguration(new SeedAbsenceStatuses());
             modelBuilder.ApplyConfiguration(new SeedSubJobStatuses());
             modelBuilder.ApplyConfiguration(new SeedPeriods());
             modelBuilder.ApplyConfiguration(new SeedCampuses());

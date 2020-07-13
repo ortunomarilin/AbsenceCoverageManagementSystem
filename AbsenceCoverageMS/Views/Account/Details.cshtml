@@ -1,16 +1,43 @@
-﻿@model UserEditViewModel
-
+﻿
+@model AccountViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
+
 <div class="view-header">
-    <h5> User Details</h5>
+    <h5> My Profile</h5>
 </div>
 
+@if (TempData["SucessMessage"] != null)
+{
+    <div class="alert alert-success  alert-dismissible ">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6 class="m-0">
+            <span>
+                <i class="fas fa-check-square"></i>
+            </span>
+            Success
+        </h6>
+        <p class="small m-0">@TempData["SucessMessage"]</p>
+    </div>
+}
 
+@if (TempData["FailureMessage"] != null)
+{
+    <div class="alert alert-danger  alert-dismissible">
+        <button class="close" data-dismiss="alert">&times;</button>
+        <h6>
+            <span>
+                <i class="fas fa-exclamation-triangle"></i>
+            </span>
+            Failure
+        </h6>
+        <p class="small m-0">@TempData["FailureMessage"]</p>
 
+    </div>
+}
 
 
 <input type="hidden" asp-for="@Model.UserId" />
@@ -21,7 +48,7 @@
 
         <div class="form-row form-section-header ">
             <div class=" col-md-12  ">
-                <h6>User Details </h6>
+                <h6>Profile </h6>
             </div>
         </div>
 
@@ -111,15 +138,6 @@
 
     </div>
 </div>
-
-<div class="row">
-    <div class="col-md-11 text-right ">
-        <a class="btn btn-link" asp-action="List">Return to Users </a>
-    </div>
-</div>
-
-
-
 
 
 

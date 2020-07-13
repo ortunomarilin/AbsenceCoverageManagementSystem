@@ -61,7 +61,7 @@ namespace AbsenceCoverageMS.Models
 
             if (gridBuilder.CurrentGrid.AbsenceStatus != "all")
             {
-                Where = ar => ar.AbsenceStatusTypeId == gridBuilder.CurrentGrid.AbsenceStatus;
+                Where = ar => ar.AbsenceStatusId == gridBuilder.CurrentGrid.AbsenceStatus;
             }
 
 
@@ -85,8 +85,8 @@ namespace AbsenceCoverageMS.Models
                 case nameof(AbsenceRequest.DurationType):
                     OrderBy = ar => ar.DurationType.Name;
                     break;
-                case nameof(AbsenceRequest.AbsenceStatusType):
-                    OrderBy = ar => ar.AbsenceStatusType.Name;
+                case nameof(AbsenceRequest.AbsenceStatus):
+                    OrderBy = ar => ar.AbsenceStatus.Name;
                     break;
                 default:
                     OrderBy = ar => ar.StartDate;

@@ -9,6 +9,7 @@ namespace AbsenceCoverageMS.Models.DomainModels
 {
     public class AbsenceType
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string AbsenceTypeId { get; set; }
 
 

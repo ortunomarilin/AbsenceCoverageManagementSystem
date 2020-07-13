@@ -44,7 +44,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             var options = new CoverageQueryOptions
             {
                 Include = "DurationType, AbsenceRequestPeriods, AbsenceStatusType, User, SubJob, SubJob.SubJobStatus",
-                Where = ar => ar.User.CampusId == user.CampusId  && ar.AbsenceStatusType.Name == "Approved" && ar.NeedCoverage == true,
+                Where = ar => ar.User.CampusId == user.CampusId  && ar.AbsenceStatus.Name == "Approved" && ar.NeedCoverage == true,
                 OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
             options.Search(gridBuilder);

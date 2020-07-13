@@ -37,7 +37,7 @@ namespace AbsenceCoverageMS
             services.AddMemoryCache();
             services.AddSession();
 
-            services.AddControllersWithViews().AddNewtonsoftJson(); ; 
+            services.AddControllersWithViews().AddNewtonsoftJson(); 
 
             services.AddRazorPages().AddRazorRuntimeCompilation();
 

@@ -1,0 +1,97 @@
+﻿
+@model AbsenceTypeViewModel
+
+@{
+    ViewData["Title"] = "Add";
+    string action = ViewContext.RouteData.Values["action"].ToString();
+}
+
+
+<!--View used for Add, Edit, and Delete-->
+
+<div class="view-header">
+    <h5>@(action == "Edit" ? "Edit" : "Add") Absence Type   </h5>
+</div>
+
+<div class="alert alert-danger" asp-validation-summary="All">
+    <h6>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        Please correct the following.
+    </h6>
+</div>
+
+<form method="post" asp-action="@action">
+
+    <input type="hidden" asp-for="@Model.AbsenceTypeId" />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8  form-section  shadow-sm   ">
+
+
+            <div class="form-row form-section-header  ">
+                <div class=" col-md-12  ">
+                    <h6>Absence Type </h6>
+                </div>
+            </div>
+
+            @if (action == "Edit")
+            {
+
+                <div class="form-row ml-5  mr-5 ">
+                    <div class="form-group col-md-2  ">
+                        <label class="form-label small ">Absence Type #</label>
+                    </div>
+                    <div class="col-md-8">
+                        <input class="form-control form-control-sm" readonly asp-for="@Model.AbsenceTypeId" />
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-row  ml-5   mr-5  mt-4">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Name </label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.Name" />
+                    <span class="text-danger" asp-validation-for="@Model.Name"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-row justify-content-end form-section-footer bg-white border-0  pr-2 mt-2">
+                <div class="col-md-2 ">
+                    @if (action == "Add")
+                    {
+                        <button type="submit" class="btn btn-primary btn-block btn-sm">
+                            <span>
+                                <i class="fas fa-check"></i>
+                            </span>
+                            Submit
+                        </button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="btn btn-success btn-block text-white  btn-sm ">
+                            <span>
+                                <i class="fas fa-edit text-white"></i>
+                            </span>
+                            Update
+                        </button>
+                    }
+
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-secondary btn-block  btn-sm " asp-action="List">Cancel </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</form>
+

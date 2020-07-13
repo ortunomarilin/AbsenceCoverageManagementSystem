@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Models.DomainModels
 {
-    public class AbsenceStatusType
+    public class AbsenceStatus
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string AbsenceStatusTypeId { get; set; }
+        public string AbsenceStatusId { get; set; }
 
         public string Name { get; set; }
 

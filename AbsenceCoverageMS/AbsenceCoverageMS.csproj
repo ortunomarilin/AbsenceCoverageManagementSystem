@@ -85,10 +85,16 @@
     <Compile Remove="Migrations\20200417084724_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200417085605_Initial.cs" />
     <Compile Remove="Migrations\20200417085605_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200417091009_Initial.cs" />
+    <Compile Remove="Migrations\20200417091009_Initial.Designer.cs" />
     <Compile Remove="Migrations\20200417103027_AutoGeneratePK.cs" />
     <Compile Remove="Migrations\20200417103027_AutoGeneratePK.Designer.cs" />
+    <Compile Remove="Migrations\20200417112009_AddDatabaseGeneratedAnnotationForStringPK.cs" />
+    <Compile Remove="Migrations\20200417112009_AddDatabaseGeneratedAnnotationForStringPK.Designer.cs" />
     <Compile Remove="Migrations\20200418073446_ConfiguredAbsentRequestRelationshipsWithFluentAPI.cs" />
     <Compile Remove="Migrations\20200418073446_ConfiguredAbsentRequestRelationshipsWithFluentAPI.Designer.cs" />
+    <Compile Remove="Migrations\20200420085534_SeedCampusHoursOfOperation.cs" />
+    <Compile Remove="Migrations\20200420085534_SeedCampusHoursOfOperation.Designer.cs" />
     <Compile Remove="Migrations\20200429071103_SeedDurationTypeAndStatusType.cs" />
     <Compile Remove="Migrations\20200429071103_SeedDurationTypeAndStatusType.Designer.cs" />
     <Compile Remove="Migrations\20200429071453_SeedDurationTypeAndStatusType.cs" />
@@ -101,6 +107,14 @@
     <Compile Remove="Migrations\20200429090859_AppliedSeedDurationTypeAndStatusTypeDataToDatabase.Designer.cs" />
     <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.cs" />
     <Compile Remove="Migrations\20200429091320_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200429092413_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.cs" />
+    <Compile Remove="Migrations\20200429092413_SeedDurationAndStatusTypesAndUpdatedPeriodModelEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200429114802_CorrectedManyToManyConfiguration.cs" />
+    <Compile Remove="Migrations\20200429114802_CorrectedManyToManyConfiguration.Designer.cs" />
+    <Compile Remove="Migrations\20200506131347_AddedPeriodNumberToPeriodEntity.cs" />
+    <Compile Remove="Migrations\20200506131347_AddedPeriodNumberToPeriodEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200507053109_UpdatedCampusSeedData.cs" />
+    <Compile Remove="Migrations\20200507053109_UpdatedCampusSeedData.Designer.cs" />
     <Compile Remove="Migrations\20200507065253_UpdatedUserEntityWithApproverProperty.cs" />
     <Compile Remove="Migrations\20200507065253_UpdatedUserEntityWithApproverProperty.Designer.cs" />
     <Compile Remove="Migrations\20200507065752_20200507065253_UpdatedUserEntityWithApproverProperty.cs" />
@@ -139,6 +153,8 @@
     <Compile Remove="Migrations\20200518032227_AddedNotificationAndNotificationUserEntities.Designer.cs" />
     <Compile Remove="Migrations\20200518040030_NewDatabaseERD.cs" />
     <Compile Remove="Migrations\20200518040030_NewDatabaseERD.Designer.cs" />
+    <Compile Remove="Migrations\20200623085837_RemovedCoverageJobEntity.cs" />
+    <Compile Remove="Migrations\20200623085837_RemovedCoverageJobEntity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

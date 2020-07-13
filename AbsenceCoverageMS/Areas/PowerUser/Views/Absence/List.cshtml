@@ -237,8 +237,8 @@
                 <th>
                     Status
                     <a asp-action="List"
-                       asp-route-sortby=@nameof(AbsenceRequest.AbsenceStatusType)
-                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.AbsenceStatusType))
+                       asp-route-sortby=@nameof(AbsenceRequest.AbsenceStatus)
+                       asp-route-sortdirection=@Model.Grid.GetNewSortDirection(nameof(AbsenceRequest.AbsenceStatus))
                        asp-route-search="@Model.Grid.Search"
                        asp-route-fromdate="@Model.Grid.FromDate"
                        asp-route-todate="@Model.Grid.ToDate"
@@ -246,7 +246,7 @@
                        asp-route-duration="@Model.Grid.Duration"
                        asp-route-needcoverage="@Model.Grid.NeedCoverage"
                        asp-route-absencestatus="@Model.Grid.AbsenceStatus"
-                       class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.AbsenceStatusType) ? "text-primary" : "text-secondary")">
+                       class=" @(Model.Grid.SortBy == nameof(AbsenceRequest.AbsenceStatus) ? "text-primary" : "text-secondary")">
                         <span>
                             <i class="fas fa-sort-down"></i>
                         </span>
@@ -285,14 +285,14 @@
                 <td>@ar.DurationType.Name</td>
                 <td>@ar.StartTime.Value.ToShortTimeString() - @ar.EndTime.Value.ToShortTimeString()</td>
                 <td>@(ar.NeedCoverage == true ? "Yes" : "No")</td>
-                <td>@ar.AbsenceStatusType.Name</td>
+                <td>@ar.AbsenceStatus.Name</td>
 
-                @if (ar.AbsenceStatusType.Name == "Canceled" || ar.AbsenceStatusType.Name == "Denied")
+                @if (ar.AbsenceStatus.Name == "Canceled" || ar.AbsenceStatus.Name == "Denied")
                 {
                     <td></td>
                     <td></td>
                 }
-                else if (ar.AbsenceStatusType.Name == "Submitted")
+                else if (ar.AbsenceStatus.Name == "Submitted")
                 {
                     <td>
                         <partial name="_ApproveModalPartial" model="@ar" />

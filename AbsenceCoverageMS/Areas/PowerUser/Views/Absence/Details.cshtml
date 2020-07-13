@@ -154,7 +154,7 @@
                     <label class="form-label">Status</label>
                 </div>
                 <div class=" col-md-3  pl-3  ">
-                    <label>@Model.AbsenceRequest.AbsenceStatusType.Name</label>
+                    <label>@Model.AbsenceRequest.AbsenceStatus.Name</label>
                 </div>
             </div>
 
@@ -164,7 +164,7 @@
                     <label class="form-label">Date Processed</label>
                 </div>
                 <div class=" col-md-3   pl-3  ">
-                    <label>@(Model.AbsenceRequest.AbsenceStatusType.Name == "Submitted" ? "N/A" : Model.AbsenceRequest.DateProcessed.ToShortDateString())</label>
+                    <label>@(Model.AbsenceRequest.AbsenceStatus.Name == "Submitted" ? "N/A" : Model.AbsenceRequest.DateProcessed.ToShortDateString())</label>
                 </div>
             </div>
 
@@ -187,7 +187,7 @@
 
             <div class="form-row">   
 
-                @if (Model.AbsenceRequest.AbsenceStatusType.Name == "Submitted")
+                @if (Model.AbsenceRequest.AbsenceStatus.Name == "Submitted")
                 {
                     <div class="col-md-2 ">
                         <partial name="_ApproveModalPartial" model="@Model.AbsenceRequest"  />
@@ -197,7 +197,7 @@
                         <partial name="_DenyModalPartial" model="@Model.AbsenceRequest" />
                     </div>
                 }
-                else if (Model.AbsenceRequest.AbsenceStatusType.Name != "Canceled")
+                else if (Model.AbsenceRequest.AbsenceStatus.Name != "Canceled")
                 {     
                     <div class="col-md-2 ">
                         <partial name="_CancelModalPartial" model="@Model.AbsenceRequest" /> 

@@ -41,7 +41,7 @@ namespace AbsenceCoverageMS.Controllers
             //Set all of the Query options based on route parameters. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
             var options = new AbsenceQueryOptions
             {
-                Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatus, User, AbsenceRequestPeriods",
                 Where = ar => ar.UserId == user.Id,
                 OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
@@ -109,7 +109,7 @@ namespace AbsenceCoverageMS.Controllers
                     {
                         UserId = user.Id,
                         DateSubmitted = DateTime.Now,
-                        AbsenceStatusTypeId = data.AbsenceStatusTypes.List().Where(s => s.Name == "Submitted").FirstOrDefault().AbsenceStatusTypeId
+                        AbsenceStatusId = data.AbsenceStatusTypes.List().Where(s => s.Name == "Submitted").FirstOrDefault().AbsenceStatusId
                     },
                     AbsenceTypes = data.AbsenceTypes.List(),
                     DurationTypes = data.DurationTypes.List(),
@@ -271,7 +271,7 @@ namespace AbsenceCoverageMS.Controllers
             AbsenceRequest absenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
             {
                 Where = ar => ar.AbsenceRequestId == id,
-                Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatus, User, AbsenceRequestPeriods",
             });
             return absenceRequest;
         }

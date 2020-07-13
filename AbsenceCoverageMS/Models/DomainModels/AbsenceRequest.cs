@@ -79,8 +79,8 @@ namespace AbsenceCoverageMS.Models.DomainModels
 
   
         //Status 
-        public string AbsenceStatusTypeId { get; set; }
-        public AbsenceStatusType AbsenceStatusType { get; set; }
+        public string AbsenceStatusId { get; set; }
+        public AbsenceStatus AbsenceStatus { get; set; }
 
 
         public string StatusRemarks { get; set; }

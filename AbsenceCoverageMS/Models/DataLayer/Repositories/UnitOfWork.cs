@@ -79,14 +79,14 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         }
 
 
-        private Repository<AbsenceStatusType> AbsenceStatusTypeRepo;
-        public Repository<AbsenceStatusType> AbsenceStatusTypes
+        private Repository<AbsenceStatus> AbsenceStatusTypeRepo;
+        public Repository<AbsenceStatus> AbsenceStatusTypes
         {
             get
             {
                 if (AbsenceStatusTypeRepo == null)
                 {
-                    AbsenceStatusTypeRepo = new Repository<AbsenceStatusType>(context);
+                    AbsenceStatusTypeRepo = new Repository<AbsenceStatus>(context);
                 }
                 return AbsenceStatusTypeRepo;
             }

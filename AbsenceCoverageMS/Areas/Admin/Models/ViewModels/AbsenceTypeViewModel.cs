@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace AbsenceCoverageMS.Areas.Admin.Models.ViewModels
 {
-    public class RoleEditViewModel
+    public class AbsenceTypeViewModel
     {
-        public string RoleId { get; set; }
+        public string AbsenceTypeId { get; set; }
 
-        [Required(ErrorMessage = "The Role name is required.")]
-        public string RoleName { get; set; }
+
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
     }
 }

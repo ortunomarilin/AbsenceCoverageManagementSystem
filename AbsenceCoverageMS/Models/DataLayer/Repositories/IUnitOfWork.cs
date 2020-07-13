@@ -14,7 +14,7 @@ namespace AbsenceCoverageMS.Models.DataLayer.Repositories
         Repository<Campus> Campuses { get; }
         Repository<Period> Periods { get; }
         Repository<SubJob> SubJobs { get; }
-        Repository<AbsenceStatusType> AbsenceStatusTypes { get; }
+        Repository<AbsenceStatus> AbsenceStatusTypes { get; }
         Repository<SubJobStatus> SubJobStatuses { get; }
 
 

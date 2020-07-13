@@ -1,0 +1,145 @@
+﻿
+@model AccountViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="view-header">
+    <h5> Edit My Profile</h5>
+</div>
+
+
+<div class="alert alert-danger alert-dismissible " asp-validation-summary="All">
+    <button class="close" data-dismiss="alert">&times;</button>
+    <h6>
+        <span>
+            <i class="fas fa-exclamation-triangle"></i>
+        </span>
+        Please correct the following.
+    </h6>
+</div>
+
+
+<form method="post" asp-action="Edit">
+
+    <input type="hidden" asp-for="@Model.UserId" />
+
+    <div class="row justify-content-center">
+        <div class="col-md-8  form-section  shadow-sm   ">
+
+
+            <div class="form-row form-section-header ">
+                <div class=" col-md-12  ">
+                    <h6>My Profile </h6>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-row  ml-5 mr-5 mb-3 mt-4 text-left">
+                <div class="form-group col-md-12  border-bottom  ">
+                    <h6 class="form-label  font-weight-normal  ">Employee Details</h6>
+                </div>
+            </div>
+
+
+            <div class="form-row  ml-5   mr-5  ">
+                <div class="form-group col-md-2  ">
+                    <label class="form-label small ">Full Name</label>
+                </div>
+                <div class="form-group col-md-4">
+                    <input class="form-control form-control-sm " placeholder="First Name" asp-for="@Model.FirstName" />
+                    <span class="text-danger" asp-validation-for="@Model.FirstName"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <input class="form-control form-control-sm " placeholder="Last Name" asp-for="@Model.LastName" />
+                    <span class="text-danger" asp-validation-for="@Model.LastName"></span>
+                </div>
+            </div>
+
+            <div class="form-row  ml-5   mr-5   ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Position Title</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.PositionTitle" />
+                    <span class="text-danger" asp-validation-for="@Model.PositionTitle"></span>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5   ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Email</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.Email" />
+                    <span class="text-danger" asp-validation-for="@Model.Email"></span>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5   ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Phone</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " placeholder="(xxx)xxx-xxxx" asp-for="@Model.Phone" />
+                    <span class="text-danger" asp-validation-for="@Model.Phone"></span>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5    ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Campus</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <select class="form-control form-control-sm" asp-for="@Model.CampusId"
+                            asp-items="@(new SelectList(Model.Campuses,
+                                                "CampusId", "Name", Model.CampusId))">
+                        <option value="">Select One</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="@Model.CampusId"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-row  ml-5 mr-5 mb-3 mt-5 text-left">
+                <div class="form-group col-md-12  border-bottom ">
+                    <h6 class="form-label font-weight-normal  ">Account Details</h6>
+                </div>
+            </div>
+
+            <div class="form-row   ml-5   mr-5  ">
+                <div class="form-group col-md-2">
+                    <label class="form-label small ">Username</label>
+                </div>
+                <div class="form-group col-md-8">
+                    <input class="form-control form-control-sm " asp-for="@Model.Username" />
+                    <span class="text-danger" asp-validation-for="@Model.Username"></span>
+                </div>
+            </div>
+
+
+            <div class="form-row justify-content-end form-section-footer bg-white border-0  pr-2 mt-2">
+                <div class="col-md-2 ">
+                    <button type="submit" class="btn btn-success btn-block btn-sm ">
+                        <span>
+                            <i class="fas fa-edit text-white"></i>
+                        </span>
+                        Update
+                    </button>
+
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-secondary btn-block  btn-sm " asp-action="Details">Cancel </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+</form>
+

@@ -1,18 +1,14 @@
 ﻿
-@model IEnumerable<IdentityRole>
+@model AbsenceTypeListViewModel
 
 @{
-    ViewData["Title"] = "Roles";
+    ViewData["Title"] = "List";
 }
 
 
-
-
 <div class="view-header mb-2 ">
-    <h3>Roles</h3>
+    <h3>Absence Types</h3>
 </div>
-
-
 
 
 @if (TempData["SucessMessage"] != null)
@@ -44,14 +40,15 @@
     </div>
 }
 
+
 <div class="content-container shadow-sm  mt-2">
 
     <form asp-action="Search" method="post">
 
         <div class="form-row ">
             <div class="form-group col-md-5 ">
-                <label class="form-label small ">Search By Role Name</label>
-                <input class="form-control  form-control-sm  bg-white" placeholder="Search by Role Name" name="SearchTerm"  />
+                <label class="form-label small ">Search By Name</label>
+                <input class="form-control  form-control-sm  bg-white" placeholder="Search by Name" name="SearchTerm" />
             </div>
             <div class="col-md-2  pt-4 ">
                 <button type="submit" class="btn btn-sm btn-primary ">
@@ -73,20 +70,18 @@
         <a class="btn btn-info  btn-sm " asp-action="Add">
             <span>
                 <i class="fas fa-plus"></i>
-                New Role
+                New Absence Type
             </span>
         </a>
     </div>
-
 </div>
-
 
 
 <div class="overflow-auto table-container">
     <table class="table table-sm shadow-sm  mb-0">
         <thead>
             <tr>
-                <th>Role</th>
+                <th>Absence Type</th>
                 <th class="  text-center" colspan="3">
                     Action
                 </th>
@@ -94,38 +89,36 @@
         </thead>
         <tbody>
 
-            @foreach (var role in Model)
+            @foreach (var absenceType in Model.AbsenceTypes)
             {
-            <tr>
-                <td class="col-md-1" >@role.Name</td>
+                <tr>
+                    <td class="col-md-1">@absenceType.Name</td>
 
-                <td class="  text-right">
-                    <a class="btn btn-success btn-sm" title="Edit" asp-action="Edit" asp-route-id="@role.Id">
-                        <span>
-                            <i class="fas fa-edit text-white"></i>
-                        </span>
-                    </a>
-                </td>
-
-                <td class="text-center">
-                    <a class="btn btn-secondary btn-sm" title="Role Users" asp-action="ManageUsers" asp-route-id="@role.Id">
-                        <span>
-                            <i class="fas fa-user-alt"></i>
-                        </span>
-                    </a>
-                </td>
-                <td class="text-left">
-                    <form method="post" title="Delete" asp-action="Delete" asp-route-id="@role.Id">
-                        <button type="submit" class="btn btn-danger btn-sm">
+                    <td class="  text-right">
+                        <a class="btn btn-success btn-sm" title="Edit" asp-action="Edit" asp-route-id="@absenceType.AbsenceTypeId">
                             <span>
-                                <i class="fas fa-trash-alt"></i>
+                                <i class="fas fa-edit text-white"></i>
                             </span>
-                        </button>
-                    </form>
-                </td>
+                        </a>
+                    </td>
 
-            </tr>
+                    <td class="text-left">
+                        <form method="post" title="Delete" asp-action="Delete" asp-route-id="@absenceType.AbsenceTypeId">
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <span>
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
             }
         </tbody>
     </table>
 </div>
+
+
+
+
+

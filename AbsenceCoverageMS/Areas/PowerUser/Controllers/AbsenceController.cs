@@ -136,7 +136,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
 
 
             //Update absence with new changes. 
-            absenceRequest.AbsenceStatusType = data.AbsenceStatusTypes.List().Where(st => st.Name == "Approved").FirstOrDefault();
+            absenceRequest.AbsenceStatus = data.AbsenceStatusTypes.List().Where(st => st.Name == "Approved").FirstOrDefault();
             absenceRequest.DateProcessed = DateTime.Now;
             absenceRequest.StatusRemarks = model.StatusRemarks;
             data.AbsenceRequests.Update(absenceRequest);
@@ -177,7 +177,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             {
 
                 //Update absence with new status of "Denied"
-                absenceRequest.AbsenceStatusType = data.AbsenceStatusTypes.List().Where(st => st.Name == "Denied").FirstOrDefault();
+                absenceRequest.AbsenceStatus = data.AbsenceStatusTypes.List().Where(st => st.Name == "Denied").FirstOrDefault();
                 absenceRequest.DateProcessed = DateTime.Now;
                 absenceRequest.StatusRemarks = model.StatusRemarks;
                 data.AbsenceRequests.Update(absenceRequest);

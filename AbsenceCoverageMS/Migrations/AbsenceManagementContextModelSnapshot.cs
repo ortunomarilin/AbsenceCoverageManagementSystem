@@ -25,7 +25,7 @@ namespace AbsenceCoverageMS.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AbsenceStatusTypeId")
+                    b.Property<string>("AbsenceStatusId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("AbsenceTypeId")
@@ -71,7 +71,7 @@ namespace AbsenceCoverageMS.Migrations
 
                     b.HasKey("AbsenceRequestId");
 
-                    b.HasIndex("AbsenceStatusTypeId");
+                    b.HasIndex("AbsenceStatusId");
 
                     b.HasIndex("AbsenceTypeId");
 
@@ -98,38 +98,38 @@ namespace AbsenceCoverageMS.Migrations
                     b.ToTable("AbsenceRequestPeriod");
                 });
 
-            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.AbsenceStatusType", b =>
+            modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.AbsenceStatus", b =>
                 {
-                    b.Property<string>("AbsenceStatusTypeId")
+                    b.Property<string>("AbsenceStatusId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("AbsenceStatusTypeId");
+                    b.HasKey("AbsenceStatusId");
 
                     b.ToTable("AbsenceStatusTypes");
 
                     b.HasData(
                         new
                         {
-                            AbsenceStatusTypeId = "1",
+                            AbsenceStatusId = "1",
                             Name = "Submitted"
                         },
                         new
                         {
-                            AbsenceStatusTypeId = "2",
+                            AbsenceStatusId = "2",
                             Name = "Approved"
                         },
                         new
                         {
-                            AbsenceStatusTypeId = "3",
+                            AbsenceStatusId = "3",
                             Name = "Denied"
                         },
                         new
                         {
-                            AbsenceStatusTypeId = "4",
+                            AbsenceStatusId = "4",
                             Name = "Canceled"
                         });
                 });
@@ -668,9 +668,9 @@ namespace AbsenceCoverageMS.Migrations
 
             modelBuilder.Entity("AbsenceCoverageMS.Models.DomainModels.AbsenceRequest", b =>
                 {
-                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceStatusType", "AbsenceStatusType")
+                    b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceStatus", "AbsenceStatus")
                         .WithMany("AbsenceRequests")
-                        .HasForeignKey("AbsenceStatusTypeId");
+                        .HasForeignKey("AbsenceStatusId");
 
                     b.HasOne("AbsenceCoverageMS.Models.DomainModels.AbsenceType", "AbsenceType")
                         .WithMany("AbsenceRequests")
