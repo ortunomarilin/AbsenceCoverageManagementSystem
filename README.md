@@ -1,5 +1,5 @@
 # Absence & Coverage Management System
-A simple absence and coverage management system, build to help school district manage both employee absences, and class coverage if needed at a campus level. 
+A simple absence and coverage management system, build to help school district manage both employee absences, and class coverage if needed at a campus level. Through this application, school personal will be able to submit absence requests electronically, managers will be able to approve or deny those absence requests, and if coverage is needed sub-teachers will be able to accept jobs that become available due to approved teacher absences.
 
 ## Introduction 
 This project was created to consolidate employee absence requests and coverage in one place. The idea for the project was inspired by my past experience working at a school district and assisting with the management of both PTO requests and coverage. In addtion, implementing this project served as an opportunity to practice what I learned reading about .NET Core. 
@@ -26,13 +26,13 @@ This project is expected to have the following functionalities for the following
 *	Admin – Manage Absence Types 
 *	PowerUser – Manage Absence Requests 
 *	PowerUser – Manage Coverage 
-*	PowerUser – Manage Teacher Schedules 
-*	SubTeacher – Available Sub Jobs 
 *	SubTeacher – Sub Job History 
+*	SubTeacher – Available Sub Jobs 
 *	User – Request an Absence 
 *	User – Absence History 
-*	User – Absence Totals
 *	User – User Profile Settings 
+* User - Dashboard
+* User - Login
 
 ## Screen Shots
 
@@ -48,5 +48,5 @@ User - Absence History
 Marilin Ortuno
 
 ## Project Status 
-Still being developed 
+Completed
 
