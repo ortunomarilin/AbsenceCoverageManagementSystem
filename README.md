@@ -36,12 +36,56 @@ This project is expected to have the following functionalities for the following
 
 ## Screen Shots
 
+User - Dashboard 
+<img src="Images/UserDashboard.PNG">
+
+
+User - Profile
+<img src="Images/UserProfile.PNG">
+
+
 User - Request An Absence 
 <img src="Images/UserRequestAnAbsence.PNG">
 
 
 User - Absence History
 <img src="Images/UserAbsenceHistory.PNG">
+
+
+Power-User - Manage Absence Requests 
+<img src="Images/PowerUserManageAbsenceRequests.PNG">
+
+
+Power-User - Manage Coverage Requests 
+<img src="Images/PowerUserManageCoverage.PNG">
+
+
+
+SubTeacher - Sub Job History 
+<img src="Images/SubTeacherSubJobHistory.PNG">
+
+
+SubTeacher - Available Sub Jobs
+<img src="Images/SubTeacherAvailableSubJobs.PNG">
+
+
+Admin - Users
+<img src="Images/AdminUsers.PNG">
+
+Admin - Add New User
+<img src="Images/AdminAddUser.PNG">
+
+Admin - Roles
+<img src="Images/AdminRoles.PNG">
+
+Admin - Add New Role
+<img src="Images/AdminAddRole.PNG">
+
+Admin - Absence Types
+<img src="Images/AdminAbsenceTypes.PNG">
+
+Admin - Add New Absence Type
+<img src="Images/AdminAddAbsenceTypes.PNG">
 
 
 ## Author 
