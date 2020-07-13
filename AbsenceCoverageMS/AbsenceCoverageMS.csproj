@@ -171,7 +171,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\PowerUser\Views\Shared\" />
-    <Folder Include="Areas\SubTeacher\Views\Home\" />
   </ItemGroup>
 
 </Project>

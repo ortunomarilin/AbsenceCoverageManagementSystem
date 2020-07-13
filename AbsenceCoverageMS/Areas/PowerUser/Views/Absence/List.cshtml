@@ -120,7 +120,7 @@
                 <label class="form-label small ">Status</label>
                 <select class="form-control form-control-sm" name="filters" asp-for="@Model.Grid.AbsenceStatus"
                         asp-items="@(new SelectList(Model.AbsenceStatusTypes,
-                                        "AbsenceStatusTypeId", "Name", Model.Grid.AbsenceStatus))">
+                                        "AbsenceStatusId", "Name", Model.Grid.AbsenceStatus))">
                     <option value="all">All </option>
                 </select>
             </div>

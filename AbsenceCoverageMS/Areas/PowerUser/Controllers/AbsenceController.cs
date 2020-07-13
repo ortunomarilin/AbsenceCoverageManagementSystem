@@ -49,7 +49,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
             //Set all of the Query options based on grid values. Will apply these options to the ViewModel list of absence requests at the time of initialization. 
             var options = new AbsenceQueryOptions
             {
-                Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods",
+                Include = "AbsenceType, DurationType, AbsenceStatus, User, AbsenceRequestPeriods",
                 Where = ar => ar.User.CampusId == user.CampusId,
                 OrderByDirection = gridBuilder.CurrentGrid.SortDirection,
             };
@@ -115,7 +115,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 AbsenceRequest = data.AbsenceRequests.Get(new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == id,
-                    Include = "AbsenceType, DurationType, AbsenceStatusType, User, AbsenceRequestPeriods"
+                    Include = "AbsenceType, DurationType, AbsenceStatus, User, AbsenceRequestPeriods"
                 })
             };
 
@@ -131,7 +131,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
+                    Include = "AbsenceStatus, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
                 });
 
 
@@ -165,7 +165,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
+                    Include = "AbsenceStatus, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period"
                 });
 
             if (model.StatusRemarks == null)
@@ -203,7 +203,7 @@ namespace AbsenceCoverageMS.Areas.PowerUser.Controllers
                 new QueryOptions<AbsenceRequest>
                 {
                     Where = ar => ar.AbsenceRequestId == model.AbsenceRequestId,
-                    Include = "AbsenceStatusType, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob"
+                    Include = "AbsenceStatus, User, AbsenceRequestPeriods, AbsenceRequestPeriods.Period, SubJob"
                 });
 
             

@@ -121,10 +121,10 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserToRole(RoleManageUsersViewModel model, string id)
+        public async Task<IActionResult> AddUserToRole(RoleManageUsersViewModel model)
         {
             //Find the user 
-            User user = await userManager.FindByIdAsync(id);
+            User user = await userManager.FindByIdAsync(model.UserId);
             if(user != null)
             {
                 var result = await userManager.AddToRoleAsync(user, model.RoleName);
@@ -139,10 +139,10 @@ namespace AbsenceCoverageMS.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> RemoveUserFromRole(RoleManageUsersViewModel model, string id)
+        public async Task<IActionResult> RemoveUserFromRole(RoleManageUsersViewModel model, string userId)
         {
             //Find User
-            User user = await userManager.FindByIdAsync(id);
+            User user = await userManager.FindByIdAsync(userId);
 
             //If finding user was successful
             if (user != null)

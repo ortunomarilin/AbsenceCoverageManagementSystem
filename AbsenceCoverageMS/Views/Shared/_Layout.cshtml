@@ -59,7 +59,7 @@
                             <span>@User.Identity.Name</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">My Account</a>
+                            <a class="dropdown-item" asp-controller="Account"  asp-action="Details" >My Profile</a>
                             <form method="post" asp-controller="Account" asp-action="LogOut" asp-area="">
                                 <button type="submit" class="dropdown-item">Log Out</button>
                             </form>
@@ -106,6 +106,15 @@
         </li>
 
         <li>
+            <a asp-controller="Absence" asp-action="Add" asp-area="">
+                <span class="icon">
+                    <i class="fas fa-calendar-times fa-fw"></i>
+                </span>
+                Request an Absence
+            </a>
+        </li>
+
+        <li>
             <a asp-controller="Absence" asp-action="List" asp-area="">
                 <span class="icon">
                     <i class="fas fa-history"></i>
@@ -114,14 +123,6 @@
             </a>
         </li>
 
-        <li>
-            <a asp-controller="Absence" asp-action="Add" asp-area="">
-                <span class="icon">
-                    <i class="fas fa-calendar-times fa-fw"></i>
-                </span>
-                Request an Absence
-            </a>
-        </li>
 
         @if (User.IsInRole("Admin"))
         {

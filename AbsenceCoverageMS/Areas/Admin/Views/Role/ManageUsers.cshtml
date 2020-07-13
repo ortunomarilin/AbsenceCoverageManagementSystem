@@ -68,19 +68,21 @@
         <div class="form-row  ml-5  justify-content-center  ">
             <div class="col-md-10   ">
 
-                <form method="post" asp-action="AddRoleToUser">
+                <form method="post" asp-action="AddUserToRole">
 
                     <div class="form-row ">
                         <div class=" col-md-5">
                             <label class=" ">Available Users</label>
-                            <select class="form-control" asp-for="@Model.Id"
+                            <select class="form-control" asp-for="@Model.UserId"
                                     asp-items="@(new SelectList(Model.AvailableUsers,
-                                            "Id", "FullName", Model.Id))">
+                                            "Id", "FullName", Model.UserId))">
                                 <option value="">Select a User</option>
                             </select>
                         </div>
 
                         <input type="hidden" asp-for="@Model.RoleId" />
+                        <input type="hidden" asp-for="@Model.RoleName" />
+                        <input type="hidden" asp-for="@Model.UserId" />
 
                         <div class=" col-md-2  mt-4">
                             <button class="btn btn-primary  btn-sm ">Add User To Role</button>
@@ -127,8 +129,10 @@
                                 <td >@user.UserName</td>
                                 <td >@user.Email</td>
                                 <td>
-                                    <form method="post" asp-action="DeleteRoleFromRole">
+                                    <form method="post" asp-action="RemoveUserFromRole">
                                         <input hidden asp-for="@Model.RoleId" />
+                                        <input hidden asp-for="@Model.RoleName" />
+
                                         <button type="submit" class="btn btn-danger btn-sm" name="UserId" value="@user.Id">
                                             <span>
                                                 <i class="fas fa-trash-alt"></i>
